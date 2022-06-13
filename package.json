@@ -1,0 +1,34 @@
+{
+  "name": "xeow",
+  "version": "1.0.0",
+  "description": "A Discord Bot With Powerfull Features",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "node check.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xXQiuChenXx/Xeow.git"
+  },
+  "keywords": [
+    "DiscordBot",
+    "Discord",
+    "discord.js"
+  ],
+  "author": "QiuChen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xXQiuChenXx/Xeow/issues"
+  },
+  "homepage": "https://github.com/xXQiuChenXx/Xeow#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "child_process": "^1.0.2",
+    "discord.js": "^13.8.0",
+    "js-yaml": "^4.1.0",
+    "moment-timezone": "^0.5.34",
+    "syntax-error": "^1.4.0"
+  }
+}

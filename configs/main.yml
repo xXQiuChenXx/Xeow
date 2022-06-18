@@ -8,7 +8,7 @@ Token: ""
 Prefix: "-"
 SlashCommand: true
 PrefixCommand: true
-Lang: en
+Lang: zh-tw
 
 
 ########################################
@@ -36,7 +36,7 @@ Storage:
 Logger:
   debug: false
   lang: "zh-tw"
-  format: "LL LTS"
+  ignore: []
 
 ########################################
 #                                      #

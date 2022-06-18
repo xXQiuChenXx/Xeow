@@ -3,57 +3,62 @@ const yml = require("js-yaml");
 const path = require("path");
 
 module.exports = class System32 {
-    #modules
     constructor() {
         this.name = "System32";
         this.description = "System32";
         this.version = "1.0.0";
         this.author = "Xeow";
-        this.#modules = {};
         const dependencies = require("../../package.json").dependencies;
-        for (const dep of Object.keys(dependencies)) {
-            this.#modules[`Xeow.Modules.${dep}`] = require(dep);
-        }
+        this.Modules = {};
+        Object.keys(dependencies).forEach(key => { this.Modules[key] = require(key); });
+
         const Libraries = fs.readdirSync(path.join(__dirname, "../../libs")).filter(file => file.endsWith(".js")).map(lib => require(`../../libs/${lib}`));
-        for (const lib of Libraries) {
-            this.#modules[`Xeow.System32.${lib.name}`] = lib.main;
-        }
+        this.Libraries = {};
+        Libraries.forEach(lib => { this.Libraries[lib.name] = lib.main; });
+
+        this.placeholder = new (require("./Placeholder"))();
+        this.Languages = new (require("./LangParser"))();
+        this.Configuration = new (require("./Configuration"))();
+        this.PluginManager = new (require("../PluginHandler/PluginLoader"))(this);
+
     }
 
     setVariable(key, variables) {
         if (this[key]) { throw new Error("Key already exists"); }
         this[key] = variables;
     }
-
-    get(module) {
-        if (module.startsWith("Xeow.Configs.")) { return this.getConfig(module.replace("Xeow.Configs.", "")); }
-        if (!this.#modules[module]) { throw new Error(`Module ${module} not found`); }
-        return this.#modules[module];
+    getFormattedDate() {
+        var date = new Date();
+        var hour = date.getHours();
+        hour = (hour < 10 ? "0" : "") + hour;
+        var min = date.getMinutes();
+        min = (min < 10 ? "0" : "") + min;
+        var sec = date.getSeconds();
+        sec = (sec < 10 ? "0" : "") + sec;
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        month = (month < 10 ? "0" : "") + month;
+        var day = date.getDate();
+        day = (day < 10 ? "0" : "") + day;
+        return day + "-" + month + "-" + year + "-" + hour + "-" + min + "-" + sec
     }
 
-    getConfig(config) {
-        if (config.includes(".")) { config = config.replace(".", "/") }
-        if (!fs.existsSync(path.join(__dirname, `../../configs/${config}.yml`))) {
-            throw new Error(`Xeow.Configs.${config.replaceAll("/", ".")} not found`);
-        }
-        let res = null
-        try {
-            res = yml.load(fs.readFileSync(path.join(__dirname, `../../configs/${config}.yml`), "utf-8"));
-        } catch (error) {
-            throw new Error(`Xeow.Configs.${config.replaceAll("/", ".")} is not a valid yaml file`);
-        }
-        return res
+    loggedIn(config, lang) {
+        console.log(lang.bot.EventLoading)
+        this.EventManager = new (require("./EventHandler"))(this.bot);
+
+        let events = fs.readdirSync(path.join(__dirname, "../events"))
+        .filter(file => { return file.endsWith(".js"); })
+        .filter(file => { 
+            try{
+                new (require(`../events/${file}`))(this, lang).on();
+                return true
+            } catch(error) {
+                console.error(error)
+            }
+        })
+        console.log(lang.bot.EventLoaded.replace("%s%", events.length))
+        require("./CommandHandler")(this.bot, lang);
+        require("./ConsoleHandler")(this);
     }
-
-    getModule(module) {
-        if (!this.#modules[`Xeow.Modules.${module}`]) { throw new Error(`Module ${module} not found`); }
-        return this.#modules[`Xeow.Modules.${module}`];
-    }
-
-    getLib(lib) {
-        if (!this.#modules[`Xeow.System32.${lib}`]) { throw new Error(`Library ${lib} not found`); }
-        return this.#modules[`Xeow.System32.${lib}`];
-    }
-
-
 }

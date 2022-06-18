@@ -5,8 +5,7 @@ if (process.version.slice(1).split('.')[0] < 16) {
 
 const CheckForModules = async () => {
     return new Promise(async (resolve) => {
-        const modules = Object.keys(require('./package.json').dependencies);
-        const missingModules = modules.filter(module => {
+        const missingModules = Object.keys(require('./package.json').dependencies).filter(module => {
             try {
                 require(module);
                 return;
@@ -131,36 +130,71 @@ async function CheckForUpdate() {
 
 }
 
+async function archiveLog(Xeow, Lang) {
+    const fs = require("fs")
+    const archiver = require('archiver');
+    if (fs.existsSync("./logs/lastest.log")) {
+        const output = fs.createWriteStream("./logs/" + `${Xeow.getFormattedDate()}.zip`);
+        const archive = archiver('zip', {
+            zlib: { level: 9 }
+        });
+        await archive.pipe(output);
+        await archive.file("./logs/lastest.log", { name: 'lastest.log' });
+        await archive.finalize();
+        await fs.unlinkSync("./logs/lastest.log")
+    }
+}
+
 async function Startup() {
     await CheckForModules();
     await CheckForBasic();
-    await CheckForUpdate();
+    const fs = require("fs")
     const Xeow = new (require("./src/Xeow/System32"))();
-     const { Client, Intents, Collection } = Xeow.get("Xeow.Modules.discord.js");
+    const config = Xeow.Configuration.readConfigSync("main");
+    const Logger = Xeow.Libraries["Logger"]
+    const Language = Xeow.Languages.readLangSync("main")
+    await archiveLog(Xeow, Language);
+    global.console = new Logger("CONSOLE", config.Logger.debug, config.Logger.ignore, config.Logger.lang)
+    await CheckForUpdate();
+    const { Client, Intents, Collection } = Xeow.Modules["discord.js"]
     const bot = new Client({
-        autoReconnect: true,
-        partials: ["CHANNEL"],
-        Intents: [
+        intents: [
             Intents.FLAGS.GUILDS,
+            Intents.FLAGS.GUILD_MESSAGES,
+            Intents.FLAGS.GUILD_PRESENCES,
+            Intents.FLAGS.GUILD_INTEGRATIONS,
+            Intents.FLAGS.DIRECT_MESSAGES,
+            Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+            Intents.FLAGS.GUILD_VOICE_STATES,
+            Intents.FLAGS.GUILD_WEBHOOKS,
+            Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+            Intents.FLAGS.GUILD_INVITES,
             Intents.FLAGS.GUILD_MEMBERS,
             Intents.FLAGS.GUILD_BANS,
             Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-            Intents.FLAGS.GUILD_INTEGRATIONS,
-            Intents.FLAGS.GUILD_WEBHOOKS,
-            Intents.FLAGS.GUILD_INVITES,
-            Intents.FLAGS.GUILD_VOICE_STATES,
-            Intents.FLAGS.GUILD_PRESENCES,
-            Intents.FLAGS.GUILD_MESSAGES,
-            Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-            Intents.FLAGS.GUILD_MESSAGE_TYPING,
-            Intents.FLAGS.DIRECT_MESSAGES,
-            Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-            Intents.FLAGS.DIRECT_MESSAGE_TYPING
-        ]
+            Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+        ],
+        autoReconnect: true,
+        partials: ["CHANNEL"],
     });
-    const config = Xeow.get("Xeow.Configs.main")
-    console.log(config)
-    bot.login(config.token + "sads");
+    bot.commands = new Collection();
+    bot.aliases = new Collection();
+    bot.categories = fs.readdirSync("./commands/");
+    bot.plugins = new Collection();
+    await bot.login(config.Token).catch(error => {
+        if (error.message.includes("An invalid token was provided")) {
+            console.showErr(Language.bot.InvalidToken);
+        } else {
+            console.showErr(Language.bot.LoginError);
+            console.error(error);
+        }
+        process.exit();
+    });
+    Xeow.setVariable("bot", bot);
+    Xeow.setVariable("CLI", new Collection());
+    if (Xeow.bot) {
+        await Xeow.loggedIn(config, Language)
+    }
 }
 
 Startup()

@@ -1,13 +1,10 @@
-const API = require('./API/BaseAPI');
 const fs = require('fs');
 
 class SimplePluginLoader {
+    #API
     constructor(bot) {
-        this.bot = bot;
-        this.logger = new bot.cores.logger('插件進程')
-        this.plugins = bot.plugins
-        this.list = []
-        this.pls = []
+        this.#API = require('./API/BaseAPI');
+        this.list = 0
     }
 
     async loadPlugin(plobj) {
@@ -24,7 +21,7 @@ class SimplePluginLoader {
                 });
                 if (lacked.length !== 0) return this.logger.showErr(`插件 ${plobj.name} 缺少依賴庫 ${lacked.join(",")}, 因此無法加載此插件`)
             }
-            const api = new API(this.bot, plobj.permissions, plobj.name)
+            const api = new API(this, plobj.permissions, plobj.name)
             if (!this._isCompatible(plobj, api)) return this.logger.warn(`插件 ${plobj.name} 不兼容該版本, 插件支持的API版本: ${plobj.api.join(", ")} (需求版本: API ${plobj.api.join('/')})`);
             const plugin = new plobj.Plugin(api);
             try {
@@ -42,8 +39,9 @@ class SimplePluginLoader {
         }
     }
 
-    async loadAll() {
+    async loadAll(lang) {
         let files = await fs.readdirSync("./plugins/").filter(x => x.endsWith('.js'));
+        if(files.length === 0) return console.log(lang.Plugin.NoPlugin)
         let plugins = files.map(file => require("../../../plugins/" + file))
             .sort(function (a, b) { return a.priority - b.priority });
         for (const plugin of plugins) {
@@ -107,6 +105,4 @@ class SimplePluginLoader {
         return true
     }
 }
-module.exports = {
-    SimplePluginLoader: SimplePluginLoader
-}
+module.exports = SimplePluginLoader

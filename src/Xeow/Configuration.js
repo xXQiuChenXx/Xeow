@@ -5,9 +5,12 @@ module.exports = class Configuration {
     constructor() {
 
     }
-    readConfig(fileName, isPlugin, encoding, options, callback) {
+
+    readConfig(fileName, type, encoding, options, callback) {
         if(fileName.includes("/")) return callback(new Error("Invalid fileName"));
-        let filePath = path.join(__dirname, `../../configs/` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
+        let filePath = path.join(__dirname, `../../configs/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../configs/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../configs/commands/` + fileName + ".yml");
         if(!fs.existsSync(filePath)) return callback(new Error("File not found"));
         fs.readFile(filePath, encoding, (err, data) => {
             if(err) return callback(err);
@@ -19,25 +22,31 @@ module.exports = class Configuration {
         });
     }
 
-    writeConfig(fileName, data, isPlugin, encoding, options, callback) {
+    writeConfig(fileName, data, type, encoding, options, callback) {
         if(fileName.includes("/")) return callback(new Error("Invalid fileName"));
-        let filePath = path.join(__dirname, `../../configs/` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
+        let filePath = path.join(__dirname, `../../configs/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../configs/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../configs/commands/` + fileName + ".yml");
         if(!fs.existsSync(filePath)) return callback(new Error("File not found"));
         fs.writeFile(filePath, YAML.dump(data, options), encoding, (err) => {
             if(err) return callback(err);
             callback(null);
         });
     }
-    readConfigSync(fileName, isPlugin, encoding) {
+    readConfigSync(fileName, type, encoding) {
         if(fileName.includes("/")) throw new Error("Invalid fileName");
-        let filePath = path.join(__dirname, `../../configs/` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
+        let filePath = path.join(__dirname, `../../configs/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../configs/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../configs/commands/` + fileName + ".yml");
         if(!fs.existsSync(filePath)) throw new Error("File not found");
         return YAML.load(fs.readFileSync(filePath, encoding));
 
     }
-    writeConfigSync(fileName, data, isPlugin, encoding) {
+    writeConfigSync(fileName, data, type, encoding) {
         if(fileName.includes("/")) throw new Error("Invalid fileName");
-        let filePath = path.join(__dirname, `../../configs/` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
+        let filePath = path.join(__dirname, `../../configs/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../configs/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../configs/commands/` + fileName + ".yml");
         if(!fs.existsSync(filePath)) throw new Error("File not found");
         fs.writeFileSync(filePath, YAML.dump(data, options), encoding);
     }

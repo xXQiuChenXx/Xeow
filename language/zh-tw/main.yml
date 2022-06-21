@@ -5,6 +5,7 @@ bot:
   EventLoading: "正在加載事件中..."
   EventLoaded: "成功加載 %s% 個事件"
   Loaded: "機器人已啓動成功!"
+  ArchiveFailed: "嘗試壓縮記錄檔案時出錯"
 
 Plugin: 
   Loaded: "已成功加載%s%個插件"
@@ -12,3 +13,16 @@ Plugin:
 
 Command: 
   Loaded: "✔ 成功加載指令 %command_name%, 別名為: %command_aliases%"
+  NoAliase: "無"
+
+Database:
+  ModuleNotLoaded: "Sequelize 模塊未被加載"
+  InvalidType: "無效或不支持的數據庫類型"
+  Loading: "正在加載數據庫..."
+  Validate: 
+    Verifying: "正在驗證數據庫信息中..."
+    Success: "驗證成功!"
+    Failed: "無法驗證/登入你的數據庫, 請檢查配置信息無誤后再重新啓動"
+  Checking: "正在檢查數據庫資料中..."
+
+

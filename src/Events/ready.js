@@ -17,6 +17,6 @@ module.exports = class Event {
     }
 
     remove() {
-        this.EventManager.unregister("ready", this._main)
+        this.EventManager.unregister("ready", this.main)
     }
 }

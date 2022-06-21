@@ -1,4 +1,5 @@
-module.exports = (bot) => {
+module.exports = (Xeow) => {
+    const bot = Xeow.bot
     process.on('unhandledRejection', error => {
         console.showErr('============================================================')
         console.showErr('--- DO NOT REPORT THIS AS A BUG OR A CRASH ---')
@@ -32,16 +33,16 @@ module.exports = (bot) => {
             console.log("退出登入DC中...")
             await bot.destroy()
             console.log("與Sqlite斷開鏈接中...")
-            await bot.cooldowns.close()
-            await bot.pluginmanager.unloadAll().catch(function(error) {
-                console.showErr('============================================================')
-                console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
-                console.showErr("============================================================")
-                console.error(error)
-                console.showErr('============================================================')
-                console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
-                console.showErr("============================================================")
-            })
+            // await bot.cooldowns.close()
+            // await bot.pluginmanager.unloadAll().catch(function(error) {
+            //     console.showErr('============================================================')
+            //     console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
+            //     console.showErr("============================================================")
+            //     console.error(error)
+            //     console.showErr('============================================================')
+            //     console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
+            //     console.showErr("============================================================")
+            // })
             process.exit()
         }
     }
@@ -52,7 +53,7 @@ module.exports = (bot) => {
         description: '幫助指令',
         run: async function help(args, bot) {
             if (args[1]) {
-                let cmd = bot.CLI.get(args[1])
+                let cmd = Xeow.CLI.get(args[1])
                 if(!cmd) return console.log('無法找到指令: ' + args[1])
                 console.log(`===================== ${args[1]} 指令幫助列表 ===================`)
                 console.log(`使用方法: ${cmd.usage === undefined ? cmd.name : cmd.usage}` )
@@ -61,7 +62,7 @@ module.exports = (bot) => {
             }
 
             console.log("======================== 指令幫助列表 ======================")
-            bot.CLI.forEach(function (command) {
+            Xeow.CLI.forEach(function (command) {
                 let cmd = command.usage === undefined ? command.name : command.usage
                 let description = command.description === undefined ? '無添加任何指令描述' : command.description
                 let fulltext = cmd + '  ==>  ' + description
@@ -72,19 +73,19 @@ module.exports = (bot) => {
         }
     }
 
-    bot.CLI.set('stop', stop)
-    bot.CLI.set('help', help)
+    Xeow.CLI.set('stop', stop)
+    Xeow.CLI.set('help', help)
 
     process.stdin.on("data",
         async function Console(data) {
             let Data = data.toString().trim()
             let args = Data.split(' ')
-            let cmd = bot.CLI.get(args[0])
+            let cmd = Xeow.CLI.get(args[0])
             if (cmd) {
-                console.cursor('終端執行了指令: ' + Data)
+                console.command('終端執行了指令: ' + Data)
                 await cmd.run(args, bot)
             } else {
-                console.cursorErr("未知指令，請重試")
+                console.command("未知指令，請重試")
             }
         })
 }

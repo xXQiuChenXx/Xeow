@@ -1,8 +1,10 @@
+// 檢查NodeJS版本是否過舊
 if (process.version.slice(1).split('.')[0] < 16) {
     console.log("\u001b[31mXeow Discord Bot requires NodeJS version 16 or higher. Please go to https://nodejs.org/ to update and install your NodeJS.\033[0m");
     process.exit();
 }
 
+// 檢查依賴庫
 const CheckForModules = async () => {
     return new Promise(async (resolve) => {
         const missingModules = Object.keys(require('./package.json').dependencies).filter(module => {
@@ -81,6 +83,7 @@ const CheckForModules = async () => {
     })
 }
 
+// 檢查重要文件正確性
 const CheckForBasic = async () => {
     return new Promise(async (resolve) => {
         const fs = require("fs");
@@ -126,25 +129,33 @@ const CheckForBasic = async () => {
     })
 }
 
+// 檢查更新
 async function CheckForUpdate() {
 
 }
 
+// 壓縮記錄文件
 async function archiveLog(Xeow, Lang) {
     const fs = require("fs")
     const archiver = require('archiver');
     if (fs.existsSync("./logs/lastest.log")) {
-        const output = fs.createWriteStream("./logs/" + `${Xeow.getFormattedDate()}.zip`);
-        const archive = archiver('zip', {
-            zlib: { level: 9 }
-        });
-        await archive.pipe(output);
-        await archive.file("./logs/lastest.log", { name: 'lastest.log' });
-        await archive.finalize();
-        await fs.unlinkSync("./logs/lastest.log")
+        try {
+            const output = fs.createWriteStream("./logs/" + `${Xeow.getFormattedDate()}.zip`);
+            const archive = archiver('zip', {
+                zlib: { level: 9 }
+            });
+            await archive.pipe(output);
+            await archive.file("./logs/lastest.log", { name: 'lastest.log' });
+            await archive.finalize();
+            await fs.unlinkSync("./logs/lastest.log")
+        } catch (error) {
+            console.showErr(Lang.bot.ArchiveFailed)
+            console.error(error)
+        }
     }
 }
 
+// 開啓 Xeow
 async function Startup() {
     await CheckForModules();
     await CheckForBasic();

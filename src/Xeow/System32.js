@@ -43,7 +43,13 @@ module.exports = class System32 {
         return day + "-" + month + "-" + year + "-" + hour + "-" + min + "-" + sec
     }
 
-    loggedIn(config, lang) {
+    async loggedIn(config, lang) {
+        console.log(lang.Database.Loading)
+        this.DBManager = new (require("./DBManager"))(this, lang)
+        await this.DBManager.connect(config);
+        await this.DBManager.validate();
+        await this.DBManager.startup();
+
         console.log(lang.bot.EventLoading)
         this.EventManager = new (require("./EventHandler"))(this.bot);
 
@@ -58,6 +64,7 @@ module.exports = class System32 {
             }
         })
         console.log(lang.bot.EventLoaded.replace("%s%", events.length))
+        
         require("./CommandHandler")(this.bot, lang);
         require("./ConsoleHandler")(this);
     }

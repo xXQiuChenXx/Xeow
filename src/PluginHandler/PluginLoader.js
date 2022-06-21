@@ -1,31 +1,29 @@
 const fs = require('fs');
-
 class SimplePluginLoader {
     #API
-    constructor(bot) {
+    constructor(Xeow) {
         this.#API = require('./API/BaseAPI');
-        this.list = 0
+        this.list = []
     }
 
     async loadPlugin(plobj) {
-        if (typeof pluginName === 'string') plobj = require("../../../plugins/" + pluginName)
+        if (typeof pluginName === 'string') plobj = require("../../plugins/" + pluginName)
         if (plobj.enable === true) {
             if (plobj.requires.length !== 0) {
-                let lacked = []
-                plobj.requires.forEach(function (item) {
+                const lacked = plobj.requires.filter(function (item) {
                     try {
                         require(item)
                     } catch (e) {
-                        lacked.push(item)
+                        return true
                     }
                 });
-                if (lacked.length !== 0) return this.logger.showErr(`插件 ${plobj.name} 缺少依賴庫 ${lacked.join(",")}, 因此無法加載此插件`)
+                if (lacked.length !== 0) return console.showErr(`插件 ${plobj.name} 缺少依賴庫 ${lacked.join(",")}, 因此無法加載此插件`)
             }
             const api = new API(this, plobj.permissions, plobj.name)
-            if (!this._isCompatible(plobj, api)) return this.logger.warn(`插件 ${plobj.name} 不兼容該版本, 插件支持的API版本: ${plobj.api.join(", ")} (需求版本: API ${plobj.api.join('/')})`);
+            if (!this._isCompatible(plobj, api)) return console.warn(`插件 ${plobj.name} 不兼容該版本, 插件支持的API版本: ${plobj.api.join(", ")} (需求版本: API ${plobj.api.join('/')})`);
             const plugin = new plobj.Plugin(api);
             try {
-                this.logger.log("載入插件 '" + plobj.name + "@" + plobj.version + "' 成功! (作者: " + plobj.author + ")")
+                console.log("載入插件 '" + plobj.name + "@" + plobj.version + "' 成功! (作者: " + plobj.author + ")")
                 await plugin.onLoad()
                 await plugin.onEnable()
             } catch (e) {
@@ -46,13 +44,13 @@ class SimplePluginLoader {
             .sort(function (a, b) { return a.priority - b.priority });
         for (const plugin of plugins) {
             await this.loadPlugin(plugin).catch(error => {
-                this.logger.showErr('===================================================================================')
-                this.logger.showErr("- DO NOT REPORT THIS AS A BUG OR A CRASH, THIS IS REALLY A PLUGIN 'S BUG OR CRASH - ")
-                this.logger.showErr("===================================================================================")
-                this.logger.error(error)
-                this.logger.showErr('===================================================================================')
-                this.logger.showErr("- DO NOT REPORT THIS AS A BUG OR A CRASH, THIS IS REALLY A PLUGIN 'S BUG OR CRASH - ")
-                this.logger.showErr("===================================================================================")
+                console.showErr('===================================================================================')
+                console.showErr("- DO NOT REPORT THIS AS A BUG OR A CRASH, THIS IS REALLY A PLUGIN 'S BUG OR CRASH - ")
+                console.showErr("===================================================================================")
+                console.error(error)
+                console.showErr('===================================================================================')
+                console.showErr("- DO NOT REPORT THIS AS A BUG OR A CRASH, THIS IS REALLY A PLUGIN 'S BUG OR CRASH - ")
+                console.showErr("===================================================================================")
             })
         }
     }
@@ -60,14 +58,15 @@ class SimplePluginLoader {
     async unloadPlugin(pluginName) {
         let plugin = this.bot.plugins.get(pluginName)
         if (plugin) {
-            this.logger.log(`正在卸載插件${pluginName}...`)
+            console.log(`正在卸載插件${pluginName}...`)
             await plugin.onDisable(pluginName)
             await this.bot.plugins.delete(pluginName)
-            this.logger.log("卸載插件 '" + pluginName + "' 成功!")
+            console.log("卸載插件 '" + pluginName + "' 成功!")
         }
     }
 
     async unloadAll() {
+        if(this.list.length === 0) return
         let x = this
         for (const pl of this.list) {
             await x.unloadPlugin(pl)

@@ -10,9 +10,11 @@ module.exports = class LangParser {
         }
     }
     
-    readLang(fileName, isPlugin, encoding, options, callback) {
+    readLang(fileName, type, encoding, options, callback) {
         if(fileName.includes("/")) return callback(new Error("Invalid fileName"));
-        let filePath = path.join(__dirname, `../../language/${this.lang}/` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
+        let filePath = path.join(__dirname, `../../language/${this.lang}/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../language/${this.lang}/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../language/${this.lang}/commands/` + fileName + ".yml");
         if(!fs.existsSync(filePath)) return callback(new Error("File not found"));
         fs.readFile(filePath, encoding, (err, data) => {
             if(err) return callback(err);
@@ -24,25 +26,31 @@ module.exports = class LangParser {
         });
     }
 
-    writeLang(fileName, data, isPlugin, encoding, options, callback) {
+    writeLang(fileName, data, type, encoding, options, callback) {
         if(fileName.includes("/")) return callback(new Error("Invalid fileName"));
-        let filePath = path.join(__dirname, `../../language/${this.lang}/` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
+        let filePath = path.join(__dirname, `../../language/${this.lang}/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../language/${this.lang}/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../language/${this.lang}/commands/` + fileName + ".yml");
         if(!fs.existsSync(filePath)) return callback(new Error("File not found"));
         fs.writeFile(filePath, YAML.dump(data, options), encoding, (err) => {
             if(err) return callback(err);
             callback(null);
         });
     }
-    readLangSync(fileName, isPlugin, encoding) {
+    readLangSync(fileName, type, encoding) {
         if(fileName.includes("/")) throw new Error("Invalid fileName");
-        let filePath = path.join(__dirname, `../../language/${this.lang}/` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
-        if(!fs.existsSync(filePath)) throw new Error("File not found");
+        let filePath = path.join(__dirname, `../../language/${this.lang}/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../language/${this.lang}/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../language/${this.lang}/commands/` + fileName + ".yml");
+        if(!fs.existsSync(filePath)) return
         return YAML.load(fs.readFileSync(filePath, encoding));
     }
 
-    writeLangSync(fileName, data, isPlugin, encoding) {
+    writeLangSync(fileName, data, type, encoding) {
         if(fileName.includes("/")) throw new Error("Invalid fileName");
-        let filePath = path.join(__dirname, `../../language/${this.lang}` + (isPlugin === true ? "plugins/" : "") + fileName + ".yml");
+        let filePath = path.join(__dirname, `../../language/${this.lang}/` + fileName + ".yml");
+        if(type === "plugin") filePath = path.join(__dirname, `../../language/${this.lang}/plugins/` + fileName + ".yml");
+        if(type === "command") filePath = path.join(__dirname, `../../language/${this.lang}/commands/` + fileName + ".yml");
         if(!fs.existsSync(filePath)) throw new Error("File not found");
         fs.writeFileSync(filePath, YAML.dump(data, options), encoding);
     }

@@ -30,6 +30,8 @@
     "discord.js": "^13.8.0",
     "js-yaml": "^4.1.0",
     "moment-timezone": "^0.5.34",
+    "sequelize": "^6.21.0",
+    "sqlite3": "^5.0.8",
     "syntax-error": "^1.4.0"
   }
 }

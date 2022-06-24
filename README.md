@@ -1,2 +1,1 @@
-# Xeow
-A Discord Bot With Powerful Features
+![](https://github.com/xXQiuChenXx/Xeow/tree/master/src/Images/Xeow.png)

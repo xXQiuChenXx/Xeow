@@ -8,3 +8,19 @@
 Xeow is a discord bot that used NodeJS/JavaScript and designed for configurability, new fun and exciting bot features.
 
 </div>
+
+## Warning
+This bot is still under developing so it is an dev build. It is still unstable just now.
+
+## To DO List
+1. Make A Wiki 
+2. Make it more stable
+3. Create more command
+4. Translation
+
+## Requirements
+
+1. NodeJS with version above 16
+
+## License
+Xeow Bot is licensed under the MIT license, A well-maintained open source ecosystem starts from us (*>ω<)φ

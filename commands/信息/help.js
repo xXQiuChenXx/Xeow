@@ -5,25 +5,12 @@ module.exports = {
         description: "幫助列表",
         usage: "help <showall/all/name> [指令]"
     },
-    options: [{
-        name: 'type',
-        type: 'STRING',
-        description: '顯示種類',
-        required: true,
-        choices: [
-            {
-                name: 'all',
-                value: 'all',
-                description: '顯示所有指令'
-            },
-            {
-                name: "search",
-                value: 'search',
-                description: '尋找指定指令'
-            }
-        ]
+    config: {
+        emoji: {
+            "信息": ":earth_americas:"
+        }
     },
-    {
+    options: [{
         name: 'name',
         type: 'STRING',
         description: '指令名字',
@@ -31,33 +18,46 @@ module.exports = {
     }],
     run: async (Xeow, message, args, lang, config) => {
         const bot = Xeow.bot
+        const prefix = Xeow.Prefix.get(message.guild.id)
         let cmd = args[0]
-        if (cmd === "all") {
-            return getAll(bot, message);
+        if (!cmd) {
+            await getAll(Xeow, message, config, prefix);
         } else {
             if (!cmd) return message.reply("使用方法錯誤")
-            getCMD(bot, message, cmd.toLowerCase())
+            await getCMD(bot, message, cmd.toLowerCase(), prefix)
         }
     }
 }
 
-async function ShowAll(bot, message) {
+async function getAll(Xeow, message, config, prefix) {
+    let bot = Xeow.bot
+    const menu = new MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("幫助選單")
+        .setDescription("使用 `help <指令名稱>` 來搜索指定的指令")
+
+    for (const category of bot.categories) {
+        menu.addField(`${config.emoji[category]} ${category}`, prefix + 'help category <指令類別>')
+    }
     let Pages = []
+
     bot.categories.forEach(function (cat) {
-        let cmd = bot.commands.filter(cmd => cmd.category === cat)
-        Pages.push({ categories: cat, commands: cmd })
+        let cmds = bot.commands.filter(cmd => cmd.category === cat)
+        Pages.push({ category: cat, commands: cmds })
     });
-    let Embeds = []
+
+    let Embeds = [menu]
     for (const temp of Pages) {
         const embed = new MessageEmbed()
             .setColor('RANDOM')
-            .setTitle(`**${temp.categories}**`)
+            .setTitle(`**${config.emoji[temp.category]} ${temp.category}**`)
         temp['commands'].forEach(function (cmd) {
-            embed.addField(cmd.name, cmd.description)
+            embed.addField(prefix + cmd.name + " - " + cmd.description, "用法: `" + prefix + cmd.usage + "`")
         });
         Embeds.push(embed)
     }
-    if (message?.interaction) return await cores.InteractionButtonPages({
+
+    if (message?.interaction) return await Xeow.Libraries.InteractionButtonPages({
         interaction: message.interaction,
         embeds: Embeds,
         time: 60000,
@@ -65,7 +65,7 @@ async function ShowAll(bot, message) {
         end: true
     })
 
-    await cores.MessageButtonPages({
+    await Xeow.Libraries.MessageButtonPages({
         message: message,
         embeds: Embeds,
         time: 60000,
@@ -74,33 +74,14 @@ async function ShowAll(bot, message) {
     })
 }
 
-function getAll(bot, message) {
-    const commands = (category) => {
-        return bot.commands
-            .filter(cmd => cmd.category === category)
-            .map(cmd => `- \`${cmd.name}\``)
-            .join(" ");
-    }
-
-    const info = bot.categories
-        .map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
-        .reduce((string, category) => string + "\n" + category);
-
-    const embed = new MessageEmbed()
-        .setColor("RANDOM")
-        .setDescription(info)
-
-    return message.reply({ embeds: [embed] });
-}
-
-function getCMD(bot, message, input) {
+function getCMD(bot, message, input, prefix) {
     const embed = new MessageEmbed()
     const cmd = bot.commands.get(input);
     if (cmd) {
         embed.setTitle(`**${cmd.name} 指令**`)
-        if(cmd.description) embed.addField('**描述**', cmd.description)
-        if(cmd.usage) embed.addField('**用法**', cmd.usage)
-        if(cmd.timeout) embed.addField('**冷卻**', cmd.timeout.toString())
+        if (cmd.description) embed.addField('**描述**', cmd.description)
+        if (cmd.usage) embed.addField('**用法**', prefix + cmd.usage)
+        if (cmd.timeout) embed.addField('**冷卻**', cmd.timeout.toString())
         embed.setFooter({ text: `提示: <> = 必须, [] = 可选` });
     } else {
         embed.setColor("RED").setDescription(`沒有找到指令 **${input}**`)

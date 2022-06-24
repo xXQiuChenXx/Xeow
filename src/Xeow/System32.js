@@ -54,7 +54,7 @@ module.exports = class System32 {
             await this.DBManager.get("prefixes").findAll());
 
         console.log(lang.bot.EventLoading)
-        this.EventManager = new (require("./EventHandler"))(this.bot);
+        this.EventManager = new (require("./EventManager"))(this.bot);
 
         let events = fs.readdirSync(path.join(__dirname, "../events"))
             .filter(file => { return file.endsWith(".js"); })

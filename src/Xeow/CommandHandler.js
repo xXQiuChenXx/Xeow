@@ -21,6 +21,7 @@ module.exports = async (Xeow, bot, lang, config) => {
                 let lang = Xeow.Language.readLangSync(cmd.name, "command")
                 if(cmd.lang?.usage) cmd.usage = lang?.usage
                 if(cmd.lang?.description) cmd.description = lang?.description
+                cmd.category = dir
             }
             bot.commands.set(cmd.name, cmd)
             if (cmd.aliases) {

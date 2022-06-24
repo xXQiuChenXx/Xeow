@@ -29,7 +29,10 @@ module.exports = class Event {
                 const config = Xeow.Configuration.readConfigSync(command.name, "command", "utf8")
                 console.log(`${message.member.user.tag} ` + "執行了指令: " + message.content)
                 try { await command.run(Xeow, message, args, lang, config);}
-                catch (error) { console.error(error); return }
+                catch (error) { 
+                    if(error.message === "Cooldown") return
+                    return console.error(error);
+                }
                 let db = await Xeow.DBManager.get("command")
                 let source = { command: command.name, guild: message.guild.id, user: message.author.id, lastRun: Date.now().toString() }
                 let data = await db.findOne({ where: { command: command.name, guild: message.guild.id, user: message.author.id } })
@@ -37,7 +40,6 @@ module.exports = class Event {
                     await data.update(source);
                     await data.save();
                 } else {
-                    console.log(JSON.stringify(source))
                     await db.build(source).save()
                 }
             }

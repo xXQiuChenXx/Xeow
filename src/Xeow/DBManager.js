@@ -29,7 +29,7 @@ module.exports = class DatabaseManager {
                 config.Storage.MySQL.Database,
                 config.Storage.MySQL.Username,
                 config.Storage.MySQL.Password,
-                { host: config.Storage.MySQL.Host, dialect: 'mysql', timezone:"+08:00", logging: msg => console.debug(msg), }
+                { host: config.Storage.MySQL.Host, dialect: 'mysql', timezone: "+08:00", logging: msg => console.debug(msg), }
             );
         } else {
             console.showErr(this.#lang.Database.InvalidType);
@@ -66,15 +66,15 @@ module.exports = class DatabaseManager {
         }, { freezeTableName: true });
         this.#db.define('economy', {
             guild: { type: DataTypes.STRING, allowNull: false },
-            userId: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-            coins: { type: DataTypes.INTEGER, allowNull: false },
-            last_update: { type: DataTypes.STRING, allowNull: false },
-            checked_in_count: { type: DataTypes.INTEGER, allowNull: false }
+            user: { type: DataTypes.STRING, allowNull: false },
+            coins: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
+            checked_in_count: { type: DataTypes.INTEGER, allowNull: false },
+            lastCheckIn: { type: DataTypes.STRING, allowNull: false }
         }, { freezeTableName: true });
         await this.#db.sync({ alter: true });
         this.#Xeow.bot.guilds.cache.forEach(async guild => {
             let prefix = await this.#db.models.prefixes.findOne({ where: { guild: guild.id } });
-            if(!prefix) await this.#db.models.prefixes.build({ guild: guild.id, prefix: config.Prefix }).save()
+            if (!prefix) await this.#db.models.prefixes.build({ guild: guild.id, prefix: config.Prefix }).save()
         })
     }
 

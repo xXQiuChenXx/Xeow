@@ -91,13 +91,14 @@ class Logger {
   _ok (caller, args, level, color) {
     if (this.ignore.includes(args[0])) return 
     if(!fs.existsSync("./logs")) fs.mkdirSync("./logs")
-    fs.appendFileSync('./logs/lastest.log', `[${moment().format(`h:mm:ss`)}] [${caller}/${level}]: ${Array.from(args)}\n`, 'utf-8')
+    const text = Array.from(args) === "" ? "undefined": Array.from(args)
+    fs.appendFileSync('./logs/lastest.log', `[${moment().format(`h:mm:ss`)}] [${caller}/${level}]: ${text}\n`, 'utf-8')
     if(level === 'COMMAND') {
       process.stdout.moveCursor(0, -1)
       process.stdout.clearLine(1)
-      process.stdout.write(`[${chalk.blue(`${moment().format(`LL LTS`)}`)}] [${color(`${caller}/${level}`)}]: ${Array.from(args)}\n`)
+      process.stdout.write(`[${chalk.blue(`${moment().format(`LL LTS`)}`)}] [${color(`${caller}/${level}`)}]: ${text}\n`)
     } else {
-      process.stdout.write(`[${chalk.blue(`${moment().format(`LL LTS`)}`)}] [${color(`${caller}/${level}`)}]: ${Array.from(args)}\n`)
+      process.stdout.write(`[${chalk.blue(`${moment().format(`LL LTS`)}`)}] [${color(`${caller}/${level}`)}]: ${text}\n`)
     }
     return this
   }

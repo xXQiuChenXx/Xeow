@@ -17,7 +17,7 @@ module.exports = class System32 {
         Libraries.forEach(lib => { this.Libraries[lib.name] = lib.main; });
 
         this.placeholder = new (require("./Placeholder"))();
-        this.Languages = new (require("./LangParser"))();
+        this.Language = new (require("./LangParser"))();
         this.Configuration = new (require("./Configuration"))();
         this.PluginManager = new (require("../PluginHandler/PluginLoader"))(this);
 
@@ -48,24 +48,60 @@ module.exports = class System32 {
         this.DBManager = new (require("./DBManager"))(this, lang)
         await this.DBManager.connect(config);
         await this.DBManager.validate();
-        await this.DBManager.startup();
+        await this.DBManager.startup(config);
+        await this.DBManager.sync(true);
+        this.Prefix = new (require("./PrefixManager"))(this.bot, this.DBManager.get("prefixes"),
+            await this.DBManager.get("prefixes").findAll());
 
         console.log(lang.bot.EventLoading)
         this.EventManager = new (require("./EventHandler"))(this.bot);
 
         let events = fs.readdirSync(path.join(__dirname, "../events"))
-        .filter(file => { return file.endsWith(".js"); })
-        .filter(file => { 
-            try{
-                new (require(`../events/${file}`))(this, lang).on();
-                return true
-            } catch(error) {
-                console.error(error)
-            }
-        })
+            .filter(file => { return file.endsWith(".js"); })
+            .filter(file => {
+                try {
+                    new (require(`../events/${file}`))(this, lang).on();
+                    return true
+                } catch (error) {
+                    console.error(error)
+                }
+            })
         console.log(lang.bot.EventLoaded.replace("%s%", events.length))
-        
-        require("./CommandHandler")(this.bot, lang);
+
+        require("./CommandHandler")(this, this.bot, lang, config);
         require("./ConsoleHandler")(this);
+    }
+
+    msToTime(duration) {
+        var milliseconds = Math.floor((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24),
+            days = Math.floor(duration / (1000 * 60 * 60 * 24))
+
+        days = (days < 10) ? "" + days : days;
+        hours = (hours < 10) ? "" + hours : hours;
+        minutes = (minutes < 10) ? "" + minutes : minutes;
+        seconds = (seconds < 10) ? "" + seconds : seconds;
+
+        return days + "天 " + hours + "小時 " + minutes + "分鐘 " + seconds + "秒 " + milliseconds + "毫秒";
+    }
+
+    async hasTimeout(command, timeout, guild, user) {
+        await this.DBManager.sync()
+        let db = await this.DBManager.get("command")
+        let lastRun = (await db.findOne({ where: { guild: guild, command: command, user: user } }))?.lastRun
+        if (!lastRun) return false
+        if ((parseInt(lastRun) + parseInt(timeout)) - Date.now() < 0) return false
+        return true
+    }
+
+    async checkTimeout(command, timeout, guild, user) {
+        await this.DBManager.sync()
+        let db = await this.DBManager.get("command")
+        let lastRun = (await db.findOne({ where: { guild: guild, command: command, user: user } }))?.lastRun
+        if (!lastRun) return { status: false, left: null }
+        if ((parseInt(lastRun) + parseInt(timeout)) - Date.now() < 0) return { status: false, left: null }
+        return { status: true, left: (parseInt(lastRun) + parseInt(timeout)) - Date.now() }
     }
 }

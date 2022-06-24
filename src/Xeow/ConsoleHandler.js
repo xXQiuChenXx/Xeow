@@ -32,17 +32,17 @@ module.exports = (Xeow) => {
             console.log("接收到關閉指令, 關閉機器人中...")
             console.log("退出登入DC中...")
             await bot.destroy()
-            console.log("與Sqlite斷開鏈接中...")
-            // await bot.cooldowns.close()
-            // await bot.pluginmanager.unloadAll().catch(function(error) {
-            //     console.showErr('============================================================')
-            //     console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
-            //     console.showErr("============================================================")
-            //     console.error(error)
-            //     console.showErr('============================================================')
-            //     console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
-            //     console.showErr("============================================================")
-            // })
+            console.log("與數據庫斷開鏈接中...")
+            await Xeow.DBManager.close()
+            await Xeow.PluginManager.unloadAll().catch(function(error) {
+                console.showErr('============================================================')
+                console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
+                console.showErr("============================================================")
+                console.error(error)
+                console.showErr('============================================================')
+                console.showErr('--- THERE WAS A ERROR WHEN UNLOADING THE PLUGIN ---')
+                console.showErr("============================================================")
+            })
             process.exit()
         }
     }

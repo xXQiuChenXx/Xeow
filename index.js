@@ -163,7 +163,7 @@ async function Startup() {
     const Xeow = new (require("./src/Xeow/System32"))();
     const config = Xeow.Configuration.readConfigSync("main");
     const Logger = Xeow.Libraries["Logger"]
-    const Language = Xeow.Languages.readLangSync("main")
+    const Language = Xeow.Language.readLangSync("main")
     await archiveLog(Xeow, Language);
     global.console = new Logger("CONSOLE", config.Logger.debug, config.Logger.ignore, config.Logger.lang)
     await CheckForUpdate();

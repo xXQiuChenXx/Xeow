@@ -1,1 +1,1 @@
-![](https://github.com/xXQiuChenXx/Xeow/tree/master/src/Images/Xeow.png)
+![](https://github.com/xXQiuChenXx/Xeow/blob/master/src/Images/Xeow.png?raw=true)

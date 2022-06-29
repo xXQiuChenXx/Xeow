@@ -42,7 +42,7 @@ module.exports = class System32 {
         return day + "-" + month + "-" + year + "-" + hour + "-" + min + "-" + sec
     }
 
-    async loggedIn(config, lang) {
+    async run(config, lang, ms) {
         console.log(lang.Database.Loading)
         this.DBManager = new (require("./DBManager"))(this, lang)
         await this.DBManager.connect(config);
@@ -69,6 +69,7 @@ module.exports = class System32 {
 
         require("./CommandHandler")(this, this.bot, lang, config);
         this.CLI = new (require("./CLI"))(this);
+        console.log(lang.bot.Loaded.replace(/%ms%/g, ((performance.now() - ms)/1000).toFixed(2)))
     }
 
     msToTime(duration) {

@@ -160,6 +160,7 @@ async function archiveLog(Xeow, Lang) {
     const fs = require("fs")
     const archiver = require('archiver');
     if (fs.existsSync("./logs/lastest.log")) {
+        console.debug(Lang.archive.archiving)
         try {
             const output = fs.createWriteStream("./logs/" + `${Xeow.getFormattedDate()}.zip`);
             const archive = archiver('zip', {
@@ -170,9 +171,10 @@ async function archiveLog(Xeow, Lang) {
             await archive.finalize();
             await fs.unlinkSync("./logs/lastest.log")
         } catch (error) {
-            console.showErr(Lang.bot.ArchiveFailed)
+            console.showErr(Lang.bot.archive.failed)
             console.error(error)
         }
+        console.debug(Lang.archive.success)
     }
 }
 // ======================== 壓縮記錄文件 =======================
@@ -183,13 +185,16 @@ async function Startup() {
     await CheckForModules();
     await CheckForBasic();
     console.clear()
+    const ms = performance.now()
     const fs = require("fs")
+    console.log("\x1b[36m\x1b[1m" + fs.readFileSync("./src/logo.txt", "utf-8") + "\x1b[0m")
     const Xeow = new (require("./src/Xeow/System32"))();
     const config = Xeow.Configuration.readConfigSync("main");
     const Logger = Xeow.Libraries["Logger"]
     const Language = Xeow.Language.readLangSync("main")
-    await archiveLog(Xeow, Language);
     global.console = new Logger("CONSOLE", config.Logger.debug, config.Logger.ignore, config.Logger.lang)
+    console.log(Language.bot.NodeJS.replace(/%version%/g, process.version))
+    await archiveLog(Xeow, Language);
     await CheckForUpdate();
     const { Client, Intents, Collection } = Xeow.Modules["discord.js"]
     const bot = new Client({
@@ -227,7 +232,7 @@ async function Startup() {
     });
     Xeow.setVariable("bot", bot);
     if (Xeow.bot) {
-        await Xeow.loggedIn(config, Language)
+        await Xeow.run(config, Language, ms)
     }
 }
 

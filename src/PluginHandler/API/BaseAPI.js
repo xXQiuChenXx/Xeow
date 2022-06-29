@@ -1,4 +1,3 @@
-const CLI = require("./CLI")
 const cmd = require("./command")
 // const extractor = require("./extractor")
 module.exports = class API {

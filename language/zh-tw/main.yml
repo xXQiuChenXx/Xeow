@@ -1,11 +1,17 @@
 bot:
+  NodeJS: "你所用的 NodeJS 版本為 %version%"
   InvalidToken: "你的機器人令牌(token) 無效/有誤, 請重新檢查后再啓動"
   LoginError: "嘗試登入到機器人時出錯:"
   LoggedIn: "已成功登入機器人 %bot%"
   EventLoading: "正在加載事件中..."
   EventLoaded: "成功加載 %s% 個事件"
-  Loaded: "機器人已啓動成功!"
+  Loaded: "機器人已啓動成功! 耗時: %ms%s"
   ArchiveFailed: "嘗試壓縮記錄檔案時出錯"
+
+archive:
+  archiving: "正在壓縮記錄檔案中..."
+  success: "壓縮記錄檔案成功!"
+  failed: "嘗試壓縮記錄檔案時出錯"
 
 Plugin: 
   Loaded: "已成功加載%s%個插件"

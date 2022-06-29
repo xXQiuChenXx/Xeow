@@ -1,8 +1,6 @@
-b: g
 balance:
   aliases:
     - bal
-    - 餘額
   category: economy
   description: 該指令無描述
   timeout: 0

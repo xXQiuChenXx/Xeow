@@ -25,12 +25,17 @@ module.exports = class Event {
             if (!command) command = bot.aliases.get(cmd);
 
             if (command) {
+                if (command.timeout) {
+                    let cd = await Xeow.checkTimeout(command.name, command.timeout, message.guild.id, message.author.id)
+                    if (cd.status) {
+                        await message.reply(lang.cooldown.replace("%time%", Xeow.msToTime(cd.left)))
+                    }
+                }
                 const lang = Xeow.Language.readLangSync(command.name, "command", "utf8")
                 const config = Xeow.Configuration.readConfigSync(command.name, "command", "utf8")
                 console.log(`${message.member.user.tag} ` + "執行了指令: " + message.content)
-                try { await command.run(Xeow, message, args, lang, config);}
-                catch (error) { 
-                    if(error.message === "Cooldown") return
+                try { await command.run(Xeow, message, args, lang, config); }
+                catch (error) {
                     return console.error(error);
                 }
                 let db = await Xeow.DBManager.get("command")

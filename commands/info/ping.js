@@ -7,22 +7,12 @@ module.exports = {
             "title": ":ping_pong: 延遲統計信息:",
             "field_1": ":signal_strength: API 延遲",
             "field_2": ":satellite: 機器人延遲"
-        },
-        "cooldown": "指令正在冷卻中, 請等待 %time% !",
-        "description": "查看機器人延遲",
-        "usage": "ping"
-    },
-    config: {
-        "timeout": 10000
-    },
-    run: async (Xeow, message, args, lang, config) => {
-        if (config?.timeout) {
-            let cd = await Xeow.checkTimeout("ping", config.timeout, message.guild.id, message.author.id)
-            if (cd.status) {
-                await message.reply(lang.cooldown.replace("%time%", Xeow.msToTime(cd.left)))
-                throw new Error("Cooldown")
-            }
         }
+    },
+    description: "查看機器人延遲",
+    usage: "ping",
+    timeout: 10000,
+    run: async (Xeow, message, args, lang, config) => {
         message.reply(lang.pinging).then(msg => {
             const embed = new Discord.MessageEmbed()
                 .setTitle(lang.pong.title)

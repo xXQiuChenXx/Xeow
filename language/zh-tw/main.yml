@@ -12,8 +12,12 @@ Plugin:
   NoPlugin: "沒有發現到任何插件"
 
 Command: 
-  Loaded: "✔ 成功加載指令 %command_name%, 別名為: %command_aliases%"
-  NoAliase: "無"
+  Loaded: "✔ 成功加載指令 %command_name%"
+  HaveAliase: "別名為: %command_aliases%"
+  NoDescription: "該指令無描述"
+  invalidUsage:
+    empty: "指令不完整, 缺少參數, 請查看一下錯誤"
+    incorrect: "指令使用方式有誤, 請查看一下錯誤"
 
 Database:
   ModuleNotLoaded: "Sequelize 模塊未被加載"
@@ -25,4 +29,28 @@ Database:
     Failed: "無法驗證/登入你的數據庫, 請檢查配置信息無誤后再重新啓動"
   Checking: "正在檢查數據庫資料中..."
 
-
+CLI:
+  commandExist: "該CLI指令(%command_name%)已存在"
+  processExit: "完畢! 機器人已關閉, 退出代碼: %exitCode%"
+  unknownCommand: "未知指令, 請重試"
+  usage: "使用方法"
+  description: "描述"
+  noDescription: "無描述"
+  getCMD:
+    title: "====================== %command_name% 指令幫助 ===================="
+    footerRepeat: 59
+  getAll:
+    title: "======================== 指令幫助列表 ======================"
+    footerRepeat: 60
+  commands:
+    stop: 
+      usage: 'stop'
+      description: "關閉機器人"
+      receivedCMD: "接收到關閉指令, 關閉機器人中..."
+      loggoutDC: "退出登入Discord中..."
+      disconnectDB: "與數據庫斷開連接中..."
+    help:
+      usage: 'help [指令]'
+      description: "指令幫助"
+      commandNotFound: '無法找到指令: %command_name%'
+  issuedCommand: "終端執行了指令: %command%"

@@ -91,7 +91,7 @@ class Logger {
   _ok (caller, args, level, color) {
     if (this.ignore.includes(args[0])) return 
     if(!fs.existsSync("./logs")) fs.mkdirSync("./logs")
-    const text = Array.from(args) === "" ? "undefined": Array.from(args)
+    const text = Array.from(args) || "undefined"
     fs.appendFileSync('./logs/lastest.log', `[${moment().format(`h:mm:ss`)}] [${caller}/${level}]: ${text}\n`, 'utf-8')
     if(level === 'COMMAND') {
       process.stdout.moveCursor(0, -1)

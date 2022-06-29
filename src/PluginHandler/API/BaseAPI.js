@@ -1,6 +1,6 @@
 const CLI = require("./CLI")
 const cmd = require("./command")
-const extractor = require("./extractor")
+// const extractor = require("./extractor")
 module.exports = class API {
     #Logger;
     constructor(Xeow, permissions, plugin) {
@@ -10,7 +10,7 @@ module.exports = class API {
         this.compatible = ['2.0.0', '2.1.0', '2.2.0', '2.2.1']
 
         if (permissions && permissions.length !== 0) {
-            if (permissions.includes('CLI_ACCESS')) this.CLI = new CLI(bot)
+            if (permissions.includes('CLI_ACCESS')) this.CLI = Xeow.CLI
             if (permissions.includes('COMMAND_ACCESS')) this.commands = new cmd(bot)
             if (permissions.includes('EVENT_ACCESS')) this.event = Xeow.EventManager
             if (permissions.includes('DB_ACCESS')) this.db = Xeow.DBManager;

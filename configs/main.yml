@@ -6,9 +6,7 @@
 
 Token: ""
 Prefix: "+"
-SlashCommand: 
-  enabled: true
-  autoDeployOnStart: false
+SlashCommand: true
 PrefixCommand: true
 Lang: zh-tw
 

@@ -1,10 +1,17 @@
-// 檢查NodeJS版本是否過舊
+// ================== 檢查NodeJS版本是否兼容 ==================
 if (process.version.slice(1).split('.')[0] < 16) {
     console.log("\u001b[31mXeow Discord Bot requires NodeJS version 16 or higher. Please go to https://nodejs.org/ to update and install your NodeJS.\033[0m");
     process.exit();
 }
+// ================== 檢查NodeJS版本是否兼容 ==================
 
-// 檢查依賴庫
+
+// ===================== 更換主要進程路徑 =====================
+process.chdir(__dirname);
+// ===================== 更換主要進程路徑 =====================
+
+
+// ======================== 檢查依賴庫 ========================
 const CheckForModules = async () => {
     return new Promise(async (resolve) => {
         const missingModules = Object.keys(require('./package.json').dependencies).filter(module => {
@@ -82,13 +89,17 @@ const CheckForModules = async () => {
         }
     })
 }
+// ======================== 檢查依賴庫 ========================
 
-// 檢查重要文件正確性
+
+// ===================== 檢查重要文件正確性 =====================
 const CheckForBasic = async () => {
     return new Promise(async (resolve) => {
+        const yml = require("js-yaml")
         const fs = require("fs");
         const path = require("path")
-        const importantFiles = ["./src/Xeow/System32.js", "./libs/Logger.js", "./src/Xeow/LangParser.js",
+        const importantFiles = [
+            "./src/Xeow/System32.js", "./libs/Logger.js", "./src/Xeow/LangParser.js",
             "./configs/main.yml", "./language/en/main.yml"]
 
         function parseJS(file) {
@@ -125,16 +136,26 @@ const CheckForBasic = async () => {
             console.log("\u001b[31mFail Checked files:\n", errorFiles.join("\n"), "\u001b[0m");
             process.exit();
         }
+        let conf = yml.load(fs.readFileSync("./configs/main.yml", "utf-8"))
+        if(!fs.existsSync(`./language/${conf.Lang}`)) {
+            console.log(`\u001b[31mUnsupported Language: ${conf.Lang}\u001b[0m`)
+            process.exit()
+        }
         resolve();
     })
 }
+// ===================== 檢查重要文件正確性 =====================
 
-// 檢查更新
+
+// ========================== 檢查更新 =========================
 async function CheckForUpdate() {
 
 }
+// ========================== 檢查更新 =========================
 
-// 壓縮記錄文件
+
+
+// ======================== 壓縮記錄文件 =======================
 async function archiveLog(Xeow, Lang) {
     const fs = require("fs")
     const archiver = require('archiver');
@@ -154,11 +175,14 @@ async function archiveLog(Xeow, Lang) {
         }
     }
 }
+// ======================== 壓縮記錄文件 =======================
 
-// 開啓 Xeow
+
+// ======================= 啓動Xeow機器人 ======================
 async function Startup() {
     await CheckForModules();
     await CheckForBasic();
+    console.clear()
     const fs = require("fs")
     const Xeow = new (require("./src/Xeow/System32"))();
     const config = Xeow.Configuration.readConfigSync("main");
@@ -202,10 +226,10 @@ async function Startup() {
         process.exit();
     });
     Xeow.setVariable("bot", bot);
-    Xeow.setVariable("CLI", new Collection());
     if (Xeow.bot) {
         await Xeow.loggedIn(config, Language)
     }
 }
 
 Startup()
+// ======================= 啓動Xeow機器人 ======================

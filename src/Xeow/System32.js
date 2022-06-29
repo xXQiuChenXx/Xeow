@@ -16,11 +16,10 @@ module.exports = class System32 {
         this.Libraries = {};
         Libraries.forEach(lib => { this.Libraries[lib.name] = lib.main; });
 
-        this.placeholder = new (require("./Placeholder"))();
-        this.Language = new (require("./LangParser"))();
+        this.Placeholder = new (require("./Placeholder"))(this);
+        this.Language = new (require("./Language"))();
         this.Configuration = new (require("./Configuration"))();
         this.PluginManager = new (require("../PluginHandler/PluginLoader"))(this);
-
     }
 
     setVariable(key, variables) {
@@ -69,7 +68,7 @@ module.exports = class System32 {
         console.log(lang.bot.EventLoaded.replace("%s%", events.length))
 
         require("./CommandHandler")(this, this.bot, lang, config);
-        require("./ConsoleHandler")(this);
+        this.CLI = new (require("./CLI"))(this);
     }
 
     msToTime(duration) {
@@ -103,5 +102,24 @@ module.exports = class System32 {
         if (!lastRun) return { status: false, left: null }
         if ((parseInt(lastRun) + parseInt(timeout)) - Date.now() < 0) return { status: false, left: null }
         return { status: true, left: (parseInt(lastRun) + parseInt(timeout)) - Date.now() }
+    }
+
+    invalidUsage({ message, arg, type, reason }) {
+        const lang = this.Language.readLangSync("main")
+        const { MessageEmbed } = this.Modules["discord.js"]
+        const embed = new MessageEmbed().setColor("RED")
+        let pre = message.content.split(message.content.split(" ")[arg + 1])[0]
+        const arrow = " ".repeat(pre.length) + "^^^"
+        if (type === "empty") {
+            embed.setTitle(reason || lang.Command.invalidUsage.empty)
+                .setDescription("```\n" + message.content + "\n" + arrow + "```")
+            message.reply({ embeds: [embed] })
+        } else if (type === "incorrect") {
+            embed.setTitle(reason|| lang.Command.invalidUsage.incorrect)
+                .setDescription("```\n" + message.content + "\n" + arrow + "```")
+            message.reply({ embeds: [embed] })
+        } else {
+            throw new Error("Unsupported type")
+        }
     }
 }

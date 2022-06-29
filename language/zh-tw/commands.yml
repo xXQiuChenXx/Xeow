@@ -1,0 +1,38 @@
+b: g
+balance:
+  aliases:
+    - bal
+    - 餘額
+  category: economy
+  description: 該指令無描述
+  timeout: 0
+  usage: balance [成員標註]
+daily:
+  aliases: []
+  category: economy
+  description: 該指令無描述
+  timeout: 86400000
+  usage: daily
+help:
+  aliases: []
+  category: info
+  description: Help Menu
+  options:
+    - description: 指令名字
+      name: name
+      required: false
+      type: STRING
+  timeout: 0
+  usage: help <showall/all/name> [command name]
+pay:
+  aliases: []
+  category: economy
+  description: 該指令無描述
+  timeout: 0
+  usage: pay <成員標註>
+ping:
+  aliases: []
+  category: info
+  description: 查看機器人延遲
+  timeout: 10000
+  usage: ping

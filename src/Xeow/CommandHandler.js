@@ -1,39 +1,45 @@
-const { readdirSync, existsSync, writeFileSync, readFileSync } = require("fs");
-const yml = require("js-yaml");
+const fs = require("fs");
 module.exports = async (Xeow, bot, lang, config) => {
-    readdirSync("./commands/").map(dir => {
-        readdirSync(`./commands/${dir}/`).map(file => {
+    let commands = Xeow.Language.readLangSync("commands")
+    let changed = false
+    fs.readdirSync("./commands/").map(dir => {
+        fs.readdirSync(`./commands/${dir}/`).map(file => {
             let cmd = require(`../../commands/${dir}/${file}`)
-            let Aliases = []; let other = lang.Command.NoAliase
-            if(cmd.config) {
-                if(!existsSync(`./configs/commands/${cmd.name}.yml`)) {
-                    writeFileSync(`./configs/commands/${cmd.name}.yml`, yml.dump(cmd.config), "utf8")
+            if (!commands?.[cmd.name]) {
+                commands[cmd.name] = {
+                    description: cmd.description || lang.Command.NoDescription,
+                    timeout: cmd?.timeout || 0,
+                    aliases: cmd.aliases || [],
+                    usage: cmd.usage || cmd.name,
+                    category: cmd.category || dir,
+                    options: cmd.options,
+                    permissions: cmd.permissions
                 }
-                if(cmd.config?.timeout) {
-                    let conf = Xeow.Configuration.readConfigSync(cmd.name, "command")
-                    cmd.timeout = conf.timeout
+                changed = true
+            }
+            if (cmd?.config) {
+                if (!Xeow.Configuration.existsSync(cmd.name, "command")) {
+                    Xeow.Configuration.writeConfigSync(cmd.name, cmd.config, "command", "utf8")
                 }
             }
-            if(cmd.lang) {
-                if(!existsSync(`./language/${config.Lang}/commands/${cmd.name}.yml`)) {
-                    writeFileSync(`./language/${config.Lang}/commands/${cmd.name}.yml`, yml.dump(cmd.lang), "utf8")
+            if (cmd?.lang) {
+                if (!Xeow.Language.existsSync(cmd.name, "command")) {
+                    Xeow.Language.writeLangSync(cmd.name, cmd.lang, "command", "utf8")
                 }
-                let lang = Xeow.Language.readLangSync(cmd.name, "command")
-                if(cmd.lang?.usage) cmd.usage = lang?.usage
-                if(cmd.lang?.description) cmd.description = lang?.description
-                cmd.category = dir
             }
+            cmd = { ...commands[cmd.name], run: cmd.run, name: cmd.name }
             bot.commands.set(cmd.name, cmd)
-            if (cmd.aliases) {
+            if (cmd.aliases.length) {
                 cmd.aliases.forEach(p => {
-                    Aliases.push(p)
-                    bot.aliases.set(p, cmd)
+                    bot.aliases.set(p, { ...cmd, name: p})
                 })
-                other = Aliases.join(", ")
+                console.log(lang.Command.Loaded.replace(/%command_name%/g, cmd.name) + " "
+                    + lang.Command.HaveAliase.replace(/%command_aliases%/g, cmd.aliases.join(", ")))
+            } else {
+                console.log(lang.Command.Loaded
+                    .replace(/%command_name%/g, cmd.name))
             }
-            console.log(lang.Command.Loaded
-                .replace("%command_name%", cmd.name)
-                .replace("%command_aliases%", other))
         })
     })
+    if (changed) Xeow.Language.writeLangSync("commands", commands, null, "utf8", { sortKeys: true })
 }

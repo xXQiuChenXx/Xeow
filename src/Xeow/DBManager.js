@@ -68,8 +68,8 @@ module.exports = class DatabaseManager {
             guild: { type: DataTypes.STRING, allowNull: false },
             user: { type: DataTypes.STRING, allowNull: false },
             coins: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
-            checked_in_count: { type: DataTypes.INTEGER, allowNull: false },
-            lastCheckIn: { type: DataTypes.STRING, allowNull: false }
+            checked_in_count: { type: DataTypes.INTEGER, allowNull: true },
+            lastCheckIn: { type: DataTypes.STRING, allowNull: true }
         }, { freezeTableName: true });
         await this.#db.sync({ alter: true });
         this.#Xeow.bot.guilds.cache.forEach(async guild => {

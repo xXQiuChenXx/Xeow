@@ -2,12 +2,8 @@ const fs = require("fs");
 module.exports = (Xeow) => {
     let base = {
         name: null,
-        dirname: false,
         enabled: true,
-        guildOnly: false,
         aliases: new Array(),
-        botPermissions: new Array(),
-        memberPermissions: new Array(),
         nsfw: false,
         ownerOnly: false,
         cooldown: 0,

@@ -4,7 +4,8 @@
         "invalidToken": "你的機器人令牌(token) 無效/有誤, 請重新檢查后再啓動",
         "loginError": "嘗試登入到機器人時出錯:",
         "loggedIn": "已成功登入機器人 {{username}}",
-        "loaded": "機器人已啓動成功! 耗時: {{second}}s"
+        "loaded": "機器人已啓動成功! 耗時: {{second}}s",
+        "leaveStar": "喜歡這個機器人嗎? 歡迎到 Github 點個小星星 https://github.com/xXQiuChenXx/Xeow"
     },
     "archive": {
         "archiving": "正在壓縮記錄文件中...",

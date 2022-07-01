@@ -1,6 +1,8 @@
 {
     "messageCreate": {
-        "cmdExecuted": "{{userTag}} 執行了指令: {{content}}"
+        "cmdExecuted": "{{userTag}} 執行了指令: {{content}}",
+        "cooldowned": "指令正在冷卻中, 請等待 {{time}}",
+        "nsfwCommand": "你只能在允許NSFW的頻道執行此指令!"
     },
     "interactionCreate": {
         "cmdNotFound": "❌ ┃ 找不到指令... 請稍待Discord同步指令列表",

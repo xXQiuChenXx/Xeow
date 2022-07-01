@@ -5,6 +5,7 @@ module.exports = class Event {
     async run(message) {
         const Xeow = this.Xeow
         if (message.author.bot) return;
+        if(!Xeow.Prefix) return 
         const prefix = Xeow.Prefix.get(message.guild.id)
         if (!message.content.toLowerCase().startsWith(prefix)) return;
 
@@ -24,9 +25,14 @@ module.exports = class Event {
             if (command.timeout) {
                 let cd = await Xeow.checkTimeout(command.name, command.timeout, message.guild.id, message.author.id)
                 if (cd.status) {
-                    await message.reply(lang.cooldown.replace("%time%", Xeow.msToTime(cd.left)))
+                    return message.replyT("console/events:messageCreate:cooldowned", {
+                        time: Xeow.msToTime(cd.left)
+                    })
                 }
             }
+            if(!message.channel.nsfw && cmd.conf.nsfw){
+				return message.replyT("console/events:messageCreate:nsfwCommand")
+			}
             console.log("console/events:messageCreate:cmdExecuted",{
                 userTag: message.member.user.tag,
                 content: message.content

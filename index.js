@@ -138,7 +138,7 @@ const CheckForBasic = async () => {
             process.exit();
         }
         let conf = yml.load(fs.readFileSync("./configs/main.yml", "utf-8"))
-        if (!fs.existsSync(`./language/${conf.Lang}`)) {
+        if (!fs.existsSync(`./languages/${conf.Lang}`)) {
             console.log(`\u001b[31mUnsupported Language: ${conf.Lang}\u001b[0m`)
             process.exit()
         }
@@ -211,6 +211,9 @@ async function Startup() {
     await Xeow.startup(config)
     Xeow.on("ready", async () => {
         await Xeow.run(config)
+        setTimeout(() => {
+            console.info("console/main:bot:leaveStar")
+        }, 15000)
         console.log("console/main:bot:loaded", { second: ((performance.now() - ms) / 1000).toFixed(2) })
     })
     await Xeow.login(config.Token).catch(error => {

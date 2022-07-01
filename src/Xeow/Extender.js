@@ -1,7 +1,4 @@
 const { Guild, Message, MessageEmbed } = require("discord.js");
-const yml = require("js-yaml");
-const fs = require("fs");
-const config = yml.load(fs.readFileSync("./configs/main.yml", "utf-8"))
 
 // Guild.prototype.translate = function(key, args) {
 // 	const language = this.client.translations.get(this.data.language);
@@ -11,7 +8,7 @@ const config = yml.load(fs.readFileSync("./configs/main.yml", "utf-8"))
 
 Message.prototype.translate = function(key, args) {
 	const language = this.client.translations.get(
-		config.Lang
+		this.client.defaultLanguage
 	);
 	if (!language) throw "Message: Invalid language set in data.";
 	return language(key, args);
@@ -47,14 +44,4 @@ Message.prototype.printDate = function(date, format) {
 // Convert time
 Message.prototype.convertTime = function(time, type, noPrefix) {
 	return this.client.convertTime(time, type, noPrefix, (this.guild && this.guild.data) ? this.guild.data.language : null);
-};
-
-MessageEmbed.prototype.errorColor = function() {
-	this.setColor("#FF0000");
-	return this;
-};
-
-MessageEmbed.prototype.successColor = function() {
-	this.setColor("#32CD32");
-	return this;
 };

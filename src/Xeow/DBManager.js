@@ -8,16 +8,16 @@ module.exports = class DatabaseManager {
     async init(config) {
         const fs = require("fs")
         const { Sequelize } = this.#Xeow.Modules["sequelize"];
-        if (config.Storage.Type === "memory") {
+        if (config.Storage.Type.toLowerCase() === "memory") {
             this.#db = new Sequelize('sqlite::memory:', { logging: msg => console.debug(msg) });
-        } else if (config.Storage.Type === "sqlite") {
+        } else if (config.Storage.Type.toLowerCase() === "sqlite") {
             if (!fs.existsSync("./database")) fs.mkdirSync("./database")
             this.#db = new Sequelize({
                 dialect: 'sqlite',
                 storage: './database/database.sqlite',
                 logging: msg => console.debug(msg)
             });
-        } else if (config.Storage.Type === "mysql") {
+        } else if (config.Storage.Type.toLowerCase() === "mysql") {
             this.#db = new Sequelize(
                 config.Storage.MySQL.Database,
                 config.Storage.MySQL.Username,

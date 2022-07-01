@@ -30,7 +30,7 @@ module.exports = class Event {
                     })
                 }
             }
-            if(!message.channel.nsfw && cmd.conf.nsfw){
+            if(!message.channel.nsfw && cmd.nsfw){
 				return message.replyT("console/events:messageCreate:nsfwCommand")
 			}
             console.log("console/events:messageCreate:cmdExecuted",{

@@ -51,7 +51,7 @@ module.exports = class Xeow extends Client {
     }
 
     translate(key, args, locale) {
-        if(!locale) locale = this.defaultLanguage
+        if (!locale) locale = this.defaultLanguage
         const language = this.translations.get(locale);
         return language(key, args);
     }
@@ -120,7 +120,11 @@ module.exports = class Xeow extends Client {
         minutes = (minutes < 10) ? "" + minutes : minutes;
         seconds = (seconds < 10) ? "" + seconds : seconds;
 
-        return days + "天 " + hours + "小時 " + minutes + "分鐘 " + seconds + "秒 " + milliseconds + "毫秒";
+        return days + this.translate("common:days") + " " +
+            hours + this.translate("common:hours") + " " +
+            minutes + this.translate("common:minutes") + " " +
+            seconds + this.translate("common:seconds") + " " +
+            milliseconds + this.translate("common:milliseconds");
     }
 
     async hasTimeout(command, timeout, guild, user) {
@@ -142,17 +146,16 @@ module.exports = class Xeow extends Client {
     }
 
     invalidUsage({ message, arg, type, reason }) {
-        const lang = this.Language.readLangSync("main")
         const { MessageEmbed } = this.Modules["discord.js"]
         const embed = new MessageEmbed().setColor("RED")
         let pre = message.content.split(message.content.split(" ")[arg + 1])[0]
         const arrow = " ".repeat(pre.length) + "^^^"
         if (type === "empty") {
-            embed.setTitle(reason || lang.Command.invalidUsage.empty)
+            embed.setTitle(reason || this.translate("common:invalidUsage:empty"))
                 .setDescription("```\n" + message.content + "\n" + arrow + "```")
             message.reply({ embeds: [embed] })
         } else if (type === "incorrect") {
-            embed.setTitle(reason || lang.Command.invalidUsage.incorrect)
+            embed.setTitle(reason || this.translate("common:invalidUsage:incorrect"))
                 .setDescription("```\n" + message.content + "\n" + arrow + "```")
             message.reply({ embeds: [embed] })
         } else {

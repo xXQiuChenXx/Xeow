@@ -1,0 +1,11 @@
+{
+    "days": "天",
+    "hours": "小時",
+    "minutes": "分鐘",
+    "seconds": "秒",
+    "milliseconds": "毫秒",
+    "invalidUsage": {
+        "empty": "缺少參數, 請查看錯誤",
+        "incorrect": "使用方式/參數錯誤, 請查看錯誤"
+    }
+}

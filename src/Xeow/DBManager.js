@@ -24,7 +24,7 @@ module.exports = class DatabaseManager {
                 config.Storage.MySQL.Password,
                 {
                     host: config.Storage.MySQL.Host,
-                    port: config.Storage.MySQL.port,
+                    port: config.Storage.MySQL.Port,
                     dialect: 'mysql', timezone: "+08:00",
                     logging: msg => console.debug(msg),
                 }

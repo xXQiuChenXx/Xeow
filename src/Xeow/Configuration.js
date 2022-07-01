@@ -33,7 +33,7 @@ module.exports = class Configuration {
         let filePath = path.join(__dirname, `../../configs/` + fileName + ".yml");
         if(type === "plugin") filePath = path.join(__dirname, `../../configs/plugins/` + fileName + ".yml");
         if(type === "command") filePath = path.join(__dirname, `../../configs/commands/` + fileName + ".yml");
-        if(!fs.existsSync(filePath)) return new Object()
+        if(!fs.existsSync(filePath)) return 
         return YAML.load(fs.readFileSync(filePath, encoding));
 
     }

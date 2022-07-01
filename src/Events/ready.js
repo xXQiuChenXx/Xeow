@@ -1,22 +1,12 @@
 module.exports = class Event {
-    constructor(Xeow, lang) {
-        this.lang = lang
-        this.EventManager = Xeow.EventManager
-        this.PluginManager = Xeow.PluginManager
+    constructor(Xeow) {
+        this.Xeow = Xeow
+        // this.PluginManager = Xeow.PluginManager
     }
-    on() {
-        const lang = this.lang
-        const PluginManager = this.PluginManager
-        this.main = async (bot) => {
-            console.log(lang.bot.LoggedIn.replace("%bot%", bot.user.username))
-            await PluginManager.loadAll(lang)
-            console.log(lang.Plugin.Loaded.replace("%s%", PluginManager.list.length))
-            console.log(lang.bot.Loaded)
-        }
-        this.EventManager.register("ready", this.main)
-    }
-
-    remove() {
-        this.EventManager.unregister("ready", this.main)
+    async run(bot) {
+        // const PluginManager = this.PluginManager
+        console.log("console/main:bot:loggedIn",{ username: bot.user.username})
+        // await PluginManager.loadAll(lang)
+        // console.log(lang.Plugin.Loaded.replace("%s%", PluginManager.list.length))
     }
 }

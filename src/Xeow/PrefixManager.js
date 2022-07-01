@@ -1,7 +1,7 @@
 module.exports = class PrefixManagaer {
     #cache
     #db
-    constructor(bot, db, cache) {
+    constructor(db, cache) {
         this.#cache = cache
         this.#db = db
     }

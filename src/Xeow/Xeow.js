@@ -1,13 +1,43 @@
 const fs = require("fs");
-const yml = require("js-yaml");
 const path = require("path");
-
-module.exports = class System32 {
+const { Client, Collection, Intents } = require("discord.js");
+module.exports = class Xeow extends Client {
     constructor() {
-        this.name = "System32";
-        this.description = "System32";
-        this.version = "1.0.0";
-        this.author = "Xeow";
+        require("./Extender")
+        super({
+            intents: [
+                Intents.FLAGS.GUILDS,
+                Intents.FLAGS.GUILD_MESSAGES,
+                Intents.FLAGS.GUILD_PRESENCES,
+                Intents.FLAGS.GUILD_INTEGRATIONS,
+                Intents.FLAGS.DIRECT_MESSAGES,
+                Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+                Intents.FLAGS.GUILD_VOICE_STATES,
+                Intents.FLAGS.GUILD_WEBHOOKS,
+                Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+                Intents.FLAGS.GUILD_INVITES,
+                Intents.FLAGS.GUILD_MEMBERS,
+                Intents.FLAGS.GUILD_BANS,
+                Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+                Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+            ],
+            autoReconnect: true,
+            partials: ["CHANNEL"],
+            allowedMentions: {
+                parse: ["users"]
+            }
+        });
+
+        this.categories = fs.readdirSync("./commands")
+        this.commands = new Collection(); // Creates new commands collection
+        this.aliases = new Collection(); // Creates new command aliases collection
+        this.plugins = new Collection(); // Creates new plugin collection
+        this.wait = function (ms) {
+            return new Promise((resolve) => {
+                setTimeout(resolve, ms)
+            })
+        }
+
         const dependencies = require("../../package.json").dependencies;
         this.Modules = {};
         Object.keys(dependencies).forEach(key => { this.Modules[key] = require(key); });
@@ -15,17 +45,22 @@ module.exports = class System32 {
         const Libraries = fs.readdirSync(path.join(__dirname, "../../libs")).filter(file => file.endsWith(".js")).map(lib => require(`../../libs/${lib}`));
         this.Libraries = {};
         Libraries.forEach(lib => { this.Libraries[lib.name] = lib.main; });
-
-        this.Placeholder = new (require("./Placeholder"))(this);
-        this.Language = new (require("./Language"))();
+        this.Libraries["Collection"] = require("discord.js").Collection
         this.Configuration = new (require("./Configuration"))();
         this.PluginManager = new (require("../PluginHandler/PluginLoader"))(this);
+    }
+
+    translate(key, args, locale) {
+        if(!locale) locale = this.defaultLanguage
+        const language = this.translations.get(locale);
+        return language(key, args);
     }
 
     setVariable(key, variables) {
         if (this[key]) { throw new Error("Key already exists"); }
         this[key] = variables;
     }
+
     getFormattedDate() {
         var date = new Date();
         var hour = date.getHours();
@@ -42,34 +77,35 @@ module.exports = class System32 {
         return day + "-" + month + "-" + year + "-" + hour + "-" + min + "-" + sec
     }
 
-    async run(config, lang, ms) {
-        console.log(lang.Database.Loading)
-        this.DBManager = new (require("./DBManager"))(this, lang)
-        await this.DBManager.connect(config);
+    async init(config) {
+        this.translations = await require("./Languages")(config)
+        this.defaultLanguage = config.Lang
+    }
+
+    async startup(config) {
+        console.log("console/main:database:loading")
+        this.DBManager = new (require("./DBManager"))(this)
+        await this.DBManager.init(config);
         await this.DBManager.validate();
+
+        this.CLI = new (require("./CLI"))(this);
+
+        console.log("console/main:event:preparing")
+        this.EventManager = new (require("./EventManager"))(this);
+        this.EventManager.events = new Collection()
+        await this.EventManager.init()
+        console.log("console/main:event:done", {
+            count: this.EventManager.events.map(e => e).length
+        })
+
+        require("./CommandHandler")(this);
+    }
+
+    async run(config) {
         await this.DBManager.startup(config);
         await this.DBManager.sync(true);
-        this.Prefix = new (require("./PrefixManager"))(this.bot, this.DBManager.get("prefixes"),
+        this.Prefix = new (require("./PrefixManager"))(this.DBManager.get("prefixes"),
             await this.DBManager.get("prefixes").findAll());
-
-        console.log(lang.bot.EventLoading)
-        this.EventManager = new (require("./EventManager"))(this.bot);
-
-        let events = fs.readdirSync(path.join(__dirname, "../events"))
-            .filter(file => { return file.endsWith(".js"); })
-            .filter(file => {
-                try {
-                    new (require(`../events/${file}`))(this, lang).on();
-                    return true
-                } catch (error) {
-                    console.error(error)
-                }
-            })
-        console.log(lang.bot.EventLoaded.replace("%s%", events.length))
-
-        require("./CommandHandler")(this, this.bot, lang, config);
-        this.CLI = new (require("./CLI"))(this);
-        console.log(lang.bot.Loaded.replace(/%ms%/g, ((performance.now() - ms)/1000).toFixed(2)))
     }
 
     msToTime(duration) {
@@ -116,7 +152,7 @@ module.exports = class System32 {
                 .setDescription("```\n" + message.content + "\n" + arrow + "```")
             message.reply({ embeds: [embed] })
         } else if (type === "incorrect") {
-            embed.setTitle(reason|| lang.Command.invalidUsage.incorrect)
+            embed.setTitle(reason || lang.Command.invalidUsage.incorrect)
                 .setDescription("```\n" + message.content + "\n" + arrow + "```")
             message.reply({ embeds: [embed] })
         } else {

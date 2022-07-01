@@ -1,19 +1,12 @@
 module.exports = class DatabaseManager {
     #Xeow
-    #lang
     #db
-    constructor(Xeow, lang) {
+    constructor(Xeow) {
         this.#Xeow = Xeow;
-        this.#lang = lang;
     }
 
-    async connect(config) {
+    async init(config) {
         const fs = require("fs")
-        if (!this.#Xeow.Modules["sequelize"]) {
-            console.showErr(this.#lang.Database.ModuleNotLoaded);
-            await this.#Xeow.bot.destroy();
-            process.exit(0);
-        }
         const { Sequelize } = this.#Xeow.Modules["sequelize"];
         if (config.Storage.Type === "memory") {
             this.#db = new Sequelize('sqlite::memory:', { logging: msg => console.debug(msg) });
@@ -29,22 +22,27 @@ module.exports = class DatabaseManager {
                 config.Storage.MySQL.Database,
                 config.Storage.MySQL.Username,
                 config.Storage.MySQL.Password,
-                { host: config.Storage.MySQL.Host, dialect: 'mysql', timezone: "+08:00", logging: msg => console.debug(msg), }
+                {
+                    host: config.Storage.MySQL.Host,
+                    port: config.Storage.MySQL.port,
+                    dialect: 'mysql', timezone: "+08:00",
+                    logging: msg => console.debug(msg),
+                }
             );
         } else {
-            console.showErr(this.#lang.Database.InvalidType);
+            console.showErr("console/main:database:invalidType", { type: config.Storage.Type});
             await this.#Xeow.bot.destroy();
             process.exit(0)
         }
     }
 
     async validate() {
-        console.log(this.#lang.Database.Validate.Verifying)
+        console.log("console/main:database:validate:verifying")
         try {
             await this.#db.authenticate();
-            console.log(this.#lang.Database.Validate.Success);
+            console.log("console/main:database:validate:success");
         } catch (error) {
-            console.showErr(this.#lang.Database.Validate.Failed)
+            console.showErr("console/main:database:validate:failed")
             console.error(error);
             await this.#Xeow.bot.destroy();
             process.exit(0);
@@ -52,7 +50,7 @@ module.exports = class DatabaseManager {
     }
 
     async startup(config) {
-        console.log(this.#lang.Database.Checking)
+        console.log("console/main:database:checking")
         const { DataTypes } = this.#Xeow.Modules["sequelize"];
         this.#db.define('command', {
             lastRun: { type: DataTypes.STRING, allowNull: false },
@@ -72,10 +70,11 @@ module.exports = class DatabaseManager {
             lastCheckIn: { type: DataTypes.STRING, allowNull: true }
         }, { freezeTableName: true });
         await this.#db.sync({ alter: true });
-        this.#Xeow.bot.guilds.cache.forEach(async guild => {
+        await this.#Xeow.guilds.cache.forEach(async guild => {
             let prefix = await this.#db.models.prefixes.findOne({ where: { guild: guild.id } });
             if (!prefix) await this.#db.models.prefixes.build({ guild: guild.id, prefix: config.Prefix }).save()
         })
+        console.log("console/main:database:checked")
     }
 
     get(model) {

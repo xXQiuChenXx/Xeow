@@ -1,0 +1,27 @@
+{
+    "module": "指令模塊",
+    "usage": "使用方法",
+    "main": {
+        "title": "幫助選單",
+        "description": "使用 `help <指令名稱>` 來搜索指定的指令"
+    },
+    "getCMD": {
+        "title": "**{{commandName}} 指令**",
+        "fields": {
+            "description": {
+                "name": "**描述**",
+                "value": "{{commandDesc}}"
+            },
+            "usage": {
+                "name": "**用法**",
+                "value": "{{prefix}}{{commandUsage}}"
+            },
+            "cooldown": {
+                "name": "**冷卻**",
+                "value": "{{commandCD}}"
+            }
+        },
+        "notFound": "沒有找到指令 {{commandName}}",
+        "footer": "提示: <>是一定要填的參數 []是選填的參數"
+    }
+}

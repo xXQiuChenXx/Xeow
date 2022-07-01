@@ -3,8 +3,6 @@ module.exports = class CLI {
     #cmd
     #event
     constructor(Xeow) {
-        const bot = Xeow.bot
-        const lang = Xeow.Language.readLangSync("main")
         this._commands = new Collection()
         this.#event = new Object()
         this.#cmd = new Object()
@@ -31,10 +29,12 @@ module.exports = class CLI {
             let args = Data.split(' ')
             let cmd = Xeow.CLI._commands.get(args[0])
             if (cmd) {
-                console.command(lang.CLI.issuedCommand.replace(/%command%/g, Data))
-                await cmd.run(args, bot)
+                console.command(Xeow.translate("console/CLI:issuedCommand", {
+                    command: Data
+                }))
+                await cmd.run(args, Xeow)
             } else {
-                console.command(lang.CLI.unknownCommand)
+                console.command(Xeow.translate("console/CLI:unknownCommand"))
             }
         }
         process.on('unhandledRejection', this.#event.unhandledRejection);
@@ -42,18 +42,20 @@ module.exports = class CLI {
         process.stdin.on("data", this.#event.data)
 
         process.on('exit', function (code) {
-            console.log(lang.CLI.processExit.replace(/%exitCode%/g, code))
+            console.log(Xeow.translate("console/CLI:processExit", {
+                exitCode: code
+            }))
         });
 
         this.#cmd.stop = {
             name: 'stop',
-            usage: lang.CLI.commands.stop.usage,
-            description: lang.CLI.commands.stop.description,
+            usage: Xeow.translate("console/CLI:commands:stop:usage"),
+            description: Xeow.translate("console/CLI:commands:stop:description"),
             run: async function stop() {
-                console.log(lang.CLI.commands.stop.receivedCMD)
-                console.log(lang.CLI.commands.stop.loggoutDC)
-                await bot.destroy()
-                console.log(lang.CLI.commands.stop.disconnectDB)
+                console.log("console/CLI:commands:stop:receivedCMD")
+                console.log("console/CLI:commands:stop:loggoutDC")
+                await Xeow.destroy()
+                console.log("console/CLI:commands:stop:disconnectDB")
                 await Xeow.DBManager.close()
                 await Xeow.PluginManager.unloadAll().catch(function (error) {
                     console.showErr('============================================================')
@@ -71,27 +73,30 @@ module.exports = class CLI {
 
         this.#cmd.help = {
             name: 'help',
-            usage: lang.CLI.commands.help.usage,
-            description: lang.CLI.commands.help.description,
-            run: async function help(args, bot) {
+            usage: Xeow.translate("console/CLI:help:usage"),
+            description: Xeow.translate("console/CLI:help:description"),
+            run: async function help(args, Xeow) {
                 if (args[1]) {
                     let cmd = Xeow.CLI._commands.get(args[1])
-                    if (!cmd) return console.log(lang.CLI.commands.help.commandNotFound.replace(/%command_name%/g, args[1]))
-                    console.log(lang.CLI.getCMD.title.replace(/%command_name%/g, args[1]))
-                    console.log(`${lang.CLI.usage}: ${cmd.usage === undefined ? cmd.name : cmd.usage}`)
-                    console.log(`${lang.CLI.description}: ${cmd.description === undefined ? lang.CLI.noDescription : cmd.description}`)
-                    return console.log("=".repeat(lang.CLI.getCMD.footerRepeat))
+                    if (!cmd) return console.log("console/CLI:commands:help:commandNotFound", {
+                        commandName: args[1]
+                    })
+                    console.log(`====================== ${Xeow.translate("console/CLI:commandHelp")} ====================`)
+                    console.log(Xeow.translate("console/CLI:commandName") + ":" + cmd.name)
+                    console.log(`${Xeow.translate("console/CLI:usage")}: ${cmd.usage === undefined ? cmd.name : cmd.usage}`)
+                    console.log(`${Xeow.translate("console/CLI:description")}: ${cmd.description === undefined ? Xeow.translate("console/CLI:noDescription") : cmd.description}`)
+                    return console.log("=".repeat(59))
                 }
 
-                console.log(lang.CLI.getAll.title)
+                console.log(`======================== ${Xeow.translate("console/CLI:commandHelpList")} ======================`)
                 Xeow.CLI._commands.forEach(function (command) {
                     let cmd = command.usage === undefined ? command.name : command.usage
-                    let description = command.description === undefined ? lang.CLI.noDescription : command.description
+                    let description = command.description === undefined ? Xeow.translate("console/CLI:noDescription") : command.description
                     let fulltext = cmd + '  ==>  ' + description
                     if (fulltext.length > 50) fulltext = fulltext.slice(0, 47) + '...'
                     console.log(fulltext)
                 })
-                console.log("=".repeat(lang.CLI.getAll.footerRepeat))
+                console.log("=").repeat(60)
             }
         }
 
@@ -99,7 +104,9 @@ module.exports = class CLI {
         this.register('help', this.#cmd.help)
     }
     register(name, callback){
-        if(this._commands.get(name)) throw new Error(lang.CLI.commandExist.replace(/%command_name%/g, name))
+        if(this._commands.get(name)) throw new Error(Xeow.translate("console/CLI:commandExist", {
+            commandName: name
+        }))
         this._commands.set(name, callback)
     }
     unregister(name) {

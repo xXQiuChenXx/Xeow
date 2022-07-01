@@ -1,0 +1,9 @@
+{
+    "messageCreate": {
+        "cmdExecuted": "{{userTag}} 執行了指令: {{content}}"
+    },
+    "interactionCreate": {
+        "cmdNotFound": "❌ ┃ 找不到指令... 請稍待Discord同步指令列表",
+        "cmdExecuted": "{{userTag}} 執行了指令: {{content}}"
+    }
+}

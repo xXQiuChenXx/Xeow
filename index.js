@@ -98,9 +98,10 @@ const CheckForBasic = async () => {
         const yml = require("js-yaml")
         const fs = require("fs");
         const path = require("path")
+
         const importantFiles = [
             "./src/Xeow/System32.js", "./libs/Logger.js", "./src/Xeow/LangParser.js",
-            "./configs/main.yml", "./language/en/main.yml"]
+            "./configs/main.yml"]
 
         function parseJS(file) {
             const syntax = require("syntax-error");
@@ -137,7 +138,7 @@ const CheckForBasic = async () => {
             process.exit();
         }
         let conf = yml.load(fs.readFileSync("./configs/main.yml", "utf-8"))
-        if(!fs.existsSync(`./language/${conf.Lang}`)) {
+        if (!fs.existsSync(`./language/${conf.Lang}`)) {
             console.log(`\u001b[31mUnsupported Language: ${conf.Lang}\u001b[0m`)
             process.exit()
         }
@@ -156,25 +157,28 @@ async function CheckForUpdate() {
 
 
 // ======================== 壓縮記錄文件 =======================
-async function archiveLog(Xeow, Lang) {
+async function archiveLog(Xeow) {
     const fs = require("fs")
     const archiver = require('archiver');
     if (fs.existsSync("./logs/lastest.log")) {
-        console.debug(Lang.archive.archiving)
+        console.debug("console/main:archive:archiving")
         try {
             const output = fs.createWriteStream("./logs/" + `${Xeow.getFormattedDate()}.zip`);
             const archive = archiver('zip', {
                 zlib: { level: 9 }
+            });
+            output.on('close', function () {
+                console.debug("console/main:archive:totalBytes", { total: archive.pointer() });
             });
             await archive.pipe(output);
             await archive.file("./logs/lastest.log", { name: 'lastest.log' });
             await archive.finalize();
             await fs.unlinkSync("./logs/lastest.log")
         } catch (error) {
-            console.showErr(Lang.bot.archive.failed)
+            console.showErr("console/main:archive:failed")
             console.error(error)
         }
-        console.debug(Lang.archive.success)
+        console.debug("console/main:archive:success")
     }
 }
 // ======================== 壓縮記錄文件 =======================
@@ -188,53 +192,36 @@ async function Startup() {
     const ms = performance.now()
     const fs = require("fs")
     console.log("\x1b[36m\x1b[1m" + fs.readFileSync("./src/logo.txt", "utf-8") + "\x1b[0m")
-    const Xeow = new (require("./src/Xeow/System32"))();
+    const Xeow = new (require("./src/Xeow/Xeow"))();
     const config = Xeow.Configuration.readConfigSync("main");
+    await Xeow.init(config)
     const Logger = Xeow.Libraries["Logger"]
-    const Language = Xeow.Language.readLangSync("main")
-    global.console = new Logger("CONSOLE", config.Logger.debug, config.Logger.ignore, config.Logger.lang)
-    console.log(Language.bot.NodeJS.replace(/%version%/g, process.version))
-    await archiveLog(Xeow, Language);
+    global.console = new Logger({
+        caller: "CONSOLE",
+        debug: config.Logger.debug,
+        ignore: config.Logger.ignore,
+        locale: config.Logger.locale,
+        format: config.Logger.momentFormat,
+        translations: Xeow.translations,
+        language: config.Lang
+    })
+    console.log("console/main:bot:NodeJS_version", { version: process.version })
+    await archiveLog(Xeow);
     await CheckForUpdate();
-    const { Client, Intents, Collection } = Xeow.Modules["discord.js"]
-    const bot = new Client({
-        intents: [
-            Intents.FLAGS.GUILDS,
-            Intents.FLAGS.GUILD_MESSAGES,
-            Intents.FLAGS.GUILD_PRESENCES,
-            Intents.FLAGS.GUILD_INTEGRATIONS,
-            Intents.FLAGS.DIRECT_MESSAGES,
-            Intents.FLAGS.DIRECT_MESSAGE_TYPING,
-            Intents.FLAGS.GUILD_VOICE_STATES,
-            Intents.FLAGS.GUILD_WEBHOOKS,
-            Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-            Intents.FLAGS.GUILD_INVITES,
-            Intents.FLAGS.GUILD_MEMBERS,
-            Intents.FLAGS.GUILD_BANS,
-            Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-            Intents.FLAGS.GUILD_MESSAGE_REACTIONS
-        ],
-        autoReconnect: true,
-        partials: ["CHANNEL"],
-    });
-    bot.commands = new Collection();
-    bot.aliases = new Collection();
-    bot.categories = fs.readdirSync("./commands/");
-    bot.plugins = new Collection();
-    await bot.login(config.Token).catch(error => {
+    await Xeow.startup(config)
+    Xeow.on("ready", async () => {
+        await Xeow.run(config)
+        console.log("console/main:bot:loaded", { second: ((performance.now() - ms) / 1000).toFixed(2) })
+    })
+    await Xeow.login(config.Token).catch(error => {
         if (error.message.includes("An invalid token was provided")) {
-            console.showErr(Language.bot.InvalidToken);
+            console.showErr("console/main:bot:invalidToken");
         } else {
-            console.showErr(Language.bot.LoginError);
+            console.showErr("console/main:bot:loginError");
             console.error(error);
         }
         process.exit();
     });
-    Xeow.setVariable("bot", bot);
-    if (Xeow.bot) {
-        await Xeow.run(config, Language, ms)
-    }
 }
-
 Startup()
 // ======================= 啓動Xeow機器人 ======================

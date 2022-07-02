@@ -84,6 +84,7 @@ module.exports = class Xeow extends Client {
     }
 
     async startup(config) {
+        this.defaultPrefix = config.Prefix
         console.log("console/main:database:loading")
         this.DBManager = new (require("./DBManager"))(this)
         await this.DBManager.init(config);

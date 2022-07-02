@@ -1,7 +1,7 @@
 {
     "success": {
         "title": ":money_with_wings: 轉賬成功!",
-        "description": "你已成功將 {{total} }錢幣轉賬給 {{user}}",
+        "description": "你已成功將 {{total}} 錢幣轉賬給 {{user}}",
         "fields": {
             "self": { "name": ":arrow_down: 你目前的餘額", "value": "{{before}} -> {{after}}" },
             "other": { "name": ":arrow_up: 他/她的餘額", "value": "{{before}} -> {{after}}" }

@@ -60,7 +60,7 @@ module.exports = {
                 .setTitle(message.translate("economy/pay:success:title"))
                 .setDescription(message.translate("economy/pay:success:description", {
                     user: args[0],
-                    total: args[1]
+                    total: args[1].toString()
                 }))
                 .addField(message.translate("economy/pay:success:fields:self:name"),
                     message.translate("economy/pay:success:fields:self:value", {

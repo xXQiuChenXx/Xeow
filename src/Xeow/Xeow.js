@@ -104,8 +104,11 @@ module.exports = class Xeow extends Client {
     async run(config) {
         await this.DBManager.startup(config);
         await this.DBManager.sync(true);
-        this.Prefix = new (require("./PrefixManager"))(this.DBManager.get("prefixes"),
-            await this.DBManager.get("prefixes").findAll());
+        this.prefix = new Collection()
+        let prefixes = await this.DBManager.get("prefixes").findAll()
+        prefixes.forEach(data => {
+            this.prefix.set(data.guild, data.prefix)
+        })
         await this.user.setPresence({ activities: config.Activities, status: config.Status });
     }
 

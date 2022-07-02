@@ -5,7 +5,6 @@ module.exports = class Event {
     async run(message) {
         const Xeow = this.Xeow
         if (message.author.bot) return;
-        if(!Xeow.Prefix) return 
         const prefix = Xeow.prefix.get(message.guild.id)
         if(!prefix) return
         if (!message.content.toLowerCase().startsWith(prefix)) return;

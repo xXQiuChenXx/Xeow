@@ -191,7 +191,7 @@ async function Startup() {
     console.clear()
     const ms = performance.now()
     const fs = require("fs")
-    console.log("\x1b[36m\x1b[1m" + fs.readFileSync("./src/logo.txt", "utf-8") + "\x1b[0m")
+    console.log("\x1b[36m\x1b[1m" + fs.readFileSync("./src/logo.txt", "utf-8").split("\n").join("\n\x1b[36m\x1b[1m")  + "\x1b[0m")
     const Xeow = new (require("./src/Xeow/Xeow"))();
     const config = Xeow.Configuration.readConfigSync("main");
     await Xeow.init(config)

@@ -106,6 +106,7 @@ module.exports = class Xeow extends Client {
         await this.DBManager.sync(true);
         this.Prefix = new (require("./PrefixManager"))(this.DBManager.get("prefixes"),
             await this.DBManager.get("prefixes").findAll());
+        await this.user.setPresence({ activities: config.Activities, status: config.Status });
     }
 
     msToTime(duration) {

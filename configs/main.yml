@@ -1,6 +1,6 @@
 ########################################
 #                                      #
-#             Xeow Config              #
+#           Xeow Bot Config            #
 #                                      #
 ########################################
 
@@ -9,6 +9,9 @@ Prefix: "+"
 SlashCommand: true
 PrefixCommand: true
 Lang: zh-TW
+Activities:
+ - name: "+help 以獲取幫助"
+Status: "online"
 
 
 ########################################

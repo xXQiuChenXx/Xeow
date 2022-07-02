@@ -23,7 +23,7 @@ module.exports = {
         },
     },
     run: async (Xeow, message, args, config) => {
-        const prefix = Xeow.Prefix.get(message.guild.id)
+        const prefix = Xeow.prefix.get(message.guild.id)
         let cmd = args[0]
         if (cmd) {
             await getCMD(Xeow, message, cmd.toLowerCase(), prefix)

@@ -8,5 +8,5 @@
         "empty": "缺少參數, 請查看錯誤",
         "incorrect": "使用方式/參數錯誤, 請查看錯誤"
     },
-    "messageDeleted": "此信息已刪除"
+    "messageDeleted": "原信息已刪除"
 }

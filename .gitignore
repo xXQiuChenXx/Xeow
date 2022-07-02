@@ -3,3 +3,4 @@ test
 logs
 package-lock.json
 database
+configs/main.yml

@@ -28,6 +28,7 @@ module.exports = class Xeow extends Client {
             }
         });
 
+        this.prefix = new Collection()
         this.categories = fs.readdirSync("./commands")
         this.commands = new Collection(); // Creates new commands collection
         this.aliases = new Collection(); // Creates new command aliases collection
@@ -104,7 +105,6 @@ module.exports = class Xeow extends Client {
     async run(config) {
         await this.DBManager.startup(config);
         await this.DBManager.sync(true);
-        this.prefix = new Collection()
         let prefixes = await this.DBManager.get("prefixes").findAll()
         prefixes.forEach(data => {
             this.prefix.set(data.guild, data.prefix)

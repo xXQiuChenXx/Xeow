@@ -7,6 +7,7 @@ module.exports = class Event {
         if (message.author.bot) return;
         if(!Xeow.Prefix) return 
         const prefix = Xeow.prefix.get(message.guild.id)
+        if(!prefix) return
         if (!message.content.toLowerCase().startsWith(prefix)) return;
 
         if (!message.member) message.member = await message.guild.fetchMember(message);

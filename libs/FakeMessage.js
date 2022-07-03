@@ -39,6 +39,10 @@ class FakeMessage {
          */
         this.member = interaction.member;
 
+        this.translate = interaction.translate;
+        this.replyT = interaction.replyT;
+        this.editT = interaction.editT;
+
         /**
          * @param {Discord.Guild} guild
          */

@@ -21,7 +21,7 @@
                 "value": "{{commandCD}}"
             }
         },
-        "notFound": "沒有找到指令 {{commandName}}",
+        "notFound": "沒有找到指令 {{cmdName}}",
         "footer": "提示: <>是一定要填的參數 []是選填的參數"
     }
 }

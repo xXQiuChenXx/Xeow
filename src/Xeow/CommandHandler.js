@@ -6,6 +6,7 @@ module.exports = (Xeow) => {
         aliases: new Array(),
         nsfw: false,
         ownerOnly: false,
+        memberPerms: [],
         cooldown: 0,
         description: null
     }

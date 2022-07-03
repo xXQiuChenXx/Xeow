@@ -3,23 +3,25 @@ module.exports = {
     config: {
         name: "help",
         description: "幫助選單",
-        usage: "help <showall/all/name> [command name]",
+        usage: "help [指令/module]",
         options: [{
             name: 'name',
             type: 'STRING',
-            description: '指令名字',
+            description: '指令名字 或者 module',
             required: false
         }],
         menu: {
             timestamp: true
         },
         "categoryReplacement": {
+            "admin": "管理員使用",
             "info": "信息",
             "economy": "經濟"
         },
         "emoji": {
             "info": ":earth_americas:",
-            "economy": "💰"
+            "economy": "💰",
+            "admin": "👑"
         },
     },
     run: async (Xeow, message, args, config) => {
@@ -41,7 +43,7 @@ async function getAll(Xeow, message, config, prefix) {
     if (config.menu.timestamp === true) menu.setTimestamp()
 
     for (const category of Xeow.categories) {
-        menu.addField(`${config.emoji[category]} ${config.categoryReplacement[category] || category}`, prefix + `help module <${message.translate("info/help:module")}}>`)
+        menu.addField(`${config.emoji[category] === undefined ? "": config.emoji[category]} ${config.categoryReplacement[category] || category}`, prefix + `help module <${message.translate("info/help:module")}}>`)
     }
     let Pages = []
 
@@ -54,7 +56,7 @@ async function getAll(Xeow, message, config, prefix) {
     for (const temp of Pages) {
         const embed = new MessageEmbed()
             .setColor('RANDOM')
-            .setTitle(`**${config.emoji[temp.category]} ${config.categoryReplacement[temp.category] || temp.category}**`)
+            .setTitle(`**${config.emoji[temp.category] === undefined ? "": config.emoji[temp.category]} ${config.categoryReplacement[temp.category] || temp.category}**`)
         temp['commands'].forEach(function (cmd) {
             embed.addField(`${prefix}${cmd.name} - ${cmd.description}`,
                 `${message.translate("info/help:usage")}: ` + "`" + prefix + cmd.usage + "`")
@@ -102,9 +104,9 @@ function getCMD(Xeow, message, input, prefix) {
         embed.setFooter({ text: message.translate("info/help:getCMD:footer") });
     } else {
         embed.setColor("RED")
-            .setDescription(message.translate("info/help:getCMD:notFound"), {
-                commandName: input
-            })
+            .setDescription(message.translate("info/help:getCMD:notFound", {
+                cmdName: input
+            }))
         return message.reply({ embeds: [embed] });
     }
 

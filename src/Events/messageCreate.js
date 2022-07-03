@@ -1,3 +1,4 @@
+const { Permissions } = require('discord.js');
 module.exports = class Event {
     constructor(Xeow) {
         this.Xeow = Xeow
@@ -22,23 +23,31 @@ module.exports = class Event {
         if (!command) command = Xeow.aliases.get(cmd);
 
         if (command) {
+            if(!this.Xeow.settings.PrefixCommand) return;
             if (command.timeout) {
                 let cd = await Xeow.checkTimeout(command.name, command.timeout, message.guild.id, message.author.id)
                 if (cd.status) {
-                    return message.replyT("console/events:messageCreate:cooldowned", {
+                    return message.replyT("events:messageCreate:cooldowned", {
                         time: Xeow.msToTime(cd.left)
                     })
                 }
             }
             if(!message.channel.nsfw && cmd.nsfw){
-				return message.replyT("console/events:messageCreate:nsfwCommand")
+				return message.replyT("events:messageCreate:nsfwCommand")
 			}
-            console.log("console/events:messageCreate:cmdExecuted",{
+
+            if(command.memberPerms?.length) {
+                let perms = command.memberPerms.map(perm => Permissions.FLAGS[perm])
+                if(!message.member.permissions.has(perms)) return message.replyT("common:lackedPermission")
+            }
+
+            console.log("events:messageCreate:cmdExecuted",{
                 userTag: message.member.user.tag,
                 content: message.content
             })
             try { await command.run(Xeow, message, args, { ...command, run: undefined }); }
             catch (error) {
+                if(error.message === "Invalid args") return
                 return console.error(error);
             }
             let db = await Xeow.DBManager.get("command")

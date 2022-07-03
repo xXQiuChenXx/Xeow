@@ -79,6 +79,7 @@ module.exports = class Xeow extends Client {
     }
 
     async init(config) {
+        this.settings = config
         this.translations = await require("./Languages")(config)
         this.defaultLanguage = config.Lang
     }
@@ -156,13 +157,17 @@ module.exports = class Xeow extends Client {
         let pre = message.content.split(message.content.split(" ")[arg + 1])[0]
         const arrow = " ".repeat(pre.length) + "^^^"
         if (type === "empty") {
-            embed.setTitle(reason || this.translate("common:invalidUsage:empty"))
+            let r = reason || this.translate("common:invalidUsage:empty")
+            embed.setTitle(r)
                 .setDescription("```\n" + message.content + "\n" + arrow + "```")
             message.reply({ embeds: [embed] })
+            throw new Error("Invalid args")
         } else if (type === "incorrect") {
-            embed.setTitle(reason || this.translate("common:invalidUsage:incorrect"))
+            let r = reason || this.translate("common:invalidUsage:incorrect")
+            embed.setTitle(r)
                 .setDescription("```\n" + message.content + "\n" + arrow + "```")
             message.reply({ embeds: [embed] })
+            throw new Error("Invalid args")
         } else {
             throw new Error("Unsupported type")
         }

@@ -1,3 +1,4 @@
+const { Permissions } = require('discord.js');
 module.exports = class Event {
     constructor(Xeow) {
         this.Xeow = Xeow
@@ -7,29 +8,42 @@ module.exports = class Event {
         const FakeMessage = this.FakeMessage
         const Xeow = this.Xeow
         if (!interaction.isCommand()) return;
+        if (!this.Xeow.settings.SlashCommand) return;
         if (interaction.user.bot) return;
         let msg = new FakeMessage(interaction)
         let command = Xeow.commands.get(interaction.commandName);
         if (!command) return interaction.reply({
-            content: "❌ ┃ 找不到指令... 請稍待Discord同步指令列表",
+            content: this.Xeow.translate("events:interactionCreate:cmdNotFound"),
             ephemeral: true
         });
         if (command.timeout) {
             let cd = await Xeow.checkTimeout(command.name, command.timeout, msg.guild.id, msg.author.id)
             if (cd.status) {
-                await msg.reply(lang.cooldown.replace("%time%", Xeow.msToTime(cd.left)))
+                return msg.replyT("events:interactionCreate:cooldowned", {
+                    time: Xeow.msToTime(cd.left)
+                })
             }
         }
         let args = msg.content.split(/ +/)
         args = args.slice(1, args.length)
-        const lang = Xeow.Languages.readLangSync(interaction.commandName, "command", "utf8")
-        const config = Xeow.Configuration.readConfigSync(command.name, "command", "utf8")
-        console.log("console/events:interactionCreate:cmdExecuted", {
-            userTag: `${interaction.user.username}#${interaction.user.discriminator} `,
+
+        if (!msg.channel.nsfw && command.nsfw) {
+            return msg.replyT("events:interactionCreate:nsfwCommand")
+        }
+
+        if (command.memberPerms?.length) {
+            let perms = command.memberPerms.map(perm => Permissions.FLAGS[perm])
+            if (!msg.member.permissions.has(perms)) return msg.replyT("common:lackedPermission")
+        }
+
+        console.log("events:interactionCreate:cmdExecuted", {
+            userTag: `${interaction.user.username}#${interaction.user.discriminator}`,
             content: `/${interaction.commandName}${interaction.options?._hoistedOptions.map(o => ` ${o.name}:${o.value}`).join('') || ''}`
         })
+
         try { await command.run(Xeow, msg, args, { ...command, run: undefined }); }
         catch (error) {
+            if(error.message === "Invalid args") return
             return console.error(error);
         }
         let db = await Xeow.DBManager.get("command")

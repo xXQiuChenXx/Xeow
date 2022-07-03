@@ -53,9 +53,12 @@ async function InteractionButtonPages(options) {
         const embed = embeds[currentPage - 1];
         const newEmbed = new Discord.MessageEmbed(embed);
         if (embed?.footer?.text) {
-            return newEmbed.setFooter(`${embed.footer.text} - 第${currentPage}頁, 共有${embeds.length}頁`, embed.footer.iconURL);
+            return newEmbed.setFooter({
+                text: `${embed.footer.text} - 第${currentPage}頁, 共有${embeds.length}頁`,
+                iconURL: embed.footer.iconURL
+            });
         }
-        return newEmbed.setFooter(`第${currentPage}頁, 共有${embeds.length}頁`);
+        return newEmbed.setFooter({ text: `第${currentPage}頁, 共有${embeds.length}頁` });
     };
     await interaction.reply({
         embeds: [changeFooter()],
@@ -94,7 +97,7 @@ async function InteractionButtonPages(options) {
         pageTravelling.add(interaction.user.id);
         collector.on("collect", (message) => {
             if (message.content.toLowerCase() === "end") {
-                message.delete().catch((e) => {console.error(e)});
+                message.delete().catch((e) => { console.error(e) });
                 return collector.stop();
             }
             const int = parseInt(message.content);

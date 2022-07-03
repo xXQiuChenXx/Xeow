@@ -25,9 +25,12 @@ async function InteractionEmbedPages(options) {
         const embed = embeds[currentPage - 1];
         const newEmbed = new Discord.MessageEmbed(embed);
         if (embed?.footer?.text) {
-            return newEmbed.setFooter(`${embed.footer.text} - 第${currentPage}頁, 共有${embeds.length}頁`, embed.footer.iconURL);
+            return newEmbed.setFooter({
+                text: `${embed.footer.text} - 第${currentPage}頁, 共有${embeds.length}頁`,
+                iconURL: embed.footer.iconURL
+            });
         }
-        return newEmbed.setFooter(`第${currentPage}頁, 共有${embeds.length}頁`);
+        return newEmbed.setFooter({ text: `第${currentPage}頁, 共有${embeds.length}頁` });
     };
 
     await interaction.reply({
@@ -35,7 +38,7 @@ async function InteractionEmbedPages(options) {
     });
 
     let Msg = await interaction.fetchReply()
-    names.forEach(async function(element){
+    names.forEach(async function (element) {
         await Msg.react(defaultEmojis[element])
     });
 
@@ -86,10 +89,10 @@ async function InteractionEmbedPages(options) {
         if (id === "first")
             currentPage = 1;
         if (id === "previous") {
-            if(currentPage -1 > 0) currentPage--;
+            if (currentPage - 1 > 0) currentPage--;
         }
         if (id === "next") {
-            if(currentPage +1 < embeds.length + 1) currentPage++;
+            if (currentPage + 1 < embeds.length + 1) currentPage++;
         }
         if (id === "last")
             currentPage = embeds.length;

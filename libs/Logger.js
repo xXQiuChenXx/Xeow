@@ -96,11 +96,12 @@ class Logger {
     if (!fs.existsSync("./logs")) fs.mkdirSync("./logs")
     let text;
     let Args = Array.prototype.slice.call(args)
-    if (typeof Args[0] === "string" && Args[0].includes("/") && Args[1] !== false) {
+    if (typeof Args[0] === "string" && Args[1] !== false) {
       const language = this.translations.get(this.language);
       text = language(Args[0], Args[1]);
     } else {
       text = Array.from(args) === [] ? "undefined" : Array.from(args)
+      if(Args[1] === false) text = text.toString().replace(/,false/g, "")
     }
     fs.appendFileSync('./logs/lastest.log', `[${moment().format(`h:mm:ss`)}] [${caller}/${level}]: ${text}\n`, 'utf-8')
     if (level === 'COMMAND') {

@@ -16,9 +16,9 @@ module.exports = (Xeow) => {
             let command = require(`../../commands/${dir}/${file}`)
             let cmd = { ...base, ...command.config, run: command.run, category: dir }
             if (cmd.name && cmd.description && cmd.enabled) {
-                let conf = Xeow.Configuration.readConfigSync(cmd.name, "command")
+                let conf = Xeow.Configuration.get("cmd_" + cmd.name)
                 if (!conf) {
-                    Xeow.Configuration.writeConfigSync(cmd.name, 
+                    Xeow.Configuration.writeSync(cmd.name, 
                         {...cmd, run: undefined}, "command", "utf8", { sortKeys: true })
                 }
                 if (conf) cmd = { ...cmd, ...conf }

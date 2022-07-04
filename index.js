@@ -98,6 +98,9 @@ const CheckForBasic = async () => {
         const yml = require("js-yaml")
         const fs = require("fs");
         const path = require("path")
+        if (!fs.existsSync("./configs/main.yml")) {
+            return console.log("\u001b[31mError: Configuration File Not Found, Make Sure You Have A look At Our Wiki\u001b[0m")
+        }
 
         const importantFiles = [
             "./src/Xeow/System32.js", "./libs/Logger.js", "./src/Xeow/LangParser.js",
@@ -119,16 +122,16 @@ const CheckForBasic = async () => {
 
         function parseYaml(file) {
             const yaml = require("js-yaml");
-            try {
-                yaml.load(fs.readFileSync(file, "utf-8"));
-            } catch (err) {
-                return true
-            }
+            yaml.load(fs.readFileSync(file, "utf-8"));
         }
 
         const errorFiles = importantFiles.filter(file => {
-            if (file.endsWith(".yml")) { parseYaml(path.join(__dirname, file)) }
-            if (file.endsWith(".js")) { parseJS(path.join(__dirname, file)) }
+            if (file.endsWith(".yml")) {
+                try { parseYaml(path.join(__dirname, file)) } catch (error) { return true }
+            }
+            if (file.endsWith(".js")) {
+                try { parseJS(path.join(__dirname, file)) } catch (error) { return true }
+            }
             return false
         })
 
@@ -137,6 +140,7 @@ const CheckForBasic = async () => {
             console.log("\u001b[31mFail Checked files:\n", errorFiles.join("\n"), "\u001b[0m");
             process.exit();
         }
+
         let conf = yml.load(fs.readFileSync("./configs/main.yml", "utf-8"))
         if (!fs.existsSync(`./languages/${conf.Lang}`)) {
             console.log(`\u001b[31mUnsupported Language: ${conf.Lang}\u001b[0m`)
@@ -191,9 +195,9 @@ async function Startup() {
     console.clear()
     const ms = performance.now()
     const fs = require("fs")
-    console.log("\x1b[36m\x1b[1m" + fs.readFileSync("./src/logo.txt", "utf-8").split("\n").join("\n\x1b[36m\x1b[1m")  + "\x1b[0m")
     const Xeow = new (require("./src/Xeow/Xeow"))();
-    const config = Xeow.Configuration.readConfigSync("main");
+    const config = Xeow.Configuration.get("main");
+    console.log("\x1b[36m\x1b[1m" + fs.readFileSync("./src/logo.txt", "utf-8").split("\n").join("\n\x1b[36m\x1b[1m") + "\x1b[0m")
     await Xeow.init(config)
     const Logger = Xeow.Libraries["Logger"]
     global.console = new Logger({

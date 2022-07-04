@@ -4,6 +4,10 @@ const path = require("path");
 module.exports = class Configuration extends Map {
     constructor() {
         super()
+        this._init()
+    }
+    
+    _init() {
         fs.readdirSync("./configs")
             .filter(element => !fs.lstatSync(`./configs/${element}`).isDirectory() && element.endsWith(".yml"))
             .forEach((file) => {

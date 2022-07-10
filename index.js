@@ -196,7 +196,7 @@ async function Startup() {
     const ms = performance.now()
     const fs = require("fs")
     const Xeow = new (require("./src/Xeow/Xeow"))();
-    const config = Xeow.Configuration.get("main");
+    const config = Xeow.Configuration.get("main.yml");
     console.log("\x1b[36m\x1b[1m" + fs.readFileSync("./src/logo.txt", "utf-8").split("\n").join("\n\x1b[36m\x1b[1m") + "\x1b[0m")
     await Xeow.init(config)
     const Logger = Xeow.Libraries["Logger"]
@@ -215,6 +215,7 @@ async function Startup() {
     await Xeow.startup(config)
     Xeow.on("ready", async () => {
         await Xeow.run(config)
+        await Xeow.PluginManager.loadAll()
         setTimeout(() => {
             console.info("console/main:bot:leaveStar")
         }, 15000)

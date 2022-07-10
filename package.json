@@ -25,6 +25,7 @@
   "homepage": "https://github.com/xXQiuChenXx/Xeow#readme",
   "dependencies": {
     "archiver": "^5.3.1",
+    "canvas": "^2.9.3",
     "chalk": "^4.1.2",
     "child_process": "^1.0.2",
     "discord.js": "^13.8.1",

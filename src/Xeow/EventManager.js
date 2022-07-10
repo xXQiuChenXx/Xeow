@@ -13,6 +13,7 @@ module.exports = class EventManager {
     unregister(name, onEvent) {
         this.Xeow.removeListener(name, onEvent)
     }
+    
     init() {
         fs.readdirSync(path.join(__dirname, "../Events"))
             .filter(file => { return file.endsWith(".js"); })

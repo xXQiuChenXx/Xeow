@@ -1,14 +1,48 @@
 const fs = require('fs');
+const API = require('./API/BaseAPI');
+const path = require("path");
 class SimplePluginLoader {
-    #API
     constructor(Xeow) {
-        this.#API = require('./API/BaseAPI');
-        this.list = []
+        this.list = [];
+        this.Xeow = Xeow;
+        this.plugins = new (Xeow.Libraries["Collection"])()
     }
 
     async loadPlugin(plobj) {
-        if (typeof pluginName === 'string') plobj = require("../../plugins/" + pluginName)
-        if (plobj.enable === true) {
+        const Xeow = this.Xeow
+        if (typeof pluginName === 'string') plobj = require("../plugins/" + pluginName)
+
+        let main = Xeow.Configuration.get(`plugins/${plobj.name}/main.yml`)
+        if (!main) {
+            main = {
+                ...plobj, Plugin: undefined, configs: undefined, requires: undefined,
+                priority: undefined, api: undefined, version: undefined, author: undefined, language: undefined
+            }
+            Xeow.Configuration.writeSync(`plugins/${plobj.name}/main.yml`, main)
+        }
+        const pluginConfig = new Object()
+
+        if (plobj.configs?.length) {
+            for (const config of plobj.configs) {
+                let filePath = `plugins/${plobj.name}/${config.name}.yml`
+                if (!Xeow.Configuration.existsSync(filePath)) {
+                    Xeow.Configuration.writeSync(filePath, config.content)
+                }
+                pluginConfig[config.name] = Xeow.Configuration.get(filePath)
+            }
+        }
+
+        if (plobj?.languages) {
+            let filePath = path.join(__dirname, "../../languages", Xeow.defaultLanguage, "plugins", `${plobj.name}.json`)
+            let fileDir = path.join(__dirname, "../../languages", Xeow.defaultLanguage, "plugins")
+            if (!fs.existsSync(filePath)) {
+                if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir)
+                fs.writeFileSync(filePath, JSON.stringify(plobj?.languages, null, 2), "utf-8")
+            }
+        }
+
+        //Check For Depencies
+        if (main.enable === true) {
             if (plobj.requires.length !== 0) {
                 const lacked = plobj.requires.filter(function (item) {
                     try {
@@ -17,30 +51,53 @@ class SimplePluginLoader {
                         return true
                     }
                 });
-                if (lacked.length !== 0) return console.showErr(`插件 ${plobj.name} 缺少依賴庫 ${lacked.join(",")}, 因此無法加載此插件`)
+                if (lacked.length !== 0) return console.showErr("console/pluginLoader:PluginLackDep", {
+                    name: plobj.name,
+                    node_modules: lacked.join(",")
+                })
             }
-            const api = new API(this, plobj.permissions, plobj.name)
-            if (!this._isCompatible(plobj, api)) return console.warn(`插件 ${plobj.name} 不兼容該版本, 插件支持的API版本: ${plobj.api.join(", ")} (需求版本: API ${plobj.api.join('/')})`);
-            const plugin = new plobj.Plugin(api);
+
+            const api = new API(this.Xeow, plobj.permissions)
+            if (!this._isCompatible(plobj, api)) return console.warn("console/pluginLoader:API:notCompatible",
+                {
+                    pluginName: plobj.name,
+                    supported_api_ver: api.compatible.join(", "),
+                    required_api_ver: plobj.api.join('/')
+                })
+            const plugin = new plobj.Plugin(api, pluginConfig);
             try {
-                console.log("載入插件 '" + plobj.name + "@" + plobj.version + "' 成功! (作者: " + plobj.author + ")")
+                console.log("console/pluginLoader:loadingPlugin",
+                    {
+                        plugin_name: plobj.name,
+                        plugin_version: plobj.version
+                    })
                 await plugin.onLoad()
                 await plugin.onEnable()
-            } catch (e) {
-                throw e
+            } catch (err) {
+                console.showErr("console/pluginLoader:loadingFailed",
+                    {
+                        plugin_name: plobj.name,
+                        plugin_version: plobj.version
+                    })
+                return console.error(err)
             }
             if (plugin.loaded === true) {
+                console.log("console/pluginLoader:loadingSuccess",
+                    {
+                        plugin_name: plobj.name,
+                        plugin_version: plobj.version,
+                        author: plobj.author
+                    })
                 await this.plugins.set(plobj.name, plugin)
                 await this.list.push(plobj.name)
-                await this.pls.push(plobj)
             }
         }
     }
 
-    async loadAll(lang) {
+    async loadAll() {
         let files = await fs.readdirSync("./plugins/").filter(x => x.endsWith('.js'));
-        if(files.length === 0) return console.log(lang.Plugin.NoPlugin)
-        let plugins = files.map(file => require("../../../plugins/" + file))
+        if (files.length === 0) return console.log("console/pluginLoader:NoPluginFound")
+        let plugins = files.map(file => require("../../plugins/" + file))
             .sort(function (a, b) { return a.priority - b.priority });
         for (const plugin of plugins) {
             await this.loadPlugin(plugin).catch(error => {
@@ -56,17 +113,17 @@ class SimplePluginLoader {
     }
 
     async unloadPlugin(pluginName) {
-        let plugin = this.bot.plugins.get(pluginName)
+        let plugin = this.plugins.get(pluginName)
         if (plugin) {
             console.log(`正在卸載插件${pluginName}...`)
             await plugin.onDisable(pluginName)
-            await this.bot.plugins.delete(pluginName)
+            await this.plugins.delete(pluginName)
             console.log("卸載插件 '" + pluginName + "' 成功!")
         }
     }
 
     async unloadAll() {
-        if(this.list.length === 0) return
+        if (this.list.length === 0) return
         let x = this
         for (const pl of this.list) {
             await x.unloadPlugin(pl)

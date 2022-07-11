@@ -5,22 +5,48 @@
 
 [![MIT License](https://img.shields.io/github/license/xXQiuChenXx/Xeow?&logo=github)](LICENSE)
 
-Xeow is a discord bot that used NodeJS/JavaScript and designed for configurability, new fun and exciting bot features.
+Xeow is a discord bot that used NodeJS/JavaScript and designed for configurability, new fun and exciting bot features. Xeow discord bot built using discord.js v13 with support for slash commands and context menus.
 
 </div>
-
-## Warning
-This bot is still under developing so it is an dev build. It is still unstable right now.
-
-## To Do List
-1. Make A Wiki 
-2. Make it more stable
-3. Create more command
-4. Translation
 
 ## Requirements
 
 1. NodeJS with version above 16
+2. Git (Optional)
+
+## Getting Started
+
+1. Install Xeow Discord Bot File (two method choose one only)
+- Open the terminal and run the following commands
+```
+git clone https://github.com/xXQiuChenXx/Xeow.git
+```
+- Download the Xeow Discord Bot File through the [Release Page](https://github.com/xXQiuChenXx/Xeow/releases/)
+
+2. Install Dependencies 
+- Open the terminal and run the command ```npm install```. Wait for all the dependencies to be installed.
+
+3. Setting Configuaration
+Rename ```config/main-example.yml``` to ```config/main.yml``` and fill the values.
+
+4. Start the bot
+Type npm run start to start the bot
+If you need any additional help, make sure to read our wiki here
+
+## Supported Database Type
+- MySQL
+- SQLite
+
+## TO DO List
+- [ ] Support For More Database Type
+- [ ] Add For More Language
+- [ ] Make A Wiki & API Docs
+- [ ] Add For Music Support
+- [ ] Be More Stable
+
+## 🤝 Contributing
+
+* Feel free to [Fork]https://github.com/xXQiuChenXx/Xeow) this repository, create a feature branch and submit a pull request
 
 ## License
 Xeow Bot is licensed under the MIT license, A well-maintained open source ecosystem starts from us (*>ω<)φ

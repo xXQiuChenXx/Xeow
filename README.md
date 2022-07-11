@@ -31,7 +31,7 @@ Rename ```config/main-example.yml``` to ```config/main.yml``` and fill the value
 
 4. Start the bot
 Type npm run start to start the bot
-If you need any additional help, make sure to read our wiki here
+If you need any additional help, make sure to read our [wiki here](https://github.com/xXQiuChenXx/Xeow/wiki)
 
 ## Supported Database Type
 - MySQL
@@ -44,9 +44,10 @@ If you need any additional help, make sure to read our wiki here
 - [ ] Add For Music Support
 - [ ] Be More Stable
 
-## 🤝 Contributing
+### 🤝 Contributing
 
-* Feel free to [Fork]https://github.com/xXQiuChenXx/Xeow) this repository, create a feature branch and submit a pull request
+* Feel free to [Fork](https://github.com/xXQiuChenXx/Xeow/fork) this repository, create a feature branch and submit a pull request.
+* If you found any bugs or you have some idea on new feature feel free to create a issue [here](https://github.com/xXQiuChenXx/Xeow/issues).
 
 ## License
 Xeow Bot is licensed under the MIT license, A well-maintained open source ecosystem starts from us (*>ω<)φ

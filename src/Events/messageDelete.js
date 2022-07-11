@@ -3,7 +3,8 @@ module.exports = class Event {
         this.Xeow = Xeow
     }
     async run(message) {
-        if (message.author.bot) return
+        if (message.author.bot) return  // return if msg author is bot
+        if(!message.content) return // return if empty message
         message.channel.createWebhook((message.member.nickname || message.member.user.username)
             + ` [${message.translate("common:messageDeleted")}]`, {
             avatar: message.author.avatarURL({ format: "png"}),

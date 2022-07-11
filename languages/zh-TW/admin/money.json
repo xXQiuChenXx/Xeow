@@ -1,0 +1,20 @@
+{
+    "cannot_negatif_number": "不能是負數",
+    "not_allow_bot": "對方不能是機器人",
+    "give": {
+        "color": "RANDOM",
+        "title": "🔧設置成功!",
+        "description": "你已成功將{{amount}}錢幣給予{{member}}, 他現在共有{{balance}}錢幣"
+    },
+    "take": {
+        "no_enough_money": "抱歉ㄟ，他沒那麽多錢幣...",
+        "color": "RANDOM",
+        "title": "🔧設置成功!",
+        "description": "你已成功將{{amount}}錢幣從{{member}}中拿走了{{amount}}錢幣, 他現在共有{{balance}}錢幣"
+    },
+    "set": {
+        "color": "RANDOM",
+        "title": "🔧設置成功!",
+        "description": "{{member}}現在共有{{amount}}錢幣"
+    }
+}

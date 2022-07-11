@@ -23,7 +23,9 @@ git clone https://github.com/xXQiuChenXx/Xeow.git
 ```
 - Download the Xeow Discord Bot File through the [Release Page](https://github.com/xXQiuChenXx/Xeow/releases/)
 
-2. Install Dependencies 
+2. Install Dependencies '
+> Make sure you have native to the correct bot directory first.
+> If you getting any problem on installing the package feel free to create a issue [here](https://github.com/xXQiuChenXx/Xeow/issues)
 - Open the terminal and run the command ```npm install```. Wait for all the dependencies to be installed.
 
 3. Setting Configuaration
@@ -48,6 +50,7 @@ If you need any additional help, make sure to read our [wiki here](https://githu
 
 * Feel free to [Fork](https://github.com/xXQiuChenXx/Xeow/fork) this repository, create a feature branch and submit a pull request.
 * If you found any bugs or you have some idea on new feature feel free to create a issue [here](https://github.com/xXQiuChenXx/Xeow/issues).
+* If you want to be a part of Xeow Discord Bot, please contact via the owner/creator 's gmail. You can found it on his github info page.
 
 ## License
 Xeow Bot is licensed under the MIT license, A well-maintained open source ecosystem starts from us (*>ω<)φ

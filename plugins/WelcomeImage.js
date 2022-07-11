@@ -62,7 +62,7 @@ module.exports = {
                 //make it "2D"
                 const ctx = canvas.getContext('2d');
                 //set the Background to the welcome.png
-                const background = await Canvas.loadImage(`./src/images/${config.background}`);
+                const background = await Canvas.loadImage(`./src/Images/${config.background}`);
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
                 // ctx.strokeStyle = '#f2f2f2';
                 // ctx.strokeRect(0, 0, canvas.width, canvas.height);

@@ -49,6 +49,12 @@ You have to enable prefix command when you first run. Use the command `slashcomm
 - [ ] Add For Music Support
 - [ ] Be More Stable And Easier
 
+### More Information
+- [Xeow Public Discord Bot Invite Link](https://discord.com/api/oauth2/authorize?client_id=575266503969210368&permissions=0&scope=bot%20applications.commands)
+- [Xeow Support Discord Server](https://discord.gg/wu2qs6eAZQ)
+- [API Docs](https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/api.md)
+- [FAQ](https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/faq.md)
+
 ### 🤝 Contributing
 
 * Feel free to [Fork](https://github.com/xXQiuChenXx/Xeow/fork) this repository, create a feature branch and submit a pull request.

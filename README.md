@@ -35,6 +35,9 @@ Rename ```config/main-example.yml``` to ```config/main.yml``` and fill the value
 Type npm run start to start the bot
 If you need any additional help, make sure to read our [wiki here](https://github.com/xXQiuChenXx/Xeow/wiki)
 
+## Create Slash Command
+You have to enable prefix command when you first run. Use the command `slashcommand reset` to automatic register all loaded command and then set the permission. After that, feel free to disable the prefix command because you can use slashcommand method to run the `slashcommand reset` command.
+
 ## Supported Database Type
 - MySQL
 - SQLite
@@ -44,7 +47,7 @@ If you need any additional help, make sure to read our [wiki here](https://githu
 - [ ] Add For More Language
 - [ ] Make A Wiki & API Docs
 - [ ] Add For Music Support
-- [ ] Be More Stable
+- [ ] Be More Stable And Easier
 
 ### 🤝 Contributing
 

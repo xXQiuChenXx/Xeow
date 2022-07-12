@@ -19,6 +19,15 @@
     - [Xeow.CLI](#xeowcli)
       - [CLI.register(name, callback)](#cliregistername-callback)
       - [CLI.unregister(name)](#cliunregistername)
+    - [Xeow.Configuration](#xeowconfiguration)
+      - [Configuration.delete(locate)](#configurationdeletelocate)
+      - [Configuration.existsSync(locate)](#configurationexistssynclocate)
+      - [Configuration.get(locate)](#configurationgetlocate)
+      - [Configuration.reload()](#configurationreload)
+      - [Configuration.read(locate, encoding, options, callback)](#configurationreadlocate-encoding-options-callback)
+      - [Configuration.write(locate, data, encoding, options, callback)](#configurationwritelocate-data-encoding-options-callback)
+      - [Configuration.readSync(locate, encoding = "utf-8")](#configurationreadsynclocate-encoding--utf-8)
+      - [Configuration.writeSync(locate, data, encoding, options)](#configurationwritesynclocate-data-encoding-options)
     - [Xeow.DBManager](#xeowdbmanager)
       - [DBManager.get(model)](#dbmanagergetmodel)
       - [DBManager.sync(alter, force)](#dbmanagersyncalter-force)
@@ -103,7 +112,52 @@ unregister/remove CLI command when the bot is running
 
 * `name` - command name
 
+
+### Xeow.Configuration
+please note that the default `__dirname` is set to ./configs
+
+#### Configuration.delete(locate)
+delete the config file permananly.
+* `locate` - the file location.
+
+#### Configuration.existsSync(locate)
+Check if wheter file exist
+* `locate` - the file location
+
+#### Configuration.get(locate)
+Get the config file in object form. This can convert yml file to object.
+* `locate` - the file location
+
+#### Configuration.reload()
+Clear the config files cache.
+
+#### Configuration.read(locate, encoding, options, callback)
+read the configuration file, returns an object
+* `locate` - the file location
+* `encoding` - file encoding
+* `options` - [js-yaml](https://www.npmjs.com/package/js-yaml) options
+* `callback` - callback function, return parameters: `error`, `data`
+
+#### Configuration.write(locate, data, encoding, options, callback)
+write the configuration file
+* `locate` - the file location
+* `data` - the file content
+* `encoding` - file encoding
+* `options` - [js-yaml](https://www.npmjs.com/package/js-yaml) options
+* `callback` - callback function, return parameters: `error`, `data`
+
+#### Configuration.readSync(locate, encoding = "utf-8")
+* `locate` - the file location
+
+#### Configuration.writeSync(locate, data, encoding, options)
+* `locate` - the file location
+* `data` - the file content
+* `encoding` - file encoding
+* `options` - [js-yaml](https://www.npmjs.com/package/js-yaml) options
+
+
 ### Xeow.DBManager
+Xeow Database Manager use [sequelize](https://www.npmjs.com/package/sequelize) pakage. If you need more documentation, you can found it there.
 #### DBManager.get(model)
 * `model` - Database table name
 

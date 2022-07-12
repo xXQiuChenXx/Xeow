@@ -105,7 +105,7 @@ module.exports = {
                 ctx.closePath();
                 ctx.clip();
 
-                const avatar_bg = await Canvas.loadImage("./src/images/white.jpg");
+                const avatar_bg = await Canvas.loadImage("./src/Images/white.jpg");
 
                 ctx.drawImage(avatar_bg, dx - 6, dy - 6, dWidth + 20, dHeight + 20);
 

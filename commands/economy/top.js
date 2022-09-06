@@ -19,14 +19,14 @@ module.exports = {
 
         // 1. 0-9   2. 10-19   3. 20-29
         for (let i = 0; i <= parseInt(data.length / 10); i++) {
-            let embed = new Discord.MessageEmbed()
+            let embed = new Discord.EmbedBuilder()
                 .setTitle(Xeow.translate("economy/top:money_top", {
                     guild: message.guild.name
                 }))
                 .setDescription(data.slice(i * 10, i * 10 + 9).map((data, i) => {
                     return `**${i + 1}.** <@${data.user}> - ${data.coins}`
                 }).join('\n'))
-                .setColor("RANDOM")
+                .setColor("Random")
             Embeds.push(embed)
         }
 

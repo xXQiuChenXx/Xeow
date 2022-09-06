@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 module.exports = {
     config: {
         name: "daily",
@@ -19,8 +19,8 @@ module.exports = {
             let current = parseFloat(data.coins) + checkInAmount + parseFloat(bonus)
             await data.update({ coins: current, lastCheckIn: now.toString(), checked_in_count: data.checked_in_count + 1 })
             await data.save()
-            const embed = new MessageEmbed()
-                .setColor("RANDOM")
+            const embed = new EmbedBuilder()
+                .setColor("Random")
                 .setTitle(message.translate("economy/daily:title"))
                 .setDescription(message.translate("economy/daily:description:hasBonus", {
                     days: data["checked_in_count"],
@@ -51,8 +51,8 @@ module.exports = {
             }
 
 
-            const embed = new MessageEmbed()
-                .setColor("RANDOM")
+            const embed = new EmbedBuilder()
+                .setColor("Random")
                 .setTitle(message.translate("economy/daily:title"))
                 .setDescription(message.translate("economy/daily:description:default", {
                     total: checkInAmount

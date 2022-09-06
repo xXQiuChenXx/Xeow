@@ -7,7 +7,7 @@ module.exports = {
     api: ['1.0.0'],
     priority: 1,
     configs: [{
-        name: "settings",
+        fileName: "settings",
         content: {
             fonts: ["TaipeiSans"],
             image_size: {
@@ -32,17 +32,20 @@ module.exports = {
             }
         }
     }],
-    languages: {
-        line_1: "歡迎, {{userTag}}",
-        line_2: "第 #{{memberCount}} 位成員加入",
-        embed_descriptioon: "**歡迎來到 {{guild_name}}!**\n嗨 <@{{member_id}}>!, 🎉🤗請到 {{rule_channel}} 同意一下規章哦!",
-        embed_footer: "歡迎"
-    },
+    languages: [{
+        fileName: "WelcomeImage",
+        content: {
+            line_1: "歡迎, {{userTag}}",
+            line_2: "第 #{{memberCount}} 位成員加入",
+            embed_descriptioon: "**歡迎來到 {{guild_name}}!**\n嗨 <@{{member_id}}>!, 🎉🤗請到 {{rule_channel}} 同意一下規章哦!",
+            embed_footer: "歡迎"
+        }
+    }],
     requires: ['discord.js', 'canvas'],
     permissions: ['EVENT_ACCESS'],
     Plugin: class Plugin {
-        constructor(api, configs) {
-            this.config = configs.settings
+        constructor(api) {
+            this.config = api.getConfig('settings')
             this.api = api
         }
 
@@ -72,7 +75,7 @@ module.exports = {
                 })
                 //if the text is too big then smaller the text
                 ctx.font = config["line_1"].font,
-                    ctx.fillStyle = config["line_1"].fillStyle
+                ctx.fillStyle = config["line_1"].fillStyle
                 ctx.textAlign = config["line_1"].textAlign
                 ctx.shadowColor = config["line_1"].shadowColor
                 ctx.shadowBlur = config["line_1"].shadowBlur
@@ -113,16 +116,15 @@ module.exports = {
                 ctx.arc(x, y, radius, startAngle, endAngle);
                 ctx.closePath();
                 ctx.clip();
-
-                const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'jpg' }));
+                const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ extension: 'jpg' }));
 
                 ctx.drawImage(avatar, dx, dy, dWidth, dHeight);
 
-                const attachment = new Discord.MessageAttachment(canvas.toBuffer(), "welcome.png");
+                const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: "welcome.png" });
                 const rules = member.guild.channels.cache.find(ch => ch.id === member.guild.rulesChannelId).toString()
 
-                const embed = new Discord.MessageEmbed()
-                    .setColor("RANDOM")
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Random")
                     .setDescription(api.translate("plugins/WelcomeImage:embed_description", {
                         guild_name: member.guild.name,
                         member_id: member.id,

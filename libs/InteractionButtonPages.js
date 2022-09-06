@@ -9,12 +9,12 @@ async function InteractionButtonPages(options) {
         end: "❌"
     };
     const defaultStyles = {
-        first: "SUCCESS",
-        previous: "PRIMARY",
-        next: "PRIMARY",
-        last: "PRIMARY",
-        number: "SECONDARY",
-        end: "DANGER"
+        first: "Success",
+        previous: "Primary",
+        next: "Primary",
+        last: "Primary",
+        number: "Secondary",
+        end: "Danger"
     };
     const { interaction, embeds, time, customFilter, fastSkip, pageTravel, end } = options;
     let currentPage = 1;
@@ -38,7 +38,7 @@ async function InteractionButtonPages(options) {
         if (names.length > 5)
             console.log("信息按鈕過多, 最大5個/1條信息")
         return names.reduce((accumulator, name) => {
-            accumulator.push(new Discord.MessageButton()
+            accumulator.push(new Discord.ButtonBuilder()
                 .setEmoji(defaultEmojis[name])
                 .setCustomId(name)
                 .setDisabled(state || checkState(name))
@@ -47,12 +47,12 @@ async function InteractionButtonPages(options) {
         }, []);
     };
     const components = (state) => [
-        new Discord.MessageActionRow().addComponents(generateButtons(state)),
+        new Discord.ActionRowBuilder().addComponents(generateButtons(state)),
     ];
     const changeFooter = () => {
-        const embed = embeds[currentPage - 1];
-        const newEmbed = new Discord.MessageEmbed(embed);
-        if (embed?.footer?.text) {
+        const newEmbed = embeds[currentPage - 1];
+        // const newEmbed = new Discord.EmbedBuilder(embed);
+        if (newEmbed?.footer?.text) {
             return newEmbed.setFooter({
                 text: `${embed.footer.text} - 第${currentPage}頁, 共有${embeds.length}頁`,
                 iconURL: embed.footer.iconURL
@@ -70,17 +70,12 @@ async function InteractionButtonPages(options) {
         return i.user.id === interaction.user.id;
     };
     const filter = customFilter || defaultFilter;
-    const collectorOptions = () => {
-        const opt = {
-            filter,
-            componentType: "BUTTON",
-        };
-        if (time)
-            opt["time"] = time;
-        return opt;
-    };
     let Msg = await interaction.fetchReply();
-    const collector = Msg.createMessageComponentCollector(await collectorOptions());
+    const collector = Msg.createMessageComponentCollector({
+        filter,
+        componentType: 2,
+        time: time
+    });
     const pageTravelling = new Set();
     const numberTravel = async () => {
         if (pageTravelling.has(interaction.user.id))
@@ -138,7 +133,7 @@ async function InteractionButtonPages(options) {
         });
     });
     collector.on("end", () => {
-        let embed = new Discord.MessageEmbed().setTitle("已失效")
+        let embed = new Discord.EmbedBuilder().setTitle("已失效")
         interaction.editReply({
             embeds: [embed],
             components: components(true),

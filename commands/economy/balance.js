@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 module.exports = {
     config: {
         name: "balance",
@@ -6,8 +6,8 @@ module.exports = {
         usage: "balance [成員標註]",
         description: "查詢自己或他人的餘額",
         options: [{
-            name: 'target',
-            type: 'USER',
+            name: 'member',
+            type: 6,
             description: '成員標註',
             required: false
         }],
@@ -27,8 +27,8 @@ module.exports = {
         if (message.mentions.members.first()) {
             let member = message.mentions.members.first()
             let coins = await getCoins(message.guild.id, member.id)
-            const embed = new MessageEmbed()
-                .setColor(coins === undefined ? "RED" : "GREEN")
+            const embed = new EmbedBuilder()
+                .setColor(coins === undefined ? "Red" : "Green")
                 .setAuthor({
                     name: member.nickname === null ? member.user.tag : member.nickname,
                     iconURL: member.user.displayAvatarURL({ dynamic: true })
@@ -42,8 +42,8 @@ module.exports = {
             await message.reply({ embeds: [embed] })
         } else {
             let coins = await getCoins(message.guild.id, message.author.id)
-            const embed = new MessageEmbed()
-                .setColor(coins === undefined ? "RED" : "GREEN")
+            const embed = new EmbedBuilder()
+                .setColor(coins === undefined ? "Red" : "Green")
                 .setAuthor({
                     name: message.member.nickname === null ? message.member.user.tag : message.member.nickname,
                     iconURL: message.member.user.displayAvatarURL({ dynamic: true })

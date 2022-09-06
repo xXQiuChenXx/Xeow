@@ -25,8 +25,9 @@ module.exports = class Configuration {
         else return false
     }
 
-    reload() {
-        this.cache.clear()
+    reload(locate) {
+        if(!locate) this.cache.clear()
+        if(locate) this.cache.delete(path.join(__dirname, "../../configs", locate))
     }
 
     delete(locate) {
@@ -75,6 +76,7 @@ module.exports = class Configuration {
         let dir = args.slice(0, args.length - 1).join("/")
         const fileDir = path.join(__dirname, "../../configs", dir)
         if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir)
-        fs.writeFileSync(filePath, YAML.dump(data, options), encoding);
+        if(typeof data === "object") fs.writeFileSync(filePath, YAML.dump(data, options), encoding);
+            else fs.writeFileSync(filePath, data, encoding);
     }
 }

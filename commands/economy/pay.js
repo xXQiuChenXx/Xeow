@@ -5,18 +5,18 @@ module.exports = {
         description: "付款/轉賬",
         options: [{
             name: 'target',
-            type: 'USER',
+            type: 6,
             description: '成員標註',
             required: true
         }, {
             name: 'amount',
-            type: 'INTEGER',
+            type: 4,
             description: '金額',
             required: true
         }]
     },
     run: async (Xeow, message, args, config) => {
-        const { MessageEmbed } = Xeow.Modules["discord.js"]
+        const { EmbedBuilder } = Xeow.Modules["discord.js"]
         if (!args[0] || !message.mentions.members.first()) return await Xeow.invalidUsage({ message: message, arg: 0, type: "empty" })
         if (!args[1]) return await Xeow.invalidUsage({ message: message, arg: 1, type: "empty" })
 
@@ -34,7 +34,7 @@ module.exports = {
             reason: message.translate("economy/pay:invalidTarget")
         })
         if (targetMember.user.bot) return message.reply(message.translate("economy/pay:noBot"))
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
         await Xeow.DBManager.sync()
         let self = await Xeow.DBManager.get("economy")
             .findOne({ where: { guild: message.guild.id, user: message.author.id } })
@@ -56,22 +56,30 @@ module.exports = {
                     })
                     .save()
             }
-            embed.setColor("GREEN")
+            embed.setColor("Green")
                 .setTitle(message.translate("economy/pay:success:title"))
                 .setDescription(message.translate("economy/pay:success:description", {
                     user: args[0],
                     total: args[1].toString()
                 }))
-                .addField(message.translate("economy/pay:success:fields:self:name"),
-                    message.translate("economy/pay:success:fields:self:value", {
-                        before: self.coins,
-                        after: parseFloat(self.coins) - parseFloat(args[1])
-                    }), true)
-                .addField(message.translate("economy/pay:success:fields:other:name"),
-                    message.translate("economy/pay:success:fields:other:value", {
-                        before: other?.coins || 0,
-                        after: parseFloat(other?.coins || 0) + parseFloat(args[1])
-                    }), true)
+
+                .addFields([
+                    {
+                        name: message.translate("economy/pay:success:fields:self:name"),
+                        value: message.translate("economy/pay:success:fields:self:value", {
+                            before: self.coins,
+                            after: parseFloat(self.coins) - parseFloat(args[1])
+                        }),
+                        inline: true
+                    }, {
+                        name: message.translate("economy/pay:success:fields:other:name"),
+                        value: message.translate("economy/pay:success:fields:other:value", {
+                            before: other?.coins || 0,
+                            after: parseFloat(other?.coins || 0) + parseFloat(args[1])
+                        }),
+                        inline: true
+                    }
+                ])
             message.reply({ embeds: [embed] })
         } else {
             message.reply(message.translate("economy/pay:insufficientBalance"))

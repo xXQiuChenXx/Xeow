@@ -1,25 +1,28 @@
 const fs = require("fs");
 const path = require("path");
-const { Client, Collection, Intents } = require("discord.js");
+const { Client, Collection, GatewayIntentBits } = require("discord.js");
 module.exports = class Xeow extends Client {
     constructor() {
         require("./Extender")
         super({
-            intents: [
-                Intents.FLAGS.GUILDS,
-                Intents.FLAGS.GUILD_MESSAGES,
-                Intents.FLAGS.GUILD_PRESENCES,
-                Intents.FLAGS.GUILD_INTEGRATIONS,
-                Intents.FLAGS.DIRECT_MESSAGES,
-                Intents.FLAGS.DIRECT_MESSAGE_TYPING,
-                Intents.FLAGS.GUILD_VOICE_STATES,
-                Intents.FLAGS.GUILD_WEBHOOKS,
-                Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-                Intents.FLAGS.GUILD_INVITES,
-                Intents.FLAGS.GUILD_MEMBERS,
-                Intents.FLAGS.GUILD_BANS,
-                Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-                Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+            intents: [ //all intents
+                GatewayIntentBits.DirectMessageReactions,
+                GatewayIntentBits.DirectMessageTyping,
+                GatewayIntentBits.DirectMessages,
+                GatewayIntentBits.GuildBans,
+                GatewayIntentBits.GuildEmojisAndStickers,
+                GatewayIntentBits.GuildIntegrations,
+                GatewayIntentBits.GuildInvites,
+                GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.GuildMessageReactions,
+                GatewayIntentBits.GuildMessageTyping,
+                GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.GuildPresences,
+                GatewayIntentBits.GuildScheduledEvents,
+                GatewayIntentBits.GuildVoiceStates,
+                GatewayIntentBits.GuildWebhooks,
+                GatewayIntentBits.Guilds,
+                GatewayIntentBits.MessageContent,
             ],
             autoReconnect: true,
             partials: ["CHANNEL"],
@@ -32,7 +35,6 @@ module.exports = class Xeow extends Client {
         this.categories = fs.readdirSync("./commands")
         this.commands = new Collection(); // Creates new commands collection
         this.aliases = new Collection(); // Creates new command aliases collection
-        this.plugins = new Collection(); // Creates new plugin collection
         this.wait = function (ms) {
             return new Promise((resolve) => {
                 setTimeout(resolve, ms)
@@ -152,8 +154,8 @@ module.exports = class Xeow extends Client {
     }
 
     invalidUsage({ message, arg, type, reason }) {
-        const { MessageEmbed } = this.Modules["discord.js"]
-        const embed = new MessageEmbed().setColor("RED")
+        const { EmbedBuilder } = require("discord.js")
+        const embed = new EmbedBuilder().setColor("Red")
         let pre = message.content.split(message.content.split(" ")[arg + 1])[0]
         const arrow = " ".repeat(pre.length) + "^^^"
         if (type === "empty") {

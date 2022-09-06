@@ -8,18 +8,18 @@ module.exports = {
         options: [
             {
                 name: 'set',
-                type: 'SUB_COMMAND',
+                type: 1,
                 description: '設置成員的錢幣',
                 options: [
                     {
                         name: 'member',
-                        type: 'USER',
+                        type: 6,
                         description: '成員標註',
                         required: true
                     },
                     {
                         name: 'amount',
-                        type: 'NUMBER',
+                        type: 10,
                         description: '數量',
                         required: true
                     }
@@ -27,18 +27,18 @@ module.exports = {
             },
             {
                 name: 'give',
-                type: 'SUB_COMMAND',
+                type: 1,
                 description: '給予成員錢幣',
                 options: [
                     {
                         name: 'member',
-                        type: 'USER',
+                        type: 6,
                         description: '成員標註',
                         required: true
                     },
                     {
                         name: 'amount',
-                        type: 'NUMBER',
+                        type: 10,
                         description: '數量',
                         required: true
                     }
@@ -46,18 +46,18 @@ module.exports = {
             },
             {
                 name: 'take',
-                type: 'SUB_COMMAND',
+                type: 1,
                 description: '扣除成員的錢幣',
                 options: [
                     {
                         name: 'member',
-                        type: 'USER',
+                        type: 6,
                         description: '成員標註',
                         required: true
                     },
                     {
                         name: 'amount',
-                        type: 'NUMBER',
+                        type: 10,
                         description: '數量',
                         required: true
                     }
@@ -66,25 +66,20 @@ module.exports = {
         ],
     },
     run: async (Xeow, message, args, config) => {
+
+        console.log(message.content)
         let type = args[0]
         let member = message.mentions.users.first()
         let amount = parseFloat(args[2])
         if(!type) {
-            await Xeow.invalidUsage({
-                message: message,
-                arg: 0,
-                type: "empty"
-            })
+            await Xeow.invalidUsage({ message: message, arg: 0, type: "empty" })
         }
+        
         if (!member) {
-            await Xeow.invalidUsage({
-                message: message,
-                arg: 1,
-                type: "empty"
-            })
+            await Xeow.invalidUsage({message: message, arg: 1, type: "empty" })
         }
 
-        if(amount === NaN) {
+        if(isNaN(amount)) {
             await Xeow.invalidUsage({
                 message: message,
                 arg: 2,
@@ -130,7 +125,7 @@ module.exports = {
                     coins: balance
                 }).save();
             }
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(Xeow.translate("admin/money:give:color"))
                 .setTitle(Xeow.translate("admin/money:give:title"))
                 .setDescription(Xeow.translate("admin/money:give:description", {
@@ -148,7 +143,7 @@ module.exports = {
             })
             await data.save()
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(Xeow.translate("admin/money:take:color"))
                 .setTitle(Xeow.translate("admin/money:take:title"))
                 .setDescription(Xeow.translate("admin/money:take:description", {
@@ -171,7 +166,7 @@ module.exports = {
                     coins: amount
                 }).save();
             }
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(Xeow.translate("admin/money:set:color"))
                 .setTitle(Xeow.translate("admin/money:set:title"))
                 .setDescription(Xeow.translate("admin/money:set:description",

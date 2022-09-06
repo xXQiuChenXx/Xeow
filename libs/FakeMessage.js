@@ -86,9 +86,9 @@ class FakeMessage {
         this._patch()
     }
 
-    createMessageComponentCollector(options = {}) {
-        return this.channel.createMessageCollector(options)
-    }
+    // createMessageComponentCollector(options = {}) {
+    //     return this.channel.createMessageCollector(options)
+    // }
 
     /**
      * @param {Array<Discord.CommandInteractionOption>} data
@@ -113,28 +113,33 @@ class FakeMessage {
     _parseOption(option) {
 
         switch (option.type) {
-            case 'SUB_COMMAND':
+            case 1:
                 return option.name + " " + option.options.map(this._parseOption.bind(this)).join(' ')
-            case 'SUB_COMMAND_GROUP':
+            case 2:
                 return option.name + " " + option.options.map(this._parseOption.bind(this)).join(' ')
-            case 'STRING':
-            case 'INTEGER':
-            case 'NUMBER':
-            case 'BOOLEAN':
+            case 3:
                 return option.value;
-            case 'USER':
+            case 4:
+                return option.value;
+            case 5:
+                return option.value;
+            case 6:
                 this.mentions.users.set(option.value, option.user)
                 this.mentions.members.set(option.value, option.member)
                 return `<@${option.value}>`;
-            case 'CHANNEL':
+            case 7:
                 this.mentions.channels.set(option.value, option.channel)
                 return `<#${option.value}>`;
-            case 'ROLE':
+            case 8:
                 this.mentions.roles.set(option.value, option.role)
                 return `<@&${option.value}>`;
-            case 'MENTIONABLE':
+            case 9:
                 // todo: detect MENTIONABLE is a user, a role or a channel
                 return `<@${option.value}>`;
+            case 10:
+                return option.value;
+            case 11:
+                ;
         }
     }
 

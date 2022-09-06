@@ -1,3 +1,17 @@
+const optType = {
+    "SUB_COMMAND": 1,
+    "SUB_COMMAND_GROUP": 2,
+    "STRING": 3,
+    "INTEGER": 4,
+    "BOOLEAN": 5,
+    "USER": 6,
+    "CHANNEL": 7,
+    "ROLE": 8,
+    "MENTIONABLE": 9,
+    "NUMBER": 10,
+    "ATTACHMENT": 11
+}
+
 class SlashCommand {
     constructor(Xeow) {
         this.Xeow = Xeow
@@ -54,7 +68,7 @@ class SlashCommand {
     async unregister(cmdName) {
         let commands = await this.Xeow.application.commands.fetch()
         let command = commands.find(cmd => cmd.name === cmdName)
-        if(!command) throw new Error(this.Xeow.translate("admin/slashcommand:commandNotFound", {
+        if (!command) throw new Error(this.Xeow.translate("admin/slashcommand:commandNotFound", {
             command: cmdName
         }))
         await this.Xeow.application?.commands.delete(command)

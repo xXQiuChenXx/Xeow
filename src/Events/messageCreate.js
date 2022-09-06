@@ -1,4 +1,3 @@
-const { Permissions } = require('discord.js');
 module.exports = class Event {
     constructor(Xeow) {
         this.Xeow = Xeow
@@ -37,8 +36,7 @@ module.exports = class Event {
 			}
 
             if(command.memberPerms?.length) {
-                let perms = command.memberPerms.map(perm => Permissions.FLAGS[perm])
-                if(!message.member.permissions.has(perms)) return message.replyT("common:lackedPermission")
+                if(!message.member.permissions.has(command.memberPerms)) return message.replyT("common:lackedPermission")
             }
 
             console.log("events:messageCreate:cmdExecuted",{

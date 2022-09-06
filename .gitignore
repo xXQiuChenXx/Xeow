@@ -4,3 +4,5 @@ logs
 package-lock.json
 database
 configs/main.yml
+configs/commands/**
+configs/plugins/**

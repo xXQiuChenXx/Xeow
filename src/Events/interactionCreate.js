@@ -24,6 +24,7 @@ module.exports = class Event {
                 })
             }
         }
+        
         let args = msg.content.split(/ +/)
         args = args.slice(1, args.length)
 
@@ -32,8 +33,7 @@ module.exports = class Event {
         }
 
         if (command.memberPerms?.length) {
-            let perms = command.memberPerms.map(perm => Permissions.FLAGS[perm])
-            if (!msg.member.permissions.has(perms)) return msg.replyT("common:lackedPermission")
+            if (!msg.member.permissions.has(command.memberPerms)) return msg.replyT("common:lackedPermission")
         }
 
         console.log("events:interactionCreate:cmdExecuted", {

@@ -1,10 +1,9 @@
 const cmd = require("./command")
 // const extractor = require("./extractor")
 module.exports = class API {
-    #Logger;
-    constructor(Xeow, permissions) {
+    constructor(Xeow, plugin) {
+        let permissions = plugin.permissions
         this.version = '1.0.0'
-        this.#Logger = Xeow.Libraries.Logger
         this.compatible = ['1.0.0']
         this.translate = Xeow.translate
         this.translations = Xeow.translations
@@ -21,9 +20,9 @@ module.exports = class API {
             if (permissions.includes('FULL_ACCESS')) this.Xeow = Xeow;
             //if( permissions.includes('EXTRACTOR_ACCESS')) this.extractor = new extractor(bot);
         }
-    }
-
-    getLoggerInstance(name) {
-        return new this.#Logger(name, 0, [], 0)
+        this.getConfig = function(name) {
+            return Xeow.Configuration.readSync(`plugins/${plugin.name}/${name}.yml`)
+        }
+        this.getLogger = Xeow.getLogger
     }
 }

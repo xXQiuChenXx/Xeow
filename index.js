@@ -209,6 +209,17 @@ async function Startup() {
         translations: Xeow.translations,
         language: config.Lang
     })
+    Xeow.getLogger = function(name, debug = false, ignore = []) {
+        return new Logger({
+            caller: name,
+            debug: debug,
+            ignore: ignore,
+            locale: config.Logger.locale,
+            format: config.Logger.momentFormat,
+            translations: Xeow.translations,
+            language: config.Lang
+        })
+    }
     console.log("console/main:bot:NodeJS_version", { version: process.version })
     await archiveLog(Xeow);
     await CheckForUpdate();
@@ -221,6 +232,7 @@ async function Startup() {
         }, 15000)
         console.log("console/main:bot:loaded", { second: ((performance.now() - ms) / 1000).toFixed(2) })
     })
+    Xeow.on("debug", console.debug)
     await Xeow.login(config.Token).catch(error => {
         if (error.message.includes("An invalid token was provided")) {
             console.showErr("console/main:bot:invalidToken");

@@ -8,7 +8,7 @@ module.exports = {
         permissions: [],
         options: [{
             name: 'type',
-            type: 'STRING',
+            type: 3,
             description: '編輯斜綫指令',
             required: true,
             choices: [
@@ -19,7 +19,7 @@ module.exports = {
             ],
         }, {
             name: "command",
-            type: "STRING",
+            type: 3,
             description: "指令名称",
             required: false
         }],

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 module.exports = {
     config: {
         name: "help",
@@ -6,7 +6,7 @@ module.exports = {
         usage: "help [指令/module]",
         options: [{
             name: 'name',
-            type: 'STRING',
+            type: 3,
             description: '指令名字 或者 module',
             required: false
         }],
@@ -36,14 +36,17 @@ module.exports = {
 }
 
 async function getAll(Xeow, message, config, prefix) {
-    const menu = new MessageEmbed()
-        .setColor("RANDOM")
+    const menu = new EmbedBuilder()
+        .setColor("Random")
         .setTitle(message.translate("info/help:main:title"))
         .setDescription(message.translate("info/help:main:description"))
     if (config.menu.timestamp === true) menu.setTimestamp()
 
     for (const category of Xeow.categories) {
-        menu.addField(`${config.emoji[category] === undefined ? "": config.emoji[category]} ${config.categoryReplacement[category] || category}`, prefix + `help module <${message.translate("info/help:module")}}>`)
+        menu.addFields([{
+            name: `${config.emoji[category] === undefined ? "" : config.emoji[category]} ${config.categoryReplacement[category] || category}`,
+            value: prefix + `help module <${message.translate("info/help:module")}}>`
+        }])
     }
     let Pages = []
 
@@ -54,12 +57,14 @@ async function getAll(Xeow, message, config, prefix) {
 
     let Embeds = [menu]
     for (const temp of Pages) {
-        const embed = new MessageEmbed()
-            .setColor('RANDOM')
-            .setTitle(`**${config.emoji[temp.category] === undefined ? "": config.emoji[temp.category]} ${config.categoryReplacement[temp.category] || temp.category}**`)
+        const embed = new EmbedBuilder()
+            .setColor('Random')
+            .setTitle(`**${config.emoji[temp.category] === undefined ? "" : config.emoji[temp.category]} ${config.categoryReplacement[temp.category] || temp.category}**`)
         temp['commands'].forEach(function (cmd) {
-            embed.addField(`${prefix}${cmd.name} - ${cmd.description}`,
-                `${message.translate("info/help:usage")}: ` + "`" + prefix + cmd.usage + "`")
+            embed.addFields([{
+                name: `${prefix}${cmd.name} - ${cmd.description}`,
+                value: `${message.translate("info/help:usage")}: ` + "`" + prefix + cmd.usage + "`"
+            }])
         });
         Embeds.push(embed)
     }
@@ -82,28 +87,36 @@ async function getAll(Xeow, message, config, prefix) {
 }
 
 function getCMD(Xeow, message, input, prefix) {
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
     const cmd = Xeow.commands.get(input);
     if (cmd) {
-        embed.setTitle(message.translate("info/help:getCMD:title",{
+        embed.setTitle(message.translate("info/help:getCMD:title", {
             commandName: cmd.name
         }))
-        if (cmd.description) embed.addField(message.translate("info/help:getCMD:fields.description.name"),
-            message.translate("info/help:getCMD:fields.description.value", {
-                commandDesc: cmd.description
-            }))
-        if (cmd.usage) embed.addField(message.translate("info/help:getCMD:fields.usage.name"),
-            message.translate("info/help:getCMD:fields.usage.value", {
-                prefix: prefix,
-                commandUsage: cmd.usage
-            }))
-        if (cmd.timeout) embed.addField(message.translate("info/help:getCMD:fields.cooldown.name"),
-            message.translate("info/help:getCMD:fields.cooldown.value", {
-                commandCD: cmd.timeout.toString()
-            }))
+
+        //awaiting for improve
+        embed.addFields([
+            {
+                name: message.translate("info/help:getCMD:fields.description.name"),
+                value: message.translate("info/help:getCMD:fields.description.value", {
+                    commandDesc: cmd.description
+                })
+            },{
+                name: message.translate("info/help:getCMD:fields.usage.name"),
+                value:  message.translate("info/help:getCMD:fields.usage.value", {
+                    prefix: prefix,
+                    commandUsage: cmd.usage
+                })
+            }, {
+                name: message.translate("info/help:getCMD:fields.cooldown.name"),
+                value: message.translate("info/help:getCMD:fields.cooldown.value", {
+                    commandCD: cmd.timeout.toString()
+                })
+            }
+        ])
         embed.setFooter({ text: message.translate("info/help:getCMD:footer") });
     } else {
-        embed.setColor("RED")
+        embed.setColor("Red")
             .setDescription(message.translate("info/help:getCMD:notFound", {
                 cmdName: input
             }))

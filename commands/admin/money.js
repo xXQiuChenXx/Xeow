@@ -6,80 +6,39 @@ module.exports = {
         usage: "money <give/take/set> <成員標註> <數量>",
         memberPerms: ["ADMINISTRATOR"],
         options: [
-            {
-                name: 'set',
-                type: 1,
-                description: '設置成員的錢幣',
-                options: [
-                    {
-                        name: 'member',
-                        type: 6,
-                        description: '成員標註',
-                        required: true
-                    },
-                    {
-                        name: 'amount',
-                        type: 10,
-                        description: '數量',
-                        required: true
-                    }
+            { name: 'set', type: 1, description: '設置成員的錢幣', options: 
+                [
+                    { name: 'member', type: 6, description: '成員標註', required: true },
+                    { name: 'amount', type: 10, description: '數量', required: true }
                 ]
             },
-            {
-                name: 'give',
-                type: 1,
-                description: '給予成員錢幣',
-                options: [
-                    {
-                        name: 'member',
-                        type: 6,
-                        description: '成員標註',
-                        required: true
-                    },
-                    {
-                        name: 'amount',
-                        type: 10,
-                        description: '數量',
-                        required: true
-                    }
+            { name: 'give', type: 1, description: '給予成員錢幣', options: 
+                [
+                    { name: 'member', type: 6, description: '成員標註', required: true },
+                    { name: 'amount', type: 10, description: '數量', required: true }
                 ]
             },
-            {
-                name: 'take',
-                type: 1,
-                description: '扣除成員的錢幣',
-                options: [
-                    {
-                        name: 'member',
-                        type: 6,
-                        description: '成員標註',
-                        required: true
-                    },
-                    {
-                        name: 'amount',
-                        type: 10,
-                        description: '數量',
-                        required: true
-                    }
+            { name: 'take', type: 1, description: '扣除成員的錢幣', options: 
+                [
+                    { name: 'member', type: 6, description: '成員標註', required: true },
+                    { name: 'amount', type: 10, description: '數量', required: true }
                 ]
             }
         ],
     },
-    run: async (Xeow, message, args, config) => {
-
-        console.log(message.content)
+    run: async (Xeow, message, args) => {
         let type = args[0]
         let member = message.mentions.users.first()
         let amount = parseFloat(args[2])
-        if(!type) {
+        if (!type) {
             await Xeow.invalidUsage({ message: message, arg: 0, type: "empty" })
         }
-        
+
         if (!member) {
-            await Xeow.invalidUsage({message: message, arg: 1, type: "empty" })
+            await Xeow.invalidUsage({ message: message, arg: 1, type: "empty" })
         }
 
-        if(isNaN(amount)) {
+        if (isNaN(amount)) {
             await Xeow.invalidUsage({
                 message: message,
                 arg: 2,
@@ -170,10 +129,10 @@ module.exports = {
                 .setColor(Xeow.translate("admin/money:set:color"))
                 .setTitle(Xeow.translate("admin/money:set:title"))
                 .setDescription(Xeow.translate("admin/money:set:description",
-                {
-                    member: member.toString(),
-                    amount: amount
-                }))
+                    {
+                        member: member.toString(),
+                        amount: amount
+                    }))
             message.reply({ embeds: [embed] })
         } else {
             return await Xeow.invalidUsage({

@@ -37,7 +37,7 @@ module.exports = {
         content: {
             line_1: "歡迎, {{userTag}}",
             line_2: "第 #{{memberCount}} 位成員加入",
-            embed_descriptioon: "**歡迎來到 {{guild_name}}!**\n嗨 <@{{member_id}}>!, 🎉🤗請到 {{rule_channel}} 同意一下規章哦!",
+            embed_description: "**歡迎來到 {{guild_name}}!**\n嗨 <@{{member_id}}>!, 🎉🤗請到 {{rule_channel}} 同意一下規章哦!",
             embed_footer: "歡迎"
         }
     }],

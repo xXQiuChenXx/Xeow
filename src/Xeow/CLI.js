@@ -96,7 +96,7 @@ module.exports = class CLI {
                     if (fulltext.length > 50) fulltext = fulltext.slice(0, 47) + '...'
                     console.log(fulltext)
                 })
-                console.log("=").repeat(60)
+                console.log("=".repeat(60))
             }
         }
 

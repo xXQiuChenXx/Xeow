@@ -45,7 +45,7 @@ async function getAll(Xeow, message, config, prefix) {
     for (const category of Xeow.categories) {
         menu.addFields([{
             name: `${config.emoji[category] === undefined ? "" : config.emoji[category]} ${config.categoryReplacement[category] || category}`,
-            value: prefix + `help module <${message.translate("info/help:module")}}>`
+            value: `${prefix}help module ${category}`
         }])
     }
     let Pages = []

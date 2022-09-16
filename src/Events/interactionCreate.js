@@ -74,7 +74,7 @@ module.exports = class Event {
                                     }),
                                     value: command?.description || noValue
                                 },
-                                { name: Xeow.translate("general/help:usage"), value: command?.usage === undefined ? noValue : `${prefix}${command.usage}` },
+                                { name: Xeow.translate("general/help:usage"), value: command?.usage === undefined ? noValue : "```" + `${prefix}${command.usage}` + "```" },
                                 { name: Xeow.translate("general/help:format:name"), value: Xeow.translate("general/help:format:value") }
                             ])
                             .setThumbnail(Xeow.user.avatarURL({ extension: 'jpg' }));

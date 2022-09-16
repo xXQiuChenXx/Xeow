@@ -45,7 +45,7 @@ module.exports = {
                         value: cmd?.description || noValue
                     }, {
                         name: `${message.translate("general/help:usage")}`,
-                        value: cmd?.usage === undefined ? noValue : `${prefix}${cmd.usage}`
+                        value: cmd?.usage === undefined ? noValue : "```" + `${prefix}${cmd.usage}` + "```"
                     }
                 ]);
             if (cmd?.timeout) embed.addFields([{

@@ -5,7 +5,9 @@ module.exports = {
         timeout: 86400000,
         description: "每日簽到",
         checkInAmount: 100,
-        bonusMultiple: 0.02
+        bonusMultiple: 0.02,
+        usage: "daily",
+        emoji: "📅"
     },
     run: async (Xeow, message, args, config) => {
         let checkInAmount = config.checkInAmount

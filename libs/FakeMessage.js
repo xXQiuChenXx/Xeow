@@ -16,7 +16,7 @@ class FakeMessage {
 
         setTimeout(async function () {
             try {
-                await interaction.deferReply()
+                await interaction.deferReply();
             } catch(error) {
 
             }
@@ -165,7 +165,11 @@ class FakeMessage {
                     return await this.channelCloned.send(options)
                 }
             }
-            await this.interaction.reply({ fetchReply: true, ...options })
+            try {
+                await this.interaction.reply({ fetchReply: true, ...options });
+            } catch(e) {
+                await this.interaction.editReply({ ...options })
+            }
             return await this.interaction.fetchReply().then(url => { return url })
         }
 

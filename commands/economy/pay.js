@@ -3,6 +3,7 @@ module.exports = {
         name: "pay",
         usage: "pay <成員標註> <金額>",
         description: "付款/轉賬",
+        emoji: "💸",
         options: [{
             name: 'target',
             type: 6,

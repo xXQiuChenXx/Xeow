@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
     config: {
         name: "money",
+        emoji: "⚙️",
         description: "設置和更改錢幣指令",
         usage: "money <give/take/set> <成員標註> <數量>",
         memberPerms: ["ADMINISTRATOR"],

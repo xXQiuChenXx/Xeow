@@ -3,7 +3,8 @@ module.exports = {
     config: {
         name: "top",
         description: "金幣排行榜",
-        usage: "top"
+        usage: "top",
+        emoji: "🏆"
     },
     run: async (Xeow, message, args, config) => {
         await Xeow.DBManager.sync()

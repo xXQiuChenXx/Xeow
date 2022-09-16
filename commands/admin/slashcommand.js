@@ -4,6 +4,7 @@ module.exports = {
         description: "編輯斜綫指令, reset 和 remove 是包含全部指令",
         usage: "slashcommand <unregister/register/reset/remove> [指令]",
         timeout: 60000,
+        emoji: "🤖",
         memberPerms: ["ADMINISTRATOR"],
         permissions: [],
         options: [{

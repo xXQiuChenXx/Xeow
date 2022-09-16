@@ -1,0 +1,25 @@
+{
+    "aliases": "指令別名",
+    "description": "指令描述",
+    "usage": "指令使用方法",
+    "cooldown": "指令冷卻",
+    "commandTutorial": "📖 指令教學",
+    "chooseCommand": "選擇指令",
+    "backToMain": "返回主頁",
+    "backToMainDescription": "顯示指令幫助主頁",
+    "format": {
+        "name": "格式説明",
+        "value": "`<>`是一定要填的參數 `[]`是選填的參數"
+    },
+    "main": {
+        "description": "嗨嗨 d(･∀･)b 我是{{username}}, \n我的目標是讓你快速建立一個優質且友好的 Discord 伺服器! \n\n這邊附上 完整的指令清單 給你\n或是在 `help` 後面加上指令名字我也會幫助你的!",
+        "menu": {
+            "placeholder": "📖 指令教學"
+        }
+    },
+
+    "getCMD": {
+        "title": "{{emoji}}┇ {{command}} 指令"
+    },
+    "noValue": "`這個人很懶, 什麽都沒留下 QAQ`"
+}

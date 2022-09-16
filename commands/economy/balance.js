@@ -5,6 +5,7 @@ module.exports = {
         aliases: ["bal"],
         usage: "balance [成員標註]",
         description: "查詢自己或他人的餘額",
+        emoji: "💰",
         options: [{
             name: 'member',
             type: 6,

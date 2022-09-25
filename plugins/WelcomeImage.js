@@ -38,7 +38,8 @@ module.exports = {
             line_1: "歡迎, {{userTag}}",
             line_2: "第 #{{memberCount}} 位成員加入",
             embed_description: "**歡迎來到 {{guild_name}}!**\n嗨 <@{{member_id}}>!, 🎉🤗請到 {{rule_channel}} 同意一下規章哦!",
-            embed_footer: "歡迎"
+            embed_footer: "歡迎",
+            noSystemChannel: "{{guild}} 沒有歡迎頻道, 因此歡迎信息無法發送"
         }
     }],
     requires: ['discord.js', 'canvas'],
@@ -137,6 +138,9 @@ module.exports = {
                     })
                     .setImage("attachment://welcome.png")
 
+                if(!member.guild.systemChannel) return console.warn("plugins/WelcomeImage:noSystemChannel", {
+                    guild: member.guild.id
+                })
                 member.guild.systemChannel.send({
                     embeds: [embed], files: [attachment]
                 });

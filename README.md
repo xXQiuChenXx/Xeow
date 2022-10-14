@@ -3,14 +3,33 @@
 <br>
   Xeow Discord Bot
 <br>
+
+<p align="center">
+  <a href="https://discord.gg/m5VthYMNmh">
+    <img src="https://discordapp.com/api/guilds/1029764799774601287/widget.png?style=shield" alt="Discord Server">
+  </a>
+  <a href="https://github.com/xXQiuChenXx/Xeow/releases/latest">
+    <img src="https://img.shields.io/github/downloads/xXQiuChenXx/Xeow/total.svg" alt="Downloads">
+  </a>
+  <a href="https://img.shields.io/github/stars/xXQiuChenXx/Xeow.svg">
+    <img src="https://github.com/xXQiuChenXx/Xeow/stargazers" alt="Stars">
+  </a>
+  <a href="https://github.com/xXQiuChenXx/Xeow/releases/latest">
+    <img src="https://img.shields.io/github/release/xXQiuChenXx/Xeow.svg" alt="Release">
+  </a>
+  <a href="https://github.com/xXQiuChenXx/Xeow/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/xXQiuChenXx/Xeow?&logo=github">
+  </a>
+  
+  <!-- Crowdin Example
+  <a href="https://crowdin.com/project/red-discordbot">
+    <img src="https://d322cqt584bo4o.cloudfront.net/red-discordbot/localized.svg" alt="Localized with Crowdin">
+  </a> -->
+</p>
+
 Xeow is a discord bot that used NodeJS/JavaScript and designed for configurability, new fun and exciting bot features. Xeow discord bot built using discord.js v14.x and the bot will keep updating as discord.js is always updating.
 
 </div>
-
-[![Downloads](https://img.shields.io/github/downloads/xXQiuChenXx/Xeow/total.svg)](https://github.com/xXQiuChenXx/Xeow/releases/latest)
-[![Stars](https://img.shields.io/github/stars/xXQiuChenXx/Xeow.svg)](https://github.com/xXQiuChenXx/Xeow/stargazers)
-[![Release](https://img.shields.io/github/release/xXQiuChenXx/Xeow.svg)](https://github.com/xXQiuChenXx/Xeow/releases/latest)
-[![MIT License](https://img.shields.io/github/license/xXQiuChenXx/Xeow?&logo=github)](https://github.com/xXQiuChenXx/Xeow/blob/master/LICENSE)
 
 ## Requirements
 

@@ -34,7 +34,7 @@
     "js-yaml": "^4.1.0",
     "moment-timezone": "^0.5.37",
     "mysql2": "^2.3.3",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.2.10",
     "sequelize": "^6.23.2",
     "sqlite3": "^5.1.2",
     "syntax-error": "^1.4.0"

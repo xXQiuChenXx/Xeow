@@ -73,7 +73,7 @@ If you need any additional help, make sure to read our [wiki here](https://githu
 - SQLite
 
 ### More Information
-<div style="text-align: center"><span style="font-family: 'Tahoma'"><span style="font-size: 18px"><br>
+<div style="text-align: center"><span style="font-family: 'Tahoma'"><span style="font-size: 15px"><br>
 <a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/wiki.md" target="_blank" class="externalLink" rel="nofollow"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/wiki.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a>
 <a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/api.md" target="_blank" class="externalLink" rel="nofollow"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/api_docs.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a>
 <a href="https://discord.gg/m5VthYMNmh" class="internalLink"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/dc.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a><br>

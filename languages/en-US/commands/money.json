@@ -1,0 +1,48 @@
+{
+    "name": "money",
+    "description": "Set and change members' coins",
+    "opts": {
+        "set": {
+            "name": "set",
+            "description": "Set member coins",
+            "opts": {
+                "member": {
+                    "name": "member",
+                    "description": "mention a member"
+                },
+                "amount": {
+                    "name": "amount",
+                    "description": "the amount of money you want to set"
+                }
+            }
+        },
+        "give": {
+            "name": "give",
+            "description": "Give member coins",
+            "opts": {
+                "member": {
+                    "name": "member",
+                    "description": "mention a member"
+                },
+                "amount": {
+                    "name": "amount",
+                    "description": "amount of coins"
+                }
+            }
+        },
+        "take": {
+            "name": "take",
+            "description": "deduct members' coins",
+            "opts": {
+                "member": {
+                    "name": "member",
+                    "description": "mention a member"
+                },
+                "amount": {
+                    "name": "amount",
+                    "description": "amount of coins"
+                }
+            }
+        }
+    }
+}

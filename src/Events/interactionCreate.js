@@ -93,20 +93,22 @@ module.exports = class Event {
             const FakeMessage = this.FakeMessage
             if (!this.Xeow.settings.SlashCommand) return;
             if (interaction.user.bot) return;
-            let msg = new FakeMessage(interaction)
-            let command = Xeow.commands.get(interaction.commandName);
-            if (!command) return interaction.reply({
+            let command = Xeow.commands.get(interaction.commandName) || Xeow.aliases.get(interaction.commandName);
+            if (!command) return await interaction.reply({
                 content: Xeow.translate("events:interactionCreate:cmdNotFound"),
                 ephemeral: true
             });
+            let msg = new FakeMessage(interaction)
+
             if (command.timeout) {
                 let cd = await Xeow.checkTimeout(command.name, command.timeout, msg.guild.id, msg.author.id)
                 if (cd.status) {
-                    return msg.replyT("events:interactionCreate:cooldowned", {
+                    return await msg.replyT("events:interactionCreate:cooldowned", {
                         time: Xeow.msToTime(cd.left)
                     })
                 }
             }
+
 
             let args = msg.content.split(/ +/)
             args = args.slice(1, args.length)
@@ -116,15 +118,25 @@ module.exports = class Event {
             }
 
             if (command.memberPerms?.length) {
-                if (!msg.member.permissions.has(command.memberPerms)) return msg.replyT("common:lackedPermission")
+                if (!msg.member.permissions.has(command.memberPerms)) return await msg.replyT("common:lackPermission")
             }
 
-            console.log("events:interactionCreate:cmdExecuted", {
+            if (command.botPerms?.length) {
+                if (!msg.guild.me.permissions.has(command.botPerms)) return await msg.replyT("events:interactionCreate:botLackPerm", {
+                    permission: command.botPerms.join("`, `")
+                })
+            }
+
+            if (command?.ownerOnly) {
+                if (msg.member.id !== this.Xeow.settings.ownerId) return await msg.replyT("events:interactionCreate:ownerOnly")
+            }
+
+            console.logT("events:interactionCreate:cmdExecuted", {
                 userTag: `${interaction.user.username}#${interaction.user.discriminator}`,
                 content: `/${interaction.commandName}${interaction.options?._hoistedOptions.map(o => ` ${o.name}:${o.value}`).join('') || ''}`
             })
 
-            try { await command.run(Xeow, msg, args, { ...command, run: undefined }); }
+            try { await command.run(Xeow, msg, args, command.config); }
             catch (error) {
                 if (error.message === "Invalid args") return
                 return console.error(error);

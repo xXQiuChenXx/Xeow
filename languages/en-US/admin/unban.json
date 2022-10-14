@@ -1,0 +1,4 @@
+{
+    "noMentions": "You must mention a member's ID",
+    "unbanned": "Removed {{id}} from banned list"
+}

@@ -1,17 +1,24 @@
 const { EmbedBuilder } = require('discord.js')
 module.exports = {
+    getLang: async function(Xeow) {
+        return {
+            name: Xeow.translate("commands/balance:name"),
+            description: Xeow.translate("commands/balance:description"),
+            descriptionLocalizations: Xeow.translateAll("commands/balance:description"),
+            options: [{
+                name: Xeow.translate("commands/balance:opts:member:name"),
+                nameLocalizations: Xeow.translateAll("commands/balance:opts:member:name"),
+                description: Xeow.translate("commands/balance:opts:member:description"),
+                type: 6,
+                descriptionLocalizations: Xeow.translateAll("commands/balance:opts:member:description")
+            }]
+        }
+    },
     config: {
-        name: "balance",
         aliases: ["bal"],
         usage: "balance [成員標註]",
         description: "查詢自己或他人的餘額",
         emoji: "💰",
-        options: [{
-            name: 'member',
-            type: 6,
-            description: '成員標註',
-            required: false
-        }],
         self: {
             timestamp: true
         },

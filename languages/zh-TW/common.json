@@ -9,5 +9,5 @@
         "incorrect": "使用方式/參數錯誤, 請查看錯誤"
     },
     "messageDeleted": "原信息已刪除",
-    "lackedPermission": "你沒有權限, 如果你認爲這是個錯誤, 請聯係管理員"
+    "lackPermission": "抱歉,但你沒有權限, 如果你認爲這是個錯誤, 請聯係管理員"
 }

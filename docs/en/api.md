@@ -9,9 +9,22 @@
     - [InteractionButtonPages](#interactionbuttonpages)
     - [InteractionEmbedPages](#interactionembedpages)
     - [Logger](#logger)
-    - [MessageButtonPages](#messagebuttonpages)
+      - [Logger.log(message)](#loggerlogmessage)
+      - [Logger.showErr(error)](#loggershowerrerror)
+      - [Logger.debug(message)](#loggerdebugmessage)
+      - [Logger.info(message)](#loggerinfomessage)
+      - [Logger.notice(message)](#loggernoticemessage)
+      - [Logger.warn(message)](#loggerwarnmessage)
+      - [Logger.addIgnore(message)](#loggeraddignoremessage)
+      - [Logger.command(message)](#loggercommandmessage)
+      - [Logger.logT(message, args)](#loggerlogtmessage-args)
+      - [Logger.showErrT(message, args)](#loggershowerrtmessage-args)
+      - [Logger.debugT(message, args)](#loggerdebugtmessage-args)
+      - [Logger.infoT(message, args)](#loggerinfotmessage-args)
+      - [Logger.noticeT(message, args)](#loggernoticetmessage-args)
+      - [Logger.warnT(message, args)](#loggerwarntmessage-args)
+    - [MessageButtonPages({ message, embeds, time, customFilter, fastSkip, pageTravel, end, newMsg })](#messagebuttonpages-message-embeds-time-customfilter-fastskip-pagetravel-end-newmsg-)
     - [MessageEmbedPages](#messageembedpages)
-    - [SlashCommand](#slashcommand)
   - [Classes](#classes)
     - [Xeow](#xeow)
       - [Xeow.Modules](#xeowmodules)
@@ -52,12 +65,61 @@ FakeMessage used to convert Discord#Interaction to Discord#Message
 ### InteractionEmbedPages
 
 ### Logger
+#### Logger.log(message)
+* `message` - The message that will show in the console
 
-### MessageButtonPages
+#### Logger.showErr(error)
+* `error` - only show the error message  
+
+#### Logger.debug(message)
+* `message` - debug message, this will only be shown if you turn on debug in config file
+
+#### Logger.info(message)
+This function is to give some information to the user through console
+* `message` - The message that will show in the console
+
+#### Logger.notice(message)
+This function is to tell the user if new release available
+* `message` - The message that will show in the console
+
+#### Logger.warn(message)
+This function is to warn the user but it is not an error
+* `message` - The message that will show in the console
+
+#### Logger.addIgnore(message)
+* `message` - Add a message into ignored error message list
+
+#### Logger.command(message)
+This function is use for CLI commands, normally you don't need it
+* `message` - The message that will show in the console
+
+#### Logger.logT(message, args)
+* `message` - The message that will show in the console
+
+#### Logger.showErrT(message, args)
+* `message` - only show the error message  
+
+#### Logger.debugT(message, args)
+* `message` - debug message, this will only be shown if you turn on debug in config file
+
+#### Logger.infoT(message, args)
+This function is to give some information to the user through console
+* `message` - The message that will show in the console
+
+#### Logger.noticeT(message, args)
+This function is to tell the user if new release available
+* `message` - The message that will show in the console
+
+#### Logger.warnT(message, args)
+This function is to warn the user but it is not an error
+* `message` - The message that will show in the console
+
+
+### MessageButtonPages({ message, embeds, time, customFilter, fastSkip, pageTravel, end, newMsg })
+
 
 ### MessageEmbedPages
 
-### SlashCommand
 
 
 
@@ -72,7 +134,7 @@ Example:
 ```js
 const Discord = Xeow.Modules["discord.js"]
 if(!Discord) {
-    // Do something here
+    // If module not found or not installed
 }
 ```
 
@@ -93,7 +155,7 @@ Get translation text from file, Translation are getting from `languages` directo
  Xeow.translate("etc-dir/main:hello", {
     world: MyWorld
  })
-// return "Hello MyWorld"
+// "Hello MyWorld"
  ```
 
 ### Xeow.CLI
@@ -114,7 +176,7 @@ unregister/remove CLI command when the bot is running
 
 
 ### Xeow.Configuration
-please note that the default `__dirname` is set to ./configs
+please note that the default `__dirname` is set to `./configs`
 
 #### Configuration.delete(locate)
 delete the config file permananly.

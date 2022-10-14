@@ -15,7 +15,7 @@ module.exports = class CLI {
             console.showErr('--- DO NOT REPORT THIS AS A BUG OR A CRASH ---')
             console.showErr("============================================================")
         }
-        this.#event.uncaughtException =  function(error){
+        this.#event.uncaughtException = function (error) {
             console.showErr('============================================================')
             console.showErr('--- DO NOT REPORT THIS AS A BUG OR A CRASH ---')
             console.showErr("============================================================")
@@ -42,9 +42,9 @@ module.exports = class CLI {
         process.stdin.on("data", this.#event.data)
 
         process.on('exit', function (code) {
-            console.log(Xeow.translate("console/CLI:processExit", {
+            console.logT("console/CLI:processExit", {
                 exitCode: code
-            }))
+            })
         });
 
         this.#cmd.stop = {
@@ -52,10 +52,10 @@ module.exports = class CLI {
             usage: Xeow.translate("console/CLI:commands:stop:usage"),
             description: Xeow.translate("console/CLI:commands:stop:description"),
             run: async function stop() {
-                console.log("console/CLI:commands:stop:receivedCMD")
-                console.log("console/CLI:commands:stop:loggoutDC")
+                console.logT("console/CLI:commands:stop:receivedCMD")
+                console.logT("console/CLI:commands:stop:loggoutDC")
                 await Xeow.destroy()
-                console.log("console/CLI:commands:stop:disconnectDB")
+                console.logT("console/CLI:commands:stop:disconnectDB")
                 await Xeow.DBManager.close()
                 await Xeow.PluginManager.unloadAll().catch(function (error) {
                     console.showErr('============================================================')
@@ -73,8 +73,8 @@ module.exports = class CLI {
 
         this.#cmd.help = {
             name: 'help',
-            usage: Xeow.translate("console/CLI:help:usage"),
-            description: Xeow.translate("console/CLI:help:description"),
+            usage: Xeow.translate("console/CLI:commands:help:usage"),
+            description: Xeow.translate("console/CLI:commands:help:description"),
             run: async function help(args, Xeow) {
                 if (args[1]) {
                     let cmd = Xeow.CLI._commands.get(args[1])
@@ -87,24 +87,18 @@ module.exports = class CLI {
                     console.log(`${Xeow.translate("console/CLI:description")}: ${cmd.description === undefined ? Xeow.translate("console/CLI:noDescription") : cmd.description}`)
                     return console.log("=".repeat(59))
                 }
-
-                console.log(`======================== ${Xeow.translate("console/CLI:commandHelpList")} ======================`)
-                Xeow.CLI._commands.forEach(function (command) {
-                    let cmd = command.usage === undefined ? command.name : command.usage
-                    let description = command.description === undefined ? Xeow.translate("console/CLI:noDescription") : command.description
-                    let fulltext = cmd + '  ==>  ' + description
-                    if (fulltext.length > 50) fulltext = fulltext.slice(0, 47) + '...'
-                    console.log(fulltext)
-                })
-                console.log("=".repeat(60))
+                const cmdds = Xeow.CLI._commands.map(x => { return { name: x.name, description: x.description } })
+                for(const command of cmdds) {
+                    console.log(`\x1b[33;1m /${command.name}: \x1b[0m${command.description}`)
+                }
             }
         }
 
         this.register('stop', this.#cmd.stop)
         this.register('help', this.#cmd.help)
     }
-    register(name, callback){
-        if(this._commands.get(name)) throw new Error(Xeow.translate("console/CLI:commandExist", {
+    register(name, callback) {
+        if (this._commands.get(name)) throw new Error(Xeow.translate("console/CLI:commandExist", {
             commandName: name
         }))
         this._commands.set(name, callback)

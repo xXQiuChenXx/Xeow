@@ -1,0 +1,10 @@
+{
+    "name": "help",
+    "description": "Help menu",
+    "opts": {
+        "command": {
+            "name": "command",
+            "description": "command name"
+        }
+    }
+}

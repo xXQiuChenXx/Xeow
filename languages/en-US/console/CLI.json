@@ -1,0 +1,26 @@
+{
+    "commandExist": "The CLI command({{commandName}}) already exists",
+    "processExit": "Done! The bot has been shut down, exit code: {{exitCode}}.",
+    "unknownCommand": "Uknown command, please try again.",
+    "commandName": "command nane",
+    "usage": "usage",
+    "description": "description",
+    "noDescription": "no description",
+    "commandHelp": "CLI command help",
+    "commandHelpList": "CLI command help list",
+    "commands": {
+        "stop": {
+            "usage": "stop",
+            "description": "shut down the bot",
+            "receivedCMD": "Received shut down command, shutting down bot...",
+            "loggoutDC": "Logging out discord...",
+            "disconnectDB": "Disconnecting database..."
+        },
+        "help": {
+            "usage": "help [comamnd]",
+            "description": "command help",
+            "commandNotFound": "cannot find command: {{commandName}}"
+        }
+    },
+    "issuedCommand": "console issued command: {{command}}"
+}

@@ -1,0 +1,10 @@
+{
+    "self": {
+        "title": "💰 Your coins",
+        "description": "You currently have {{coins}} coins"
+    },
+    "other": {
+        "title": "💰 His/Her coins",
+        "description": "His/Her currently have {{coins}} coins"
+    }
+}

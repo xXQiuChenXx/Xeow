@@ -9,6 +9,8 @@ Prefix: "+"
 SlashCommand: true
 PrefixCommand: true
 Lang: zh-TW
+SupportedLang: ["en-US"]
+ownerId: "000000000000000000"
 Activities:
  - name: "+help 以獲取幫助"
 Status: "online"

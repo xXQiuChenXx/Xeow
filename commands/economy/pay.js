@@ -1,20 +1,29 @@
 module.exports = {
+    getLang: async function(Xeow) {
+        return {
+            name: Xeow.translate("commands/pay:name"),
+            description: Xeow.translate("commands/pay:description"),
+            descriptionLocalizations: Xeow.translateAll("commands/pay:description"),
+            options: [{
+                name: Xeow.translate("commands/pay:opts:target:name"),
+                nameLocalizations: Xeow.translateAll("commands/pay:opts:target:name"),
+                description: Xeow.translate("commands/pay:opts:target:description"),
+                descriptionLocalizations: Xeow.translateAll("commands/pay:opts:target:description"),
+                type: 6,
+                required: true
+            }, {
+                name: Xeow.translate("commands/pay:opts:amount:name"),
+                nameLocalizations: Xeow.translateAll("commands/pay:opts:amount:name"),
+                description: Xeow.translate("commands/pay:opts:amount:description"),
+                descriptionLocalizations: Xeow.translateAll("commands/pay:opts:amount:description"),
+                type: 4,
+                required: true
+            }]
+        }
+    },
     config: {
-        name: "pay",
         usage: "pay <成員標註> <金額>",
-        description: "付款/轉賬",
         emoji: "💸",
-        options: [{
-            name: 'target',
-            type: 6,
-            description: '成員標註',
-            required: true
-        }, {
-            name: 'amount',
-            type: 4,
-            description: '金額',
-            required: true
-        }]
     },
     run: async (Xeow, message, args, config) => {
         const { EmbedBuilder } = Xeow.Modules["discord.js"]

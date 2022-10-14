@@ -1,4 +1,4 @@
-const { Message, InteractionCollector, CommandInteraction } = require("discord.js");
+const { Message, CommandInteraction } = require("discord.js");
 
 Message.prototype.translate = function (key, args) {
 	const language = this.client.translations.get(

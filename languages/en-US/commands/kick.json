@@ -1,0 +1,14 @@
+{
+    "name": "kick",
+    "description": "kick a member",
+    "opts": {
+        "member": {
+            "name": "member",
+            "description": "mention a member to kick"
+        },
+        "reason": {
+            "name": "reason",
+            "description": "kick reason"
+        }
+    }
+}

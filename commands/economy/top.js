@@ -1,10 +1,15 @@
 const Discord = require("discord.js");
 module.exports = {
+    getLang: async function(Xeow) {
+      return {
+        name: Xeow.translate("commands/top:name"),
+        description: Xeow.translate("commands/top:description"),
+        descriptionLocalizations: Xeow.translateAll("commands/top:description")
+      }  
+    },
     config: {
-        name: "top",
-        description: "金幣排行榜",
         usage: "top",
-        emoji: "🏆"
+        emoji: "🏆",
     },
     run: async (Xeow, message, args, config) => {
         await Xeow.DBManager.sync()

@@ -2,12 +2,16 @@
     "messageCreate": {
         "cmdExecuted": "{{userTag}} 執行了指令: {{content}}",
         "cooldowned": "指令正在冷卻中, 請等待 {{time}}",
-        "nsfwCommand": "你只能在允許NSFW的頻道執行此指令!"
+        "nsfwCommand": "你只能在允許NSFW的頻道執行此指令!",
+        "botLackPerm": "抱歉, 但我缺少 {{permission}} 權限來執行此指令",
+        "ownerOnly": "這個指令只能機器人擁有者使用"
     },
     "interactionCreate": {
         "cmdNotFound": "❌ ┃ 找不到指令... 請稍待Discord同步指令列表",
         "cmdExecuted": "{{userTag}} 執行了指令: {{content}}",
         "cooldowned": "指令正在冷卻中, 請等待 {{time}}",
-        "nsfwCommand": "你只能在允許NSFW的頻道執行此指令!"
+        "nsfwCommand": "你只能在允許NSFW的頻道執行此指令!",
+        "botLackPerm": "抱歉, 但我缺少 {{permission}} 權限來執行此指令",
+        "ownerOnly": "這個指令只能機器人擁有者使用"
     }
 }

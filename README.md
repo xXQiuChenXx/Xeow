@@ -1,11 +1,14 @@
 <div align="center">
 <a href="https://github.com/xXQiuChenXx/"><img src="https://github.com/xXQiuChenXx/Xeow/blob/master/src/Images/Xeow.png?raw=true" alt="Xeow"></a>
-
-## Xeow Discord Bot
-
+<br>
+  Xeow Discord Bot
+<br>
+[![Downloads](https://img.shields.io/github/downloads/xXQiuChenXx/Xeow/total.svg)](https://github.com/xXQiuChenXx/Xeow/releases/latest)
+[![Stars](https://img.shields.io/github/stars/xXQiuChenXx/Xeow.svg)](https://github.com/xXQiuChenXx/Xeow/stargazers)
+[![Release](https://img.shields.io/github/release/xXQiuChenXx/Xeow.svg)](https://github.com/xXQiuChenXx/Xeow/releases/latest)
 [![MIT License](https://img.shields.io/github/license/xXQiuChenXx/Xeow?&logo=github)](LICENSE)
 
-Xeow is a discord bot that used NodeJS/JavaScript and designed for configurability, new fun and exciting bot features. Xeow discord bot built using discord.js v13 with support for slash commands and context menus.
+Xeow is a discord bot that used NodeJS/JavaScript and designed for configurability, new fun and exciting bot features. Xeow discord bot built using discord.js v14.x and the bot will keep updating as discord.js is always updating.
 
 </div>
 
@@ -13,6 +16,13 @@ Xeow is a discord bot that used NodeJS/JavaScript and designed for configurabili
 
 1. NodeJS with version above 16
 2. Git (Optional)
+
+## Features
+- Support for public and private bot
+- Support for plugins (You can make it your own plugin, just have a look at API docs)
+- Multi-language support (english, zh-TW, and customizable)
+- Console commands
+- Human friendy configurations
 
 ## Getting Started
 
@@ -24,7 +34,7 @@ git clone https://github.com/xXQiuChenXx/Xeow.git
 - Download the Xeow Discord Bot File through the [Release Page](https://github.com/xXQiuChenXx/Xeow/releases/)
 
 2. Install Dependencies
-> Make sure you have native to the correct bot directory first.
+> Make sure you have native to the correct bot directory first before you run the command.
 > If you getting any problem on installing the package feel free to create a issue [here](https://github.com/xXQiuChenXx/Xeow/issues)
 - Open the terminal and run the command ```npm install```. Wait for all the dependencies to be installed.
 
@@ -35,25 +45,22 @@ Rename ```config/main-example.yml``` to ```config/main.yml``` and fill the value
 Type npm run start to start the bot
 If you need any additional help, make sure to read our [wiki here](https://github.com/xXQiuChenXx/Xeow/wiki)
 
-## Create Slash Command
-You have to enable prefix command when you first run. Use the command `slashcommand reset` to automatic register all loaded command and then set the permission. After that, feel free to disable the prefix command because you can use slashcommand method to run the `slashcommand reset` command.
+## About Slash Command
+- Please note that the slash command will not automatically register when you start up the bot. You need to use the prefix command `slashcommand reset` in order to set up the slash commands. 
+- We haven't support for editting the slash commands such as editting the permissions because we need some time to think the way to grant the Bearer token. 
 
 ## Supported Database Type
 - MySQL
 - SQLite
 
-## TO DO List
-- [ ] Support For More Database Type
-- [ ] Add For More Language
-- [ ] Make A Wiki & API Docs
-- [ ] Add For Music Support
-- [ ] Be More Stable And Easier
-
 ### More Information
-- [Xeow Public Discord Bot Invite Link](https://discord.com/api/oauth2/authorize?client_id=575266503969210368&permissions=0&scope=bot%20applications.commands)
-- [Xeow Support Discord Server](https://discord.gg/wu2qs6eAZQ)
-- [API Docs](https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/api.md)
-- [FAQ](https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/faq.md)
+<div style="text-align: center"><span style="font-family: 'Tahoma'"><span style="font-size: 18px"><br>
+<a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/wiki.md" target="_blank" class="externalLink" rel="nofollow"><img src="https://github.com/xXQiuChenXx/xXQiuChenXx/Xeow/blob/master/assets/wiki.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"</a>
+<a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/api.md" target="_blank" class="externalLink" rel="nofollow"><img src="hhttps://github.com/xXQiuChenXx/xXQiuChenXx/Xeow/blob/master/assets/api_docs.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"</a>
+<a href="https://discord.gg/m5VthYMNmh" target="_blank" class="externalLink" rel="nofollow"><img src="https://github.com/xXQiuChenXx/xXQiuChenXx/Xeow/blob/master/assets/dc.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a><br>
+<a href="https://github.com/xXQiuChenXx/Xeow/releases" class="internalLink"><img src="https://i.ibb.co/vDySDtt/download.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]" data-url="https://i.ibb.co/vDySDtt/download.png"></a>
+<a href="https://discord.com/api/oauth2/authorize?client_id=575266503969210368&permissions=0&scope=bot%20applications.commands" target="_blank" class="externalLink" rel="nofollow"><img src="https://github.com/xXQiuChenXx/xXQiuChenXx/Xeow/blob/master/assets/invite.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]" ></a><br>
+</span></span>&ZeroWidthSpace;</div>
 
 ### 🤝 Contributing
 
@@ -62,4 +69,4 @@ You have to enable prefix command when you first run. Use the command `slashcomm
 * If you want to be a part of Xeow Discord Bot, please contact via the owner/creator 's gmail. You can found it on his github info page.
 
 ## License
-Xeow Bot is licensed under the MIT license, A well-maintained open source ecosystem starts from us (*>ω<)φ
+Xeow Bot is released under the MIT license. A well-maintained open source ecosystem starts from us (*>ω<)φ

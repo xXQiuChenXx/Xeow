@@ -170,6 +170,7 @@ class FakeMessage {
             } catch(e) {
                 await this.interaction.editReply({ ...options })
             }
+            return this.interaction
             return await this.interaction.fetchReply().then(url => { return url })
         }
 

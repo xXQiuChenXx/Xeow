@@ -1,0 +1,18 @@
+{
+    "name": "ban",
+    "description": "ban a member in your guild",
+    "opts": {
+        "member": {
+            "name": "member",
+            "description": "mention a member"
+        },
+        "reason": {
+            "name": "reason",
+            "description": "ban reason"
+        },
+        "deleteMessage": {
+            "name": "delete_message",
+            "description": "How much of their recent message history to delete, must be between 0 and 604800 (7 days)"
+        }
+    }
+}

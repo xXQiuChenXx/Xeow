@@ -1,13 +1,25 @@
 const { EmbedBuilder, SelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 module.exports = {
+    getLang: async function (Xeow) {
+        return {
+            name: Xeow.translate("commands/help:name"),
+            description: Xeow.translate("commands/help:description"),
+            descriptionLocalizations: Xeow.translateAll("commands/help:description"),
+            options: [
+                {
+                    name: Xeow.translate("commands/help:opts:command:name"),
+                    nameLocalizations: Xeow.translateAll("commands/help:opts:command:name"),
+                    type: 3,
+                    description: Xeow.translate("commands/help:opts:command:description"),
+                    descriptionLocalizations: Xeow.translateAll("commands/help:opts:command:description"), 
+                    required: false
+                }
+            ]
+        }
+    },
     config: {
-        name: "help",
-        description: "幫助選單",
         usage: "help [指令]",
         emoji: "❓",
-        options: [
-            { name: 'name', type: 3, description: '指令名称', required: false }
-        ],
         categoryReplacement: {
             admin: {
                 name: "管理員使用",

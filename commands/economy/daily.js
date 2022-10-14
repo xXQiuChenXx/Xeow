@@ -1,13 +1,18 @@
 const { EmbedBuilder } = require('discord.js')
 module.exports = {
+    getLang: async function(Xeow) {
+        return {
+            name: Xeow.translate("commands/daily:name"),
+            description: Xeow.translate("commands/daily:description"),
+            descriptionLocalizations: Xeow.translateAll("commands/daily:description")
+        }
+    },
     config: {
-        name: "daily",
         timeout: 86400000,
-        description: "每日簽到",
         checkInAmount: 100,
         bonusMultiple: 0.02,
         usage: "daily",
-        emoji: "📅"
+        emoji: "📅",
     },
     run: async (Xeow, message, args, config) => {
         let checkInAmount = config.checkInAmount

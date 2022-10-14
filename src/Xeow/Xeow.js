@@ -1,11 +1,12 @@
 const fs = require("fs");
 const path = require("path");
+const Language = require("./Languages");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 module.exports = class Xeow extends Client {
     constructor() {
         require("./Extender")
         super({
-            intents: [ //all intents
+            intents: [ //Many but not all intents
                 GatewayIntentBits.DirectMessageReactions,
                 GatewayIntentBits.DirectMessageTyping,
                 GatewayIntentBits.DirectMessages,
@@ -82,28 +83,31 @@ module.exports = class Xeow extends Client {
 
     async init(config) {
         this.settings = config
-        this.translations = await require("./Languages")(config)
+        const lng = new Language()
+        await lng.init(config);
+        this.translations = await lng.translation()
+        this.translateAll = lng.getTranslationsForKey
         this.defaultLanguage = config.Lang
     }
 
     async startup(config) {
         this.defaultPrefix = config.Prefix
-        console.log("console/main:database:loading")
+        console.logT("console/main:database:loading")
         this.DBManager = new (require("./DBManager"))(this)
         await this.DBManager.init(config);
         await this.DBManager.validate();
 
         this.CLI = new (require("./CLI"))(this);
 
-        console.log("console/main:event:preparing")
+        console.logT("console/main:event:preparing")
         this.EventManager = new (require("./EventManager"))(this);
         this.EventManager.events = new Collection()
         await this.EventManager.init()
-        console.log("console/main:event:done", {
+        console.logT("console/main:event:done", {
             count: this.EventManager.events.map(e => e).length
         })
 
-        require("./CommandHandler")(this);
+        await require("./CommandHandler")(this);
     }
 
     async run(config) {

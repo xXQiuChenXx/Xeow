@@ -30,19 +30,19 @@ module.exports = class DatabaseManager {
                 }
             );
         } else {
-            console.showErr("console/main:database:invalidType", { type: config.Storage.Type});
+            console.showErrT("console/main:database:invalidType", { type: config.Storage.Type});
             await this.#Xeow.bot.destroy();
             process.exit(0)
         }
     }
 
     async validate() {
-        console.log("console/main:database:validate:verifying")
+        console.logT("console/main:database:validate:verifying")
         try {
             await this.#db.authenticate();
-            console.log("console/main:database:validate:success");
+            console.logT("console/main:database:validate:success");
         } catch (error) {
-            console.showErr("console/main:database:validate:failed")
+            console.showErrT("console/main:database:validate:failed")
             console.error(error);
             await this.#Xeow.bot.destroy();
             process.exit(0);
@@ -50,7 +50,7 @@ module.exports = class DatabaseManager {
     }
 
     async startup(config) {
-        console.log("console/main:database:checking")
+        console.logT("console/main:database:checking")
         const { DataTypes } = this.#Xeow.Modules["sequelize"];
         this.#db.define('command', {
             lastRun: { type: DataTypes.STRING, allowNull: false },
@@ -74,7 +74,7 @@ module.exports = class DatabaseManager {
             let prefix = await this.#db.models.prefixes.findOne({ where: { guild: guild.id } });
             if (!prefix) await this.#db.models.prefixes.build({ guild: guild.id, prefix: config.Prefix }).save()
         })
-        console.log("console/main:database:checked")
+        console.logT("console/main:database:checked")
     }
 
     get(model) {

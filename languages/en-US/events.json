@@ -1,0 +1,15 @@
+{
+    "messageCreate": {
+        "cmdExecuted": "{{userTag}} issued command: {{content}}",
+        "cooldowned": "Command is cooling down, please wait for {{time}}",
+        "nsfwCommand": "You only can allowed to use this command in NSFW channel!",
+        "botLackPerm": "I'm sorry, but I lack {{permission}} permission to issue this command"
+    },
+    "interactionCreate": {
+        "cmdNotFound": "❌ ┃ command not found... Please wait for discord to synchronize the command list",
+        "cmdExecuted": "{{userTag}} issued command: {{content}}",
+        "cooldowned": "Command is cooling down, please wait for {{time}}",
+        "nsfwCommand": "You only can allowed to use this command in NSFW channel!",
+        "botLackPerm": "I'm sorry, but I lack {{permission}} permission to issue this command"
+    }
+}

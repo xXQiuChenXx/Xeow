@@ -1,0 +1,12 @@
+{
+    "NoPluginFound": "No installed plugins found",
+    "PluginLackDep": "{{name}} plugin needs module {{node_modules}} in order to load the plugin",
+    "API": {
+        "commandExist": "{{commandName}} command already exist",
+        "invalidCommand": "Invalid command",
+        "notCompatible": "{{pluginName}} plugin is not compatible, supported API version: {{supported_api_ver}} (Required API version: {{required_api_ver}})"
+    },
+    "loadingPlugin": "Loading plugin {{plugin_name}}@{{plugin_version}} ...",
+    "loadingFailed": "An error has occurred when loading the plugin {{plugin_name}}@{{plugin_version}}:",
+    "loadingSuccess": "Successfully loaded plugin {{plugin_name}}@{{plugin_version}}! (author: {{author}})"
+}

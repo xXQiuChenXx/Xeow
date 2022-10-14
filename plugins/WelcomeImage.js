@@ -56,94 +56,96 @@ module.exports = {
             const fs = require("fs")
             const config = this.config
             const api = this.api
-            this.event = async function (member) {
-                config.fonts.forEach(function (font) {
-                    if (fs.existsSync(`./src/font/${font}.ttf`)) {
-                        Canvas.registerFont(`./src/font/${font}.ttf`, { family: font });
-                    }
-                })
-                const canvas = Canvas.createCanvas(config.image_size.width, config.image_size.height);
-                //make it "2D"
-                const ctx = canvas.getContext('2d');
-                //set the Background to the welcome.png
-                const background = await Canvas.loadImage(`./src/Images/${config.background}`);
-                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-                // ctx.strokeStyle = '#f2f2f2';
-                // ctx.strokeRect(0, 0, canvas.width, canvas.height);
-                //set the first text string 
-                const userTag = api.translate("plugins/WelcomeImage:line_1", {
-                    userTag: member.user.tag
-                })
-                //if the text is too big then smaller the text
-                ctx.font = config["line_1"].font,
-                ctx.fillStyle = config["line_1"].fillStyle
-                ctx.textAlign = config["line_1"].textAlign
-                ctx.shadowColor = config["line_1"].shadowColor
-                ctx.shadowBlur = config["line_1"].shadowBlur
-                ctx.lineWidth = config["line_1"].lineWidth
-                ctx.fillText(userTag, canvas.width / 2, canvas.height / 2 + 155);
-                //define the Member count
-                const textString = api.translate("plugins/WelcomeImage:line_2", {
-                    memberCount: member.guild.memberCount
-                })
-                ctx.font = config["line_2"].font
-                ctx.fillStyle = config["line_2"].fillStyle
-                ctx.shadowColor = config["line_2"].shadowColor
-                ctx.shadowBlur = config["line_2"].shadowBlur
-                ctx.lineWidth = config["line_2"].lineWidth
-                ctx.fillText(textString, canvas.width / 2, canvas.height / 2 + 220);
-
-                const dWidth = 260
-                const dHeight = 260
-                const dx = (canvas.width / 2) - (dWidth / 2)
-                const dy = 60;
-
-                const x = canvas.width / 2
-                const y = dy + (dHeight / 2)
-                const radius = dWidth / 2
-                const startAngle = 0
-                const endAngle = Math.PI * 2
-
-                ctx.beginPath();
-                ctx.arc(x, y, radius + 5, startAngle, endAngle);
-                ctx.closePath();
-                ctx.clip();
-
-                const avatar_bg = await Canvas.loadImage("./src/Images/white.jpg");
-
-                ctx.drawImage(avatar_bg, dx - 6, dy - 6, dWidth + 20, dHeight + 20);
-
-                ctx.beginPath();
-                ctx.arc(x, y, radius, startAngle, endAngle);
-                ctx.closePath();
-                ctx.clip();
-                const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ extension: 'jpg' }));
-
-                ctx.drawImage(avatar, dx, dy, dWidth, dHeight);
-
-                const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: "welcome.png" });
-                const rules = member.guild.channels.cache.find(ch => ch.id === member.guild.rulesChannelId).toString()
-
-                const embed = new Discord.EmbedBuilder()
-                    .setColor("Random")
-                    .setDescription(api.translate("plugins/WelcomeImage:embed_description", {
-                        guild_name: member.guild.name,
-                        member_id: member.id,
-                        rule_channel: rules
-                    }))
-                    .setTimestamp()
-                    .setFooter({
-                        text: api.translate("plugins/WelcomeImage:embed_footer"),
-                        iconURL: member.guild.iconURL({ dynamic: true })
+            this.event = async function (oldMember, newMember) {
+                if (oldMember.pending && !newMember.pending) {
+                    config.fonts.forEach(function (font) {
+                        if (fs.existsSync(`./src/font/${font}.ttf`)) {
+                            Canvas.registerFont(`./src/font/${font}.ttf`, { family: font });
+                        }
                     })
-                    .setImage("attachment://welcome.png")
+                    const canvas = Canvas.createCanvas(config.image_size.width, config.image_size.height);
+                    //make it "2D"
+                    const ctx = canvas.getContext('2d');
+                    //set the Background to the welcome.png
+                    const background = await Canvas.loadImage(`./src/Images/${config.background}`);
+                    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+                    // ctx.strokeStyle = '#f2f2f2';
+                    // ctx.strokeRect(0, 0, canvas.width, canvas.height);
+                    //set the first text string 
+                    const userTag = api.translate("plugins/WelcomeImage:line_1", {
+                        userTag: member.user.tag
+                    })
+                    //if the text is too big then smaller the text
+                    ctx.font = config["line_1"].font,
+                        ctx.fillStyle = config["line_1"].fillStyle
+                    ctx.textAlign = config["line_1"].textAlign
+                    ctx.shadowColor = config["line_1"].shadowColor
+                    ctx.shadowBlur = config["line_1"].shadowBlur
+                    ctx.lineWidth = config["line_1"].lineWidth
+                    ctx.fillText(userTag, canvas.width / 2, canvas.height / 2 + 155);
+                    //define the Member count
+                    const textString = api.translate("plugins/WelcomeImage:line_2", {
+                        memberCount: member.guild.memberCount
+                    })
+                    ctx.font = config["line_2"].font
+                    ctx.fillStyle = config["line_2"].fillStyle
+                    ctx.shadowColor = config["line_2"].shadowColor
+                    ctx.shadowBlur = config["line_2"].shadowBlur
+                    ctx.lineWidth = config["line_2"].lineWidth
+                    ctx.fillText(textString, canvas.width / 2, canvas.height / 2 + 220);
 
-                if(!member.guild.systemChannel) return console.warn("plugins/WelcomeImage:noSystemChannel", {
-                    guild: member.guild.id
-                })
-                member.guild.systemChannel.send({
-                    embeds: [embed], files: [attachment]
-                });
+                    const dWidth = 260
+                    const dHeight = 260
+                    const dx = (canvas.width / 2) - (dWidth / 2)
+                    const dy = 60;
+
+                    const x = canvas.width / 2
+                    const y = dy + (dHeight / 2)
+                    const radius = dWidth / 2
+                    const startAngle = 0
+                    const endAngle = Math.PI * 2
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius + 5, startAngle, endAngle);
+                    ctx.closePath();
+                    ctx.clip();
+
+                    const avatar_bg = await Canvas.loadImage("./src/Images/white.jpg");
+
+                    ctx.drawImage(avatar_bg, dx - 6, dy - 6, dWidth + 20, dHeight + 20);
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, startAngle, endAngle);
+                    ctx.closePath();
+                    ctx.clip();
+                    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ extension: 'jpg' }));
+
+                    ctx.drawImage(avatar, dx, dy, dWidth, dHeight);
+
+                    const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: "welcome.png" });
+                    const rules = member.guild.channels.cache.find(ch => ch.id === member.guild.rulesChannelId).toString()
+
+                    const embed = new Discord.EmbedBuilder()
+                        .setColor("Random")
+                        .setDescription(api.translate("plugins/WelcomeImage:embed_description", {
+                            guild_name: member.guild.name,
+                            member_id: member.id,
+                            rule_channel: rules
+                        }))
+                        .setTimestamp()
+                        .setFooter({
+                            text: api.translate("plugins/WelcomeImage:embed_footer"),
+                            iconURL: member.guild.iconURL({ dynamic: true })
+                        })
+                        .setImage("attachment://welcome.png")
+
+                    if (!member.guild.systemChannel) return console.warn("plugins/WelcomeImage:noSystemChannel", {
+                        guild: member.guild.id
+                    })
+                    member.guild.systemChannel.send({
+                        embeds: [embed], files: [attachment]
+                    });
+                }
             }
             this.api.EventManager.register("guildMemberAdd", this.event)
         }

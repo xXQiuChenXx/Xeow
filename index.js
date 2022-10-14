@@ -174,6 +174,9 @@ async function archiveLog(Xeow) {
             output.on('close', function () {
                 console.debug("console/main:archive:totalBytes", { total: archive.pointer() });
             });
+            output.on('warning', function (err) {
+                console.debug(err.message)
+            });
             await archive.pipe(output);
             await archive.file("./logs/lastest.log", { name: 'lastest.log' });
             await archive.finalize();
@@ -206,21 +209,19 @@ async function Startup() {
         ignore: config.Logger.ignore,
         locale: config.Logger.locale,
         format: config.Logger.momentFormat,
-        translations: Xeow.translations,
-        language: config.Lang
+        Xeow: Xeow
     })
-    Xeow.getLogger = function(name, debug = false, ignore = []) {
+    Xeow.getLogger = function (name, debug = false, ignore = []) {
         return new Logger({
             caller: name,
             debug: debug,
             ignore: ignore,
             locale: config.Logger.locale,
             format: config.Logger.momentFormat,
-            translations: Xeow.translations,
-            language: config.Lang
+            Xeow: Xeow
         })
     }
-    console.log("console/main:bot:NodeJS_version", { version: process.version })
+    console.logT("console/main:bot:NodeJS_version", { version: process.version })
     await archiveLog(Xeow);
     await CheckForUpdate();
     await Xeow.startup(config)
@@ -228,16 +229,16 @@ async function Startup() {
         await Xeow.run(config)
         await Xeow.PluginManager.loadAll()
         setTimeout(() => {
-            console.info("console/main:bot:leaveStar")
+            console.infoT("console/main:bot:leaveStar")
         }, 15000)
-        console.log("console/main:bot:loaded", { second: ((performance.now() - ms) / 1000).toFixed(2) })
+        console.logT("console/main:bot:loaded", { second: ((performance.now() - ms) / 1000).toFixed(2) })
     })
     Xeow.on("debug", console.debug)
     await Xeow.login(config.Token).catch(error => {
         if (error.message.includes("An invalid token was provided")) {
-            console.showErr("console/main:bot:invalidToken");
+            console.showErrT("console/main:bot:invalidToken");
         } else {
-            console.showErr("console/main:bot:loginError");
+            console.showErrT("console/main:bot:loginError");
             console.error(error);
         }
         process.exit();

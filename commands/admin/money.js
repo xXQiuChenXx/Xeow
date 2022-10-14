@@ -1,32 +1,6 @@
 const Discord = require("discord.js");
+
 module.exports = {
-    config: {
-        name: "money",
-        emoji: "⚙️",
-        description: "設置和更改錢幣指令",
-        usage: "money <give/take/set> <成員標註> <數量>",
-        memberPerms: ["ADMINISTRATOR"],
-        options: [
-            { name: 'set', type: 1, description: '設置成員的錢幣', options: 
-                [
-                    { name: 'member', type: 6, description: '成員標註', required: true },
-                    { name: 'amount', type: 10, description: '數量', required: true }
-                ]
-            },
-            { name: 'give', type: 1, description: '給予成員錢幣', options: 
-                [
-                    { name: 'member', type: 6, description: '成員標註', required: true },
-                    { name: 'amount', type: 10, description: '數量', required: true }
-                ]
-            },
-            { name: 'take', type: 1, description: '扣除成員的錢幣', options: 
-                [
-                    { name: 'member', type: 6, description: '成員標註', required: true },
-                    { name: 'amount', type: 10, description: '數量', required: true }
-                ]
-            }
-        ],
-    },
     run: async (Xeow, message, args) => {
         let type = args[0]
         let member = message.mentions.users.first()
@@ -142,5 +116,83 @@ module.exports = {
                 type: "incorrect"
             })
         }
+    },
+
+    getLang: async function (Xeow) {
+        return {
+            name: Xeow.translate("commands/money:name"),
+            description: Xeow.translate("commands/money:description"),
+            descriptionLocalizations: Xeow.translateAll("commands/money:description"),
+            defaultMemberPermissions: ["Administrator"],
+            options: [{
+                name: Xeow.translate("commands/money:opts:set:name"),
+                nameLocalizations: Xeow.translateAll("commands/money:opts:set:name"),
+                type: 1,
+                description: Xeow.translate("commands/money:opts:set:description"),
+                descriptionLocalizations: Xeow.translateAll("commands/money:opts:set:description"),
+                options: [{
+                    name: Xeow.translate("commands/money:opts:set:opts:member:name"),
+                    nameLocalizations: Xeow.translateAll("commands/money:opts:set:opts:member:name"),
+                    type: 6,
+                    description: Xeow.translate("commands/money:opts:set:opts:member:description"),
+                    descriptionLocalizations: Xeow.translateAll("commands/money:opts:set:opts:member:description"),
+                    required: true
+                }, {
+                    name: Xeow.translate("commands/money:opts:set:opts:amount:name"),
+                    nameLocalizations: Xeow.translateAll("commands/money:opts:set:opts:amount:name"),
+                    type: 10,
+                    description: Xeow.translate("commands/money:opts:set:opts:amount:description"),
+                    descriptionLocalizations: Xeow.translateAll("commands/money:opts:set:opts:amount:description"),
+                    required: true
+                }]
+            }, {
+                name: Xeow.translate("commands/money:opts:give:name"),
+                nameLocalizations: Xeow.translateAll("commands/money:opts:give:name"),
+                type: 1,
+                description: Xeow.translate("commands/money:opts:give:description"),
+                descriptionLocalizations: Xeow.translateAll("commands/money:opts:give:description"),
+                options: [{
+                    name: Xeow.translate("commands/money:opts:give:opts:member:name"),
+                    nameLocalizations: Xeow.translateAll("commands/money:opts:give:opts:member:name"),
+                    type: 6,
+                    description: Xeow.translate("commands/money:opts:give:opts:member:description"),
+                    descriptionLocalizations: Xeow.translateAll("commands/money:opts:give:opts:member:description"),
+                    required: true
+                }, {
+                    name: Xeow.translate("commands/money:opts:give:opts:amount:name"),
+                    nameLocalizations: Xeow.translateAll("commands/money:opts:give:opts:amount:name"),
+                    type: 10,
+                    description: Xeow.translate("commands/money:opts:give:opts:amount:description"),
+                    descriptionLocalizations: Xeow.translateAll("commands/money:opts:give:opts:amount:description"),
+                    required: true
+                }]
+            }, {
+                name: Xeow.translate("commands/money:opts:take:name"),
+                nameLocalizations: Xeow.translateAll("commands/money:opts:take:name"),
+                type: 1,
+                description: Xeow.translate("commands/money:opts:take:description"),
+                descriptionLocalizations: Xeow.translateAll("commands/money:opts:take:description"),
+                options: [{
+                    name: Xeow.translate("commands/money:opts:take:opts:member:name"),
+                    nameLocalizations: Xeow.translateAll("commands/money:opts:take:opts:member:name"),
+                    type: 6,
+                    description: Xeow.translate("commands/money:opts:take:opts:member:description"),
+                    descriptionLocalizations: Xeow.translateAll("commands/money:opts:take:opts:member:description"),
+                    required: true
+                }, {
+                    name: Xeow.translate("commands/money:opts:take:opts:amount:name"),
+                    nameLocalizations: Xeow.translateAll("commands/money:opts:take:opts:amount:name"),
+                    type: 10,
+                    description: Xeow.translate("commands/money:opts:take:opts:amount:description"),
+                    descriptionLocalizations: Xeow.translateAll("commands/money:opts:take:opts:amount:description"),
+                    required: true
+                }]
+            }],
+        }
+    },
+    config: {
+        emoji: "⚙️",
+        usage: "money <give/take/set> <成員標註> <數量>",
+        memberPerms: ["Administrator"]
     }
 }

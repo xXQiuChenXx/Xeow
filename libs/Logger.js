@@ -2,13 +2,12 @@ const chalk = require('chalk')
 const moment = require('moment-timezone');
 const fs = require('fs')
 class Logger {
-  constructor({ caller , debug, ignore , locale, format, translations, language }) {
-    this.translations = translations
-    this.language = language
+  constructor({ caller, debug, ignore, locale, format, Xeow }) {
     this.caller = caller
     this.debugging = debug
     this.ignore = ignore
     this.format = format
+    this.Xeow = Xeow
     moment.locale(locale);
   }
 
@@ -20,11 +19,20 @@ class Logger {
     return this._ok(this.caller, arguments, 'DEBUG', chalk.grey)
   }
 
+  debugT() {
+    if (!this.debugging) return
+    return this._okT(this.caller, arguments, 'DEBUG', chalk.grey)
+  }
+
   /**
    * @description 用於提示用戶, 進程正常
    */
   log() {
     return this._ok(this.caller, arguments, 'LOG', chalk.greenBright)
+  }
+
+  logT() {
+    return this._okT(this.caller, arguments, 'LOG', chalk.greenBright)
   }
 
   /**
@@ -34,11 +42,19 @@ class Logger {
     return this._ok(this.caller, arguments, 'INFO', chalk.blueBright)
   }
 
+  infoT() {
+    return this._okT(this.caller, arguments, 'INFO', chalk.blueBright)
+  }
+
   /**
    * @description 用於提示用戶, 依賴過期, 版本更新
    */
   notice() {
     return this._ok(this.caller, arguments, 'NOTICE', chalk.blue)
+  }
+
+  noticeT() {
+    return this._okT(this.caller, arguments, 'NOTICE', chalk.blue)
   }
 
   /**
@@ -48,11 +64,19 @@ class Logger {
     return this._ok(this.caller, arguments, 'WARN', chalk.yellow)
   }
 
+  warnT() {
+    return this._okT(this.caller, arguments, 'WARN', chalk.yellow)
+  }
+
   /**
    * @description 用於警告用戶, 進程致命錯誤
    */
   fatal() {
     return this._ok(this.caller, arguments, 'FATAL', chalk.redBright)
+  }
+
+  fatalT() {
+    return this._okT(this.caller, arguments, 'FATAL', chalk.redBright)
   }
 
   /**
@@ -77,10 +101,14 @@ class Logger {
     return this._ok(this.caller, arguments, 'ERROR', chalk.red)
   }
 
+  showErrT() {
+    return this._okT(this.caller, arguments, 'ERROR', chalk.red)
+  }
+
   /**
   * @description 用於设置无视的错误信息
   */
-  setIgnore(msg) {
+  addIgnore(msg) {
     this.ignore.push(msg)
   }
 
@@ -91,25 +119,24 @@ class Logger {
     return this._ok(this.caller, arguments, 'COMMAND', chalk.greenBright)
   }
 
+  _okT(caller, args, level, color) {
+    const content = this.Xeow.translate.apply(this.Xeow, args)
+    if (this.ignore.includes(content)) return
+    if (!fs.existsSync("./logs")) fs.mkdirSync("./logs")
+    fs.appendFileSync('./logs/lastest.log', `[${moment().format(`h:mm:ss`)}] [${caller}/${level}]: ${content}\n`, 'utf-8')
+    process.stdout.write(`[${chalk.blue(`${moment().format(this.format)}`)}] [${color(`${caller}/${level}`)}]: ${content}\n`)
+  }
+
   _ok(caller, args, level, color) {
     if (this.ignore.includes(args[0])) return
     if (!fs.existsSync("./logs")) fs.mkdirSync("./logs")
-    let text;
-    let Args = Array.prototype.slice.call(args)
-    if (typeof Args[0] === "string" && Args[1] !== false) {
-      const language = this.translations.get(this.language);
-      text = language(Args[0], Args[1]);
-    } else {
-      text = Array.from(args) === [] ? "undefined" : Array.from(args)
-      if(Args[1] === false) text = text.toString().replace(/,false/g, "")
-    }
-    fs.appendFileSync('./logs/lastest.log', `[${moment().format(`h:mm:ss`)}] [${caller}/${level}]: ${text}\n`, 'utf-8')
+    fs.appendFileSync('./logs/lastest.log', `[${moment().format(`h:mm:ss`)}] [${caller}/${level}]: ${Array.from(args)}\n`, 'utf-8')
     if (level === 'COMMAND') {
       process.stdout.moveCursor(0, -1)
       process.stdout.clearLine(1)
-      process.stdout.write(`[${chalk.blue(`${moment().format(this.format)}`)}] [${color(`${caller}/${level}`)}]: ${text}\n`)
+      process.stdout.write(`[${chalk.blue(`${moment().format(this.format)}`)}] [${color(`${caller}/${level}`)}]: ${Array.from(args)}\n`)
     } else {
-      process.stdout.write(`[${chalk.blue(`${moment().format(this.format)}`)}] [${color(`${caller}/${level}`)}]: ${text}\n`)
+      process.stdout.write(`[${chalk.blue(`${moment().format(this.format)}`)}] [${color(`${caller}/${level}`)}]: ${Array.from(args)}\n`)
     }
     return this
   }

@@ -11,8 +11,8 @@
   <a href="https://github.com/xXQiuChenXx/Xeow/releases/latest">
     <img src="https://img.shields.io/github/downloads/xXQiuChenXx/Xeow/total.svg" alt="Downloads">
   </a>
-  <a href="https://img.shields.io/github/stars/xXQiuChenXx/Xeow.svg">
-    <img src="https://github.com/xXQiuChenXx/Xeow/stargazers" alt="Stars">
+  <a href="https://github.com/xXQiuChenXx/Xeow/stargazers">
+    <img src="https://img.shields.io/github/stars/xXQiuChenXx/Xeow.svg" alt="Stars">
   </a>
   <a href="https://github.com/xXQiuChenXx/Xeow/releases/latest">
     <img src="https://img.shields.io/github/release/xXQiuChenXx/Xeow.svg" alt="Release">
@@ -20,7 +20,7 @@
   <a href="https://github.com/xXQiuChenXx/Xeow/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/xXQiuChenXx/Xeow?&logo=github">
   </a>
-  
+
   <!-- Crowdin Example
   <a href="https://crowdin.com/project/red-discordbot">
     <img src="https://d322cqt584bo4o.cloudfront.net/red-discordbot/localized.svg" alt="Localized with Crowdin">
@@ -75,15 +75,20 @@ If you need any additional help, make sure to read our [wiki here](https://githu
 ### More Information
 <div style="text-align: center"><span style="font-family: 'Tahoma'"><span style="font-size: 18px"><br>
 
-<a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/wiki.md" target="_blank" class="externalLink" rel="nofollow"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/wiki.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"</a>
+<a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/wiki.md" target="_blank" class="externalLink" rel="nofollow">
+<img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/wiki.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a>
 
-<a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/api.md" target="_blank" class="externalLink" rel="nofollow"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/api_docs.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"</a>
+<a href="https://github.com/xXQiuChenXx/Xeow/blob/master/docs/en/api.md" target="_blank" class="externalLink" rel="nofollow">
+<img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/api_docs.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a>
 
-<a href="https://discord.gg/m5VthYMNmh" target="_blank" class="externalLink" rel="nofollow"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/dc.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a><br>
+<a href="https://discord.gg/m5VthYMNmh" target="_blank" class="externalLink" rel="nofollow">
+<img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/dc.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a><br>
 
-<a href="https://github.com/xXQiuChenXx/Xeow/releases" class="internalLink"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/download.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a>
+<a href="https://github.com/xXQiuChenXx/Xeow/releases" class="internalLink">
+<img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/download.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]"></a>
 
-<a href="https://discord.com/api/oauth2/authorize?client_id=575266503969210368&permissions=0&scope=bot%20applications.commands" target="_blank" class="externalLink" rel="nofollow"><img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/invite.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]" ></a><br>
+<a href="https://discord.com/api/oauth2/authorize?client_id=575266503969210368&permissions=0&scope=bot%20applications.commands" target="_blank" class="externalLink" rel="nofollow">
+<img src="https://raw.githubusercontent.com/xXQiuChenXx/Xeow/master/assets/invite.png" class="bbCodeImage LbImage" alt="[&ZeroWidthSpace;IMG]" ></a><br>
 </span></span>&ZeroWidthSpace;</div>
 
 ### 🤝 Contributing

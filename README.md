@@ -3,7 +3,7 @@
 <br>
   Xeow Discord Bot
 <br>
-[![Downloads](https://img.shields.io/github/downloads/xXQiuChenXx/Xeow/total.svg)](https://github.com/xXQiuChenXx/Xeow/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/xXQiuChenXx/Xeow/total.svg)](https://github.com/xXQiuChenXx/Xeow/releases/latest)]
 [![Stars](https://img.shields.io/github/stars/xXQiuChenXx/Xeow.svg)](https://github.com/xXQiuChenXx/Xeow/stargazers)
 [![Release](https://img.shields.io/github/release/xXQiuChenXx/Xeow.svg)](https://github.com/xXQiuChenXx/Xeow/releases/latest)
 [![MIT License](https://img.shields.io/github/license/xXQiuChenXx/Xeow?&logo=github)](LICENSE)

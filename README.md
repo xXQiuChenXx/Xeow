@@ -1,8 +1,8 @@
 <div align="center">
 <a href="https://github.com/xXQiuChenXx/"><img src="https://github.com/xXQiuChenXx/Xeow/blob/master/src/Images/Xeow.png?raw=true" alt="Xeow"></a>
-<br>
-  Xeow Discord Bot
-<br>
+<h1>
+<br>Xeow Discord Bot<br>
+</h1>
 
 <p align="center">
   <a href="https://discord.gg/m5VthYMNmh">
@@ -33,7 +33,7 @@ Xeow is a discord bot that used NodeJS/JavaScript and designed for configurabili
 
 ## Requirements
 
-1. NodeJS with version above 16
+1. NodeJS with version v16.x.x and above
 2. Git (Optional)
 
 ## Features

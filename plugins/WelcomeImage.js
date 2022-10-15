@@ -147,7 +147,7 @@ module.exports = {
                     });
                 }
             }
-            this.api.EventManager.register("guildMemberAdd", this.event)
+            this.api.EventManager.register("guildMemberUpdate", this.event)
         }
 
         async onEnable() {
@@ -155,7 +155,7 @@ module.exports = {
         }
 
         async onDisable() {
-            this.api.EventManager.unregister("guildMemberAdd", this.event)
+            this.api.EventManager.unregister("guildMemberUpdate", this.event)
             this.loaded = false
         }
     }

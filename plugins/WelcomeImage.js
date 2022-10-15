@@ -73,7 +73,7 @@ module.exports = {
                     // ctx.strokeRect(0, 0, canvas.width, canvas.height);
                     //set the first text string 
                     const userTag = api.translate("plugins/WelcomeImage:line_1", {
-                        userTag: member.user.tag
+                        userTag: newMember.user.tag
                     })
                     //if the text is too big then smaller the text
                     ctx.font = config["line_1"].font,
@@ -85,7 +85,7 @@ module.exports = {
                     ctx.fillText(userTag, canvas.width / 2, canvas.height / 2 + 155);
                     //define the Member count
                     const textString = api.translate("plugins/WelcomeImage:line_2", {
-                        memberCount: member.guild.memberCount
+                        memberCount: newMember.guild.memberCount
                     })
                     ctx.font = config["line_2"].font
                     ctx.fillStyle = config["line_2"].fillStyle
@@ -118,31 +118,31 @@ module.exports = {
                     ctx.arc(x, y, radius, startAngle, endAngle);
                     ctx.closePath();
                     ctx.clip();
-                    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ extension: 'jpg' }));
+                    const avatar = await Canvas.loadImage(newMember.user.displayAvatarURL({ extension: 'jpg' }));
 
                     ctx.drawImage(avatar, dx, dy, dWidth, dHeight);
 
                     const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: "welcome.png" });
-                    const rules = member.guild.channels.cache.find(ch => ch.id === member.guild.rulesChannelId).toString()
+                    const rules = newMember.guild.channels.cache.find(ch => ch.id === member.guild.rulesChannelId).toString()
 
                     const embed = new Discord.EmbedBuilder()
                         .setColor("Random")
                         .setDescription(api.translate("plugins/WelcomeImage:embed_description", {
-                            guild_name: member.guild.name,
-                            member_id: member.id,
+                            guild_name: newMember.guild.name,
+                            member_id: newMember.id,
                             rule_channel: rules
                         }))
                         .setTimestamp()
                         .setFooter({
                             text: api.translate("plugins/WelcomeImage:embed_footer"),
-                            iconURL: member.guild.iconURL({ dynamic: true })
+                            iconURL: newMember.guild.iconURL({ dynamic: true })
                         })
                         .setImage("attachment://welcome.png")
 
-                    if (!member.guild.systemChannel) return console.warn("plugins/WelcomeImage:noSystemChannel", {
-                        guild: member.guild.id
+                    if (!newMember.guild.systemChannel) return console.warn("plugins/WelcomeImage:noSystemChannel", {
+                        guild: newMember.guild.id
                     })
-                    member.guild.systemChannel.send({
+                    newMember.guild.systemChannel.send({
                         embeds: [embed], files: [attachment]
                     });
                 }

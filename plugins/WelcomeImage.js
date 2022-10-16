@@ -123,7 +123,7 @@ module.exports = {
                     ctx.drawImage(avatar, dx, dy, dWidth, dHeight);
 
                     const attachment = new Discord.AttachmentBuilder(canvas.toBuffer(), { name: "welcome.png" });
-                    const rules = newMember.guild.channels.cache.find(ch => ch.id === member.guild.rulesChannelId).toString()
+                    const rules = newMember.guild.channels.cache.find(ch => ch.id === newMember.guild.rulesChannelId).toString()
 
                     const embed = new Discord.EmbedBuilder()
                         .setColor("Random")

@@ -1,49 +1,46 @@
 module.exports = {
-    getLang: async function(Xeow) {
+    getLang: async function (Xeow) {
         return {
-            name: Xeow.translate("commands/pay:name"),
-            description: Xeow.translate("commands/pay:description"),
-            descriptionLocalizations: Xeow.translateAll("commands/pay:description"),
+            name: Xeow.translate("app_commands/pay:name"),
+            description: Xeow.translate("app_commands/pay:description"),
+            descriptionLocalizations: Xeow.translateAll("app_commands/pay:description"),
             options: [{
-                name: Xeow.translate("commands/pay:opts:target:name"),
-                nameLocalizations: Xeow.translateAll("commands/pay:opts:target:name"),
-                description: Xeow.translate("commands/pay:opts:target:description"),
-                descriptionLocalizations: Xeow.translateAll("commands/pay:opts:target:description"),
+                name: Xeow.translate("app_commands/pay:opts:target:name"),
+                nameLocalizations: Xeow.translateAll("app_commands/pay:opts:target:name"),
+                description: Xeow.translate("app_commands/pay:opts:target:description"),
+                descriptionLocalizations: Xeow.translateAll("app_commands/pay:opts:target:description"),
                 type: 6,
                 required: true
             }, {
-                name: Xeow.translate("commands/pay:opts:amount:name"),
-                nameLocalizations: Xeow.translateAll("commands/pay:opts:amount:name"),
-                description: Xeow.translate("commands/pay:opts:amount:description"),
-                descriptionLocalizations: Xeow.translateAll("commands/pay:opts:amount:description"),
+                name: Xeow.translate("app_commands/pay:opts:amount:name"),
+                nameLocalizations: Xeow.translateAll("app_commands/pay:opts:amount:name"),
+                description: Xeow.translate("app_commands/pay:opts:amount:description"),
+                descriptionLocalizations: Xeow.translateAll("app_commands/pay:opts:amount:description"),
                 type: 4,
                 required: true
             }]
         }
     },
+    usage: "commands/pay:usage",
     config: {
-        usage: "pay <成員標註> <金額>",
         emoji: "💸",
     },
     run: async (Xeow, message, args, config) => {
         const { EmbedBuilder } = Xeow.Modules["discord.js"]
-        if (!args[0] || !message.mentions.members.first()) return await Xeow.invalidUsage({ message: message, arg: 0, type: "empty" })
-        if (!args[1]) return await Xeow.invalidUsage({ message: message, arg: 1, type: "empty" })
+        if (!message.mentions.members.first()) return await message.invalidUsage({ position: 0, reason: 6 })
+        if (!args[1]) return await message.invalidUsage({ position: 1, reason: 1 })
 
         if (!parseFloat(args[1]) || parseFloat(args[1]) < 1) {
-            return await Xeow.invalidUsage({
-                message: message, arg: 1, type: "incorrect",
-                reason: message.translate("economy/pay:invalidAmount", {
-                    give: args[1]
-                })
+            return await message.invalidUsage({
+                position: 1, reason: Xeow.translate("commands/pay:invalidAmount",
+                    { give: args[1] }
+                )
             })
         }
         const targetMember = message.mentions.members.first()
-        if (targetMember.id === message.author.id) return await Xeow.invalidUsage({
-            message: message, arg: 0, type: "incorrect",
-            reason: message.translate("economy/pay:invalidTarget")
-        })
-        if (targetMember.user.bot) return message.reply(message.translate("economy/pay:noBot"))
+        if (targetMember.id === message.author.id) return await message.replyT("commands/pay:invalidTarget")
+        if (targetMember.user.bot) return await message.replyT("commands/pay:cantBot")
+
         const embed = new EmbedBuilder()
         await Xeow.DBManager.sync()
         let self = await Xeow.DBManager.get("economy")
@@ -67,32 +64,31 @@ module.exports = {
                     .save()
             }
             embed.setColor("Green")
-                .setTitle(message.translate("economy/pay:success:title"))
-                .setDescription(message.translate("economy/pay:success:description", {
+                .setTitle(Xeow.translate("commands/pay:success:title"))
+                .setDescription(Xeow.translate("commands/pay:success:description", {
                     user: args[0],
                     total: args[1].toString()
                 }))
-
                 .addFields([
                     {
-                        name: message.translate("economy/pay:success:fields:self:name"),
-                        value: message.translate("economy/pay:success:fields:self:value", {
+                        name: Xeow.translate("commands/pay:success:fields:self:name"),
+                        value: Xeow.translate("commands/pay:success:fields:self:value", {
                             before: self.coins,
                             after: parseFloat(self.coins) - parseFloat(args[1])
                         }),
                         inline: true
                     }, {
-                        name: message.translate("economy/pay:success:fields:other:name"),
-                        value: message.translate("economy/pay:success:fields:other:value", {
+                        name: Xeow.translate("commands/pay:success:fields:other:name"),
+                        value: Xeow.translate("commands/pay:success:fields:other:value", {
                             before: other?.coins || 0,
                             after: parseFloat(other?.coins || 0) + parseFloat(args[1])
                         }),
                         inline: true
                     }
                 ])
-            message.reply({ embeds: [embed] })
+            await message.reply({ embeds: [embed] })
         } else {
-            message.reply(message.translate("economy/pay:insufficientBalance"))
+            await message.replyT("commands/pay:insufficientBalance")
         }
     }
 }

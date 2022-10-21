@@ -1,0 +1,21 @@
+{
+    "usage": "slashcommand <unregister/register/reset/remove> [指令]",
+    "removeFailed": "尝试清除斜线指令失败了, 请检查后台以查看详细信息",
+    "removeSuccess": "清除斜线指令成功!",
+    "resetting": "重置斜线指令中...",
+    "hasBeenReset": "斜线指令已重置",
+    "resetFailed": "重置指令时出错, 请检查后台以查看错误",
+    "loadingCommand": "正在加载指令 {{command}} 中...",
+    "loadedCommand": "已成功加载指令 {{command}}",
+    "registeringCommand": "正在注册斜线指令 {{command}} 中...",
+    "registerSuccess": "成功注册斜线指令 {{command}}!",
+    "registerFailed": "尝试注册斜线指令时出错, 请查看后台以了解详情",
+    "settingPermission":"设置指令权限中...",
+    "setPermissionFailed": "尝试设置指令权限时出错了, 请检查后台以查看错误",
+    "setPermsSuccess": "设置权限成功",
+    "commandNotFound": "找不到 `{{command}}` 指令",
+    "guildNotFound": "无法找到该伺服器/群 {{id}}",
+    "unregisteredCommand": "已成功注销指令 {{command}}",
+    "unregisteringCommand": "注销 {{command}} 指令中...",
+    "unregisterFailed": "尝试注销 {{command}} 时失败了"
+}

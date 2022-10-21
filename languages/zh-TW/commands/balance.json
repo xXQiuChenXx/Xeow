@@ -1,10 +1,11 @@
 {
-    "name": "balance",
-    "description": "查詢自己或他人的餘額",
-    "opts": {
-        "member": {
-            "name": "成員",
-            "description": "成員標註"
-        }
+    "self": {
+        "title": "💰 你的餘額",
+        "description": "你目前擁有 {{coins}} 錢幣"
+    },
+    "usage": "balance [成員標註]",
+    "other": {
+        "title": "💰 他/她的餘額",
+        "description": "他/她目前擁有 {{coins}} 錢幣"
     }
 }

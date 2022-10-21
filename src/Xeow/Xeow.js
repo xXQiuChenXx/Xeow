@@ -92,18 +92,18 @@ module.exports = class Xeow extends Client {
 
     async startup(config) {
         this.defaultPrefix = config.Prefix
-        console.logT("console/main:database:loading")
+        console.logT("core/main:database:loading")
         this.DBManager = new (require("./DBManager"))(this)
         await this.DBManager.init(config);
         await this.DBManager.validate();
 
         this.CLI = new (require("./CLI"))(this);
 
-        console.logT("console/main:event:preparing")
+        console.logT("core/main:event:preparing")
         this.EventManager = new (require("./EventManager"))(this);
         this.EventManager.events = new Collection()
         await this.EventManager.init()
-        console.logT("console/main:event:done", {
+        console.logT("core/main:event:done", {
             count: this.EventManager.events.map(e => e).length
         })
 
@@ -132,11 +132,13 @@ module.exports = class Xeow extends Client {
         minutes = (minutes < 10) ? "" + minutes : minutes;
         seconds = (seconds < 10) ? "" + seconds : seconds;
 
-        return days + this.translate("common:days") + " " +
-            hours + this.translate("common:hours") + " " +
-            minutes + this.translate("common:minutes") + " " +
-            seconds + this.translate("common:seconds") + " " +
-            milliseconds + this.translate("common:milliseconds");
+        let arr = [
+            `${days} ${this.translate("core/common:days")}`,
+            `${hours} ${this.translate("core/common:hours")}`,
+            `${minutes} ${this.translate("core/common:minutes")}`,
+            `${seconds} ${this.translate("core/common:seconds")}`
+        ]
+        return arr.filter(x => !x.startsWith("0")).join(" ")
     }
 
     async hasTimeout(command, timeout, guild, user) {
@@ -148,34 +150,12 @@ module.exports = class Xeow extends Client {
         return true
     }
 
-    async checkTimeout(command, timeout, guild, user) {
+    async checkTimeout(cmd, msg) {
         await this.DBManager.sync()
         let db = await this.DBManager.get("command")
-        let lastRun = (await db.findOne({ where: { guild: guild, command: command, user: user } }))?.lastRun
+        let lastRun = (await db.findOne({ where: { guild: msg.guild.id, command: cmd.name, user: msg.author.id } }))?.lastRun
         if (!lastRun) return { status: false, left: null }
-        if ((parseInt(lastRun) + parseInt(timeout)) - Date.now() < 0) return { status: false, left: null }
-        return { status: true, left: (parseInt(lastRun) + parseInt(timeout)) - Date.now() }
-    }
-
-    invalidUsage({ message, arg, type, reason }) {
-        const { EmbedBuilder } = require("discord.js")
-        const embed = new EmbedBuilder().setColor("Red")
-        let pre = message.content.split(message.content.split(" ")[arg + 1])[0]
-        const arrow = " ".repeat(pre.length) + "^^^"
-        if (type === "empty") {
-            let r = reason || this.translate("common:invalidUsage:empty")
-            embed.setTitle(r)
-                .setDescription("```\n" + message.content + "\n" + arrow + "```")
-            message.reply({ embeds: [embed] })
-            throw new Error("Invalid args")
-        } else if (type === "incorrect") {
-            let r = reason || this.translate("common:invalidUsage:incorrect")
-            embed.setTitle(r)
-                .setDescription("```\n" + message.content + "\n" + arrow + "```")
-            message.reply({ embeds: [embed] })
-            throw new Error("Invalid args")
-        } else {
-            throw new Error("Unsupported type")
-        }
+        if ((parseInt(lastRun) + parseInt(cmd.timeout)) - Date.now() < 0) return { status: false, left: null }
+        return { status: true, left: (parseInt(lastRun) + parseInt(cmd.timeout)) - Date.now() }
     }
 }

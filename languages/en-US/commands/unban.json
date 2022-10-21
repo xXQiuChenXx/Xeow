@@ -1,14 +1,5 @@
 {
-    "name": "unban",
-    "description": "unban a member",
-    "opts": {
-        "memberID": {
-            "name": "id",
-            "description": "the member's id that you want to unban"
-        },
-        "reason": {
-            "name": "reason",
-            "description": "unban reason"
-        }
-    }
+    "usage": "unban <id>",
+    "noMentions": "You must mention a member's ID",
+    "unbanned": "Removed {{id}} from banned list"
 }

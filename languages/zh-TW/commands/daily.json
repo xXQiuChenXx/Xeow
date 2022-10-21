@@ -1,4 +1,9 @@
 {
-    "name": "daily",
-    "description": "每日簽到"
+    "usage": "daily",
+    "title": ":white_check_mark: 簽到成功!",
+    "description": {
+        "default": "你已成功領取了每日 {{total}} 錢幣",
+        "hasBonus": "你已連續簽到 {{days}} 天, 因此你獲得了額外獎勵 {{bonus}}, 本次簽到共獲得了 {{total}} 錢幣"
+    },
+    "footer": "使用 balance 指令可查看你目前的餘額"
 }

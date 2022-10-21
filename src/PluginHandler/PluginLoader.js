@@ -16,7 +16,7 @@ class SimplePluginLoader {
     async loadPlugin(plugin) {
         const Xeow = this.Xeow
         if (typeof plugin === 'string') plugin = require("../../plugins/" + plugin) // convert plugin name to plugin instance
-        if (this.list.includes(plugin.name)) return console.showErrT("console/pluginLoader:pluginExist", { name: plugin.name }) // check whether plugin already loaded
+        if (this.list.includes(plugin.name)) return console.showErrT("core/pluginLoader:pluginExist", { name: plugin.name }) // check whether plugin already loaded
         let main = Xeow.Configuration.get(`plugins/${plugin.name}/main.yml`) // get the main plugin configuration file
         if (!fs.existsSync("./configs/plugins")) fs.mkdir("./configs/plugins")
 
@@ -40,7 +40,7 @@ class SimplePluginLoader {
                             if (!Xeow.Configuration.existsSync(filePath)) {
                                 if (typeof config.content === "string" && (config.content?.startsWith("https://") || config.content?.startsWith("http://"))) {
                                     config.content = await this._getContent(config.content)
-                                    if (typeof config.content !== 'object') throw new Error(Xeow.translate("console/pluginLoader:contentMustBeObject"))
+                                    if (typeof config.content !== 'object') throw new Error(Xeow.translate("core/pluginLoader:contentMustBeObject"))
                                 }
                                 Xeow.Configuration.writeSync(filePath, config.content)
                             }
@@ -52,7 +52,7 @@ class SimplePluginLoader {
                         if (typeof plugin.config.content === "string"
                             && (plugin.config.content?.startsWith("https://") || plugin.config.content?.startsWith("http://"))) {
                             plugin.config.content = await this._getContent(plugin.config.content)
-                            if (typeof plugin.config.content !== 'object') throw new Error(Xeow.translate("console/pluginLoader:contentMustBeObject"))
+                            if (typeof plugin.config.content !== 'object') throw new Error(Xeow.translate("core/pluginLoader:contentMustBeObject"))
                         }
                         Xeow.Configuration.writeSync(filePath, plugin.config.content)
                     }
@@ -67,7 +67,7 @@ class SimplePluginLoader {
                             let filePath = path.join(fileDir, `${lang.fileName}.json`)
                             if (!fs.existsSync(filePath)) {
                                 if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir)
-                                if (typeof lang.content !== 'object') throw new Error(Xeow.translate("console/pluginLoader:contentMustBeObject"))
+                                if (typeof lang.content !== 'object') throw new Error(Xeow.translate("core/pluginLoader:contentMustBeObject"))
                                 fs.writeFileSync(filePath, JSON.stringify(lang.content, null, 2), "utf-8")
                             }
                         }
@@ -77,7 +77,7 @@ class SimplePluginLoader {
                     let filePath = path.join(fileDir, `${plugin.language.fileName}.json`)
                     if (!fs.existsSync(filePath)) {
                         if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir)
-                        if (typeof plugin.language.content !== 'object') throw new Error(Xeow.translate("console/pluginLoader:contentMustBeObject"))
+                        if (typeof plugin.language.content !== 'object') throw new Error(Xeow.translate("core/pluginLoader:contentMustBeObject"))
                         fs.writeFileSync(filePath, JSON.stringify(plugin.language.content, null, 2), "utf-8")
                     }
                 }
@@ -92,7 +92,7 @@ class SimplePluginLoader {
                         return true
                     }
                 });
-                if (lacked.length !== 0) return console.showErrT("console/pluginLoader:PluginLackDep", {
+                if (lacked.length !== 0) return console.showErrT("core/pluginLoader:PluginLackDep", {
                     name: plugin.name,
                     node_modules: lacked.join(",")
                 })
@@ -100,7 +100,7 @@ class SimplePluginLoader {
 
             //Check For API CompatibleAP
             const api = new API(this.Xeow, plugin)
-            if (!this._isCompatible(plugin, api)) return console.warnT("console/pluginLoader:API:notCompatible",
+            if (!this._isCompatible(plugin, api)) return console.warnT("core/pluginLoader:API:notCompatible",
                 {
                     pluginName: plugin.name,
                     supported_api_ver: api.compatible.join(", "),
@@ -110,7 +110,7 @@ class SimplePluginLoader {
             // Init
             const pluginInstance = new plugin.Plugin(api);
             try {
-                console.logT("console/pluginLoader:loadingPlugin",
+                console.logT("core/pluginLoader:loadingPlugin",
                     {
                         plugin_name: plugin.name,
                         plugin_version: plugin.version
@@ -118,7 +118,7 @@ class SimplePluginLoader {
                 await pluginInstance.onLoad()
                 await pluginInstance.onEnable()
             } catch (err) {
-                console.showErrT("console/pluginLoader:loadingFailed",
+                console.showErrT("core/pluginLoader:loadingFailed",
                     {
                         plugin_name: plugin.name,
                         plugin_version: plugin.version
@@ -127,7 +127,7 @@ class SimplePluginLoader {
             }
 
             if (plugin.loaded === true) {
-                console.logT("console/pluginLoader:loadingSuccess",
+                console.logT("core/pluginLoader:loadingSuccess",
                     {
                         plugin_name: plugin.name,
                         plugin_version: plugin.version,
@@ -156,13 +156,12 @@ class SimplePluginLoader {
      */
     async loadAll() {
         let files = await fs.readdirSync("./plugins/").filter(x => x.endsWith('.js'));
-        if (files.length === 0) return console.logT("console/pluginLoader:NoPluginFound");
+        if (files.length === 0) return console.logT("core/pluginLoader:NoPluginFound");
         let plugins = files.map(file => {
             return { ...(require(`../../plugins/${file}`)), _fileName: file }
         }).sort(function (a, b) { return a.priority - b.priority });
 
         // check for ambiguous plugin
-        // Ambiguous plugin name `CMILib' for files `plugins/CMILib1.2.3.6 copy.jar' and `plugins/CMILib1.2.3.6.jar' in `plugins'
         const lookup = plugins.reduce((a, e) => {
             if (!a[e.name]) a[e.name] = [`'${e._fileName}'`]
             else a[e.name].push(`'${e._fileName}'`)
@@ -171,7 +170,7 @@ class SimplePluginLoader {
         const ambiguousPlugins = Object.keys(lookup).filter(x => lookup[x].length !== 1)
         if (ambiguousPlugins.length) {
             for (const name of ambiguousPlugins) {
-                console.showErrT("console/pluginLoader:ambiguousPlugin", {
+                console.showErrT("core/pluginLoader:ambiguousPlugin", {
                     name: name,
                     files: lookup[name].join(", ")
                 })
@@ -199,10 +198,10 @@ class SimplePluginLoader {
     async disablePlugin(pluginName) {
         let plugin = this.plugins.get(pluginName)
         if (plugin) {
-            console.logT("console/pluginLoader:disablingPlugin", { name: pluginName })
+            console.logT("core/pluginLoader:disablingPlugin", { name: pluginName })
             await plugin.onDisable(pluginName)
             await this.plugins.delete(pluginName)
-            console.logT("console/pluginLoader:disabledPlugin", { name: pluginName })
+            console.logT("core/pluginLoader:disabledPlugin", { name: pluginName })
         }
     }
 

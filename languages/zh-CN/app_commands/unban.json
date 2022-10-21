@@ -1,0 +1,14 @@
+{
+    "name": "unban",
+    "description": "解除封禁一位成员",
+    "opts": {
+        "memberID": {
+            "name": "id",
+            "description": "成员ID"
+        },
+        "reason": {
+            "name": "原因",
+            "description": "解封原因"
+        }
+    }
+}

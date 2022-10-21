@@ -1,10 +1,11 @@
 {
-    "name": "balance",
-    "description": "Check your own or someone else's balance",
-    "opts": {
-        "member": {
-            "name": "member",
-            "description": "mention a member"
-        }
+    "usage": "balance [member]",
+    "self": {
+        "title": "💰 Your coins",
+        "description": "You currently have {{coins}} coins"
+    },
+    "other": {
+        "title": "💰 His/Her coins",
+        "description": "His/Her currently have {{coins}} coins"
     }
 }

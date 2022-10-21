@@ -165,14 +165,14 @@ async function archiveLog(Xeow) {
     const fs = require("fs")
     const archiver = require('archiver');
     if (fs.existsSync("./logs/lastest.log")) {
-        console.debug("console/main:archive:archiving")
+        console.debug("core/main:archive:archiving")
         try {
             const output = fs.createWriteStream("./logs/" + `${Xeow.getFormattedDate()}.zip`);
             const archive = archiver('zip', {
                 zlib: { level: 9 }
             });
             output.on('close', function () {
-                console.debug("console/main:archive:totalBytes", { total: archive.pointer() });
+                console.debug("core/main:archive:success", { total: archive.pointer() });
             });
             output.on('warning', function (err) {
                 console.debug(err.message)
@@ -182,10 +182,9 @@ async function archiveLog(Xeow) {
             await archive.finalize();
             await fs.unlinkSync("./logs/lastest.log")
         } catch (error) {
-            console.showErr("console/main:archive:failed")
+            console.showErr("core/main:archive:failed")
             console.error(error)
         }
-        console.debug("console/main:archive:success")
     }
 }
 // ======================== 壓縮記錄文件 =======================
@@ -221,7 +220,7 @@ async function Startup() {
             Xeow: Xeow
         })
     }
-    console.logT("console/main:bot:NodeJS_version", { version: process.version })
+    console.logT("core/main:bot:nodeJSVersion", { version: process.version })
     await archiveLog(Xeow);
     await CheckForUpdate();
     await Xeow.startup(config)
@@ -229,16 +228,16 @@ async function Startup() {
         await Xeow.run(config)
         await Xeow.PluginManager.loadAll()
         setTimeout(() => {
-            console.infoT("console/main:bot:leaveStar")
+            console.infoT("core/main:bot:leaveStar")
         }, 15000)
-        console.logT("console/main:bot:loaded", { second: ((performance.now() - ms) / 1000).toFixed(2) })
+        console.logT("core/main:bot:loaded", { second: ((performance.now() - ms) / 1000).toFixed(2) })
     })
     Xeow.on("debug", console.debug)
     await Xeow.login(config.Token).catch(error => {
         if (error.message.includes("An invalid token was provided")) {
-            console.showErrT("console/main:bot:invalidToken");
+            console.showErrT("core/main:bot:invalidToken");
         } else {
-            console.showErrT("console/main:bot:loginError");
+            console.showErrT("core/main:bot:loginError");
             console.error(error);
         }
         process.exit();

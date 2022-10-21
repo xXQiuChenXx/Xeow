@@ -1,0 +1,9 @@
+{
+    "usage": "daily",
+    "title": ":white_check_mark: 签到成功!",
+    "description": {
+        "default": "你已成功领取了每日 {{total}} 钱币",
+        "hasBonus": "你已连续签到 {{days}} 天, 因此你获得了额外奖励 {{bonus}}, 本次签到共获得了 {{total}} 钱币"
+    },
+    "footer": "使用 balance 指令可查看你目前的余额"
+}

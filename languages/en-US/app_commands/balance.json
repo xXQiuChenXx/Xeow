@@ -1,0 +1,10 @@
+{
+    "name": "balance",
+    "description": "Check your own or someone else's balance",
+    "opts": {
+        "member": {
+            "name": "member",
+            "description": "mention a member"
+        }
+    }
+}

@@ -3,6 +3,6 @@ module.exports = class Event {
         this.Xeow = Xeow
     }
     async run(bot) {
-        console.logT("console/main:bot:loggedIn",{ username: bot.user.username})
+        console.logT("core/main:bot:loggedIn",{ username: bot.user.username})
     }
 }

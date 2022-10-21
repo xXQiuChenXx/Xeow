@@ -2,22 +2,21 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = {
     getLang: async function(Xeow) {
         return {
-            name: Xeow.translate("commands/balance:name"),
-            description: Xeow.translate("commands/balance:description"),
-            descriptionLocalizations: Xeow.translateAll("commands/balance:description"),
+            name: Xeow.translate("app_commands/balance:name"),
+            description: Xeow.translate("app_commands/balance:description"),
+            descriptionLocalizations: Xeow.translateAll("app_commands/balance:description"),
             options: [{
-                name: Xeow.translate("commands/balance:opts:member:name"),
-                nameLocalizations: Xeow.translateAll("commands/balance:opts:member:name"),
-                description: Xeow.translate("commands/balance:opts:member:description"),
+                name: Xeow.translate("app_commands/balance:opts:member:name"),
+                nameLocalizations: Xeow.translateAll("app_commands/balance:opts:member:name"),
+                description: Xeow.translate("app_commands/balance:opts:member:description"),
                 type: 6,
-                descriptionLocalizations: Xeow.translateAll("commands/balance:opts:member:description")
+                descriptionLocalizations: Xeow.translateAll("app_commands/balance:opts:member:description")
             }]
         }
     },
+    usage: "commands/balance:usage",
     config: {
         aliases: ["bal"],
-        usage: "balance [成員標註]",
-        description: "查詢自己或他人的餘額",
         emoji: "💰",
         self: {
             timestamp: true
@@ -41,8 +40,8 @@ module.exports = {
                     name: member.nickname === null ? member.user.tag : member.nickname,
                     iconURL: member.user.displayAvatarURL({ dynamic: true })
                 })
-                .setTitle(message.translate("economy/balance:other:title"))
-                .setDescription(message.translate("economy/balance:other:description", {
+                .setTitle(message.translate("commands/balance:other:title"))
+                .setDescription(message.translate("commands/balance:other:description", {
                     coins: coins === undefined ? "0" : coins
                 }))
             if (config.other.timestamp === true) embed.setTimestamp()
@@ -56,8 +55,8 @@ module.exports = {
                     name: message.member.nickname === null ? message.member.user.tag : message.member.nickname,
                     iconURL: message.member.user.displayAvatarURL({ dynamic: true })
                 })
-                .setTitle(message.translate("economy/balance:self:title"))
-                .setDescription(message.translate("economy/balance:self:description", {
+                .setTitle(message.translate("commands/balance:self:title"))
+                .setDescription(message.translate("commands/balance:self:description", {
                     coins:  coins === undefined ? "0" : coins
                 }))
             if (config.self.timestamp === true) embed.setTimestamp()

@@ -1,0 +1,53 @@
+{
+    "bot": {
+        "nodeJSVersion": "你所用的 NodeJS 版本为 {{version}}",
+        "invalidToken": "你的机器人令牌(token) 无效, 请重新检查后再启动",
+        "loginError": "尝试登入到机器人时出错:",
+        "loggedIn": "已成功登入机器人 {{username}}",
+        "loaded": "机器人已启动成功! 耗时: {{second}}s",
+        "leaveStar": "喜欢这个机器人吗? 欢迎到 Github 点个小星星 https://github.com/xXQiuChenXx/Xeow"
+    },
+    "archive": {
+        "archiving": "正在压缩记录文件中...",
+        "success": "成功压缩记录文件, 共 {{total}} bytes",
+        "failed": "压缩记录文件时出错"
+    },
+    "database": {
+        "invalidType": "抱歉, 但目前还不支持 {{type}} 数据库类型",
+        "loading": "正在加载数据库...",
+        "validate": {
+            "verifying": "正在验证数据库信息中...",
+            "success": "验证成功!",
+            "failed": "无法验证/登入你的数据库, 请检查配置信息无误后再重新启动"
+        },
+        "checking": "正在检查数据库资料中...",
+        "checked": "检查完毕!"
+    },
+    "event": {
+        "preparing": "正在准备事件中...",
+        "loaded": "成功加载事件 {{event}}",
+        "done": "已加载 {{count}} 事件"
+    },
+    "command": {
+        "loaded": {
+            "noAliase": "✔ 成功加载指令 {{commandName}}",
+            "haveAliase": "✔ 成功加载指令 {{commandName}}, 别名为: {{commandAliases}}"
+        },
+        "NoDescription": "该指令无描述",
+        "invalidUsage": {
+            "title": "指令使用方式错误, 请检查错误后再试",
+            "description": "错误: {{reason}}",
+            "rs": {
+                "empty": "缺少参数",
+                "number": "必须是一个数字",
+                "string": "必须是一个文本",
+                "integer": "必须是一个整数",
+                "boolean": "只能是 true 或者 false",
+                "user": "必须指定一位用户",
+                "channel": "必须是一个频道",
+                "role": "必须是一个身分组",
+                "mentionable": "必须是可被标注的"
+            }
+        }
+    }
+}

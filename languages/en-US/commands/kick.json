@@ -1,14 +1,6 @@
 {
-    "name": "kick",
-    "description": "kick a member",
-    "opts": {
-        "member": {
-            "name": "member",
-            "description": "mention a member to kick"
-        },
-        "reason": {
-            "name": "reason",
-            "description": "kick reason"
-        }
-    }
+    "defaultReason": "Violating server rules",
+    "errorOccured": "An error occurred, please report it to the developer",
+    "kicked": "`{{member}}` no longer a member of our server",
+    "usage": "kick <member> [reason]"
 }

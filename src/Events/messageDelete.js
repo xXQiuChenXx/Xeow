@@ -9,7 +9,7 @@ module.exports = class Event {
         const SDM = await this.Xeow.Configuration.get("feature")?.ShowDeletedMessage
         if (SDM && SDM === true) {
             message.channel.createWebhook((message.member.nickname || message.member.user.username)
-                + ` [${message.translate("common:messageDeleted")}]`, {
+                + ` [${message.translate("core/common:messageDeleted")}]`, {
                 avatar: message.author.avatarURL({ format: "png" }),
             }).then(async webhook => {
                     await webhook.send({ content: message.content })

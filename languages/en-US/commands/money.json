@@ -1,48 +1,19 @@
 {
-    "name": "money",
-    "description": "Set and change members' coins",
-    "opts": {
-        "set": {
-            "name": "set",
-            "description": "Set member coins",
-            "opts": {
-                "member": {
-                    "name": "member",
-                    "description": "mention a member"
-                },
-                "amount": {
-                    "name": "amount",
-                    "description": "the amount of money you want to set"
-                }
-            }
-        },
-        "give": {
-            "name": "give",
-            "description": "Give member coins",
-            "opts": {
-                "member": {
-                    "name": "member",
-                    "description": "mention a member"
-                },
-                "amount": {
-                    "name": "amount",
-                    "description": "amount of coins"
-                }
-            }
-        },
-        "take": {
-            "name": "take",
-            "description": "deduct members' coins",
-            "opts": {
-                "member": {
-                    "name": "member",
-                    "description": "mention a member"
-                },
-                "amount": {
-                    "name": "amount",
-                    "description": "amount of coins"
-                }
-            }
-        }
-    }
+    "usage": "money <give/take/set> <member>",
+    "cantNegNum": "Cannot be negatif number",
+    "cantBot": "The member that you mentioned cannot be a bot",
+    "give": {
+        "title": "🔧Setting success!",
+        "description": "You have successfully transferred {{amount}} coins to {{member}}, who now has {{balance}}"
+    },
+    "take": {
+        "no_enough_money": "Sorry, but he/she don't have so much coins",
+        "title": "🔧Setting success!",
+        "description": "You have successfully removed {{amount}} coins from {{member}}, he now has {{balance}} coins"
+    },
+    "set": {
+        "title": "🔧Setting success!",
+        "description": "{{member}} now have {{amount}} coins"
+    },
+    "invalidUsage": "Must be 'take', 'give', or 'set'"
 }

@@ -1,47 +1,47 @@
 module.exports = {
     getLang: async function (Xeow) {
         return {
-            name: Xeow.translate("commands/kick:name"),
-            description: Xeow.translate("commands/kick:description"),
-            descriptionLocalizations: Xeow.translateAll("commands/kick:description"),
+            name: Xeow.translate("app_commands/kick:name"),
+            description: Xeow.translate("app_commands/kick:description"),
+            descriptionLocalizations: Xeow.translateAll("app_commands/kick:description"),
             defaultMemberPermissions: ["KickMembers"],
             options: [
                 {
-                    name: Xeow.translate("commands/kick:opts:member:name"),
-                    nameLocalizations: Xeow.translateAll("commands/kick:opts:member:name"),
+                    name: Xeow.translate("app_commands/kick:opts:member:name"),
+                    nameLocalizations: Xeow.translateAll("app_commands/kick:opts:member:name"),
                     type: 6,
-                    description: Xeow.translate("commands/kick:opts:member:description"),
-                    descriptionLocalizations: Xeow.translateAll("commands/kick:opts:member:description"),
+                    description: Xeow.translate("app_commands/kick:opts:member:description"),
+                    descriptionLocalizations: Xeow.translateAll("app_commands/kick:opts:member:description"),
                     required: true
                 },
                 {
-                    name: Xeow.translate("commands/kick:opts:reason:name"),
-                    nameLocalizations: Xeow.translateAll("commands/kick:opts:reason:name"),
+                    name: Xeow.translate("app_commands/kick:opts:reason:name"),
+                    nameLocalizations: Xeow.translateAll("app_commands/kick:opts:reason:name"),
                     type: 3,
-                    description: Xeow.translate("commands/kick:opts:reason:description"),
-                    descriptionLocalizations: Xeow.translateAll("commands/kick:opts:reason:description"),
+                    description: Xeow.translate("app_commands/kick:opts:reason:description"),
+                    descriptionLocalizations: Xeow.translateAll("app_commands/kick:opts:reason:description"),
                     required: false
                 },
             ]
         }
     },
+    usage: "commands/kick:usage",
     config: {
-        usage: "kick <@成員>",
         emoji: "🦵",
         memberPerms: ["KickMembers"],
         botPerms: ["KickMembers"]
     },
     run: async (Xeow, message, args, config) => {
         const member = message.mentions.members.first();
-        if(!member) return message.replyT("admin/kick:noMentions");
-        const reason = args.slice(1, args.length).join(" ") || Xeow.translate("admin/kick:defaultReason");
+        if(!member) return await message.invalidUsage({ position: 0, reason: 6 })
+        const reason = args.slice(1, args.length).join(" ") || Xeow.translate("commands/kick:defaultReason");
         try {
             await member.kick(reason);
         } catch(error) {
             console.error(error)
-            return message.replyT("admin/kick:errorOccured")
+            return message.replyT("commands/kick:errorOccured")
         }
-        await message.replyT("admin/kick:kicked", {
+        await message.replyT("commands/kick:kicked", {
             member: member.user.tag
         })
     }

@@ -1,0 +1,5 @@
+{
+    "usage": "unban <成员标注>",
+    "noMentions": "你未指定一位成员的ID",
+    "unbanned": "执行成功! {{id}} 已从封禁列表中移除"
+}

@@ -18,10 +18,11 @@ module.exports = async (Xeow) => {
             const command_file = require(`../../commands/${dir}/${file}`)
             let command = await command_file.getLang(Xeow);
             let cmd = { ...base, ...command_file, ...command, category: dir, ...command_file.config }
+            cmd.usage = Xeow.translate(cmd.usage)
             const conf = Xeow.Configuration.get(`commands/${cmd.name}.yml`)
             if (!conf) {
                 Xeow.Configuration.writeSync(`commands/${cmd.name}.yml`,
-                    { ...base, ...command_file.config, category: dir}, "utf8", { sortKeys: true })
+                    { ...base, ...command_file.config, category: dir }, "utf8", { sortKeys: true })
             } else {
                 cmd = { ...cmd, ...conf }
             }
@@ -31,12 +32,12 @@ module.exports = async (Xeow) => {
                     cmd.aliases.forEach(p => {
                         Xeow.aliases.set(p, { ...cmd, name: p })
                     })
-                    console.logT("console/main:command:loaded:haveAliase", {
+                    console.logT("core/main:command:loaded:haveAliase", {
                         commandName: cmd.name,
                         commandAliases: cmd.aliases.join(", ")
                     })
                 } else {
-                    console.logT("console/main:command:loaded:noAliase", {
+                    console.logT("core/main:command:loaded:noAliase", {
                         commandName: cmd.name
                     })
                 }

@@ -1,0 +1,18 @@
+{
+    "name": "ban",
+    "description": "封禁一位成员",
+    "opts": {
+        "member": {
+            "name": "成员",
+            "description": "指定一位成员"
+        },
+        "reason": {
+            "name": "原因",
+            "description": "封禁原因"
+        },
+        "deleteMessage": {
+            "name": "删除信息",
+            "description": "要删除的消息秒数，必须介于 0 和 604800 (7 天) 之间"
+        }
+    }
+}

@@ -1,10 +1,23 @@
 {
-    "name": "help",
-    "description": "Help menu",
-    "opts": {
-        "command": {
-            "name": "command",
-            "description": "command name"
+    "aliases": "command aliase(s)",
+    "description": "command description",
+    "usage": "help [command]",
+    "cmd_usage": "command usage",
+    "cooldown": "command cooldown",
+    "commandTutorial": "📖 command tutorial",
+    "chooseCommand": "Choose a command",
+    "backToMain": "Go back to main",
+    "backToMainDescription": "Shows the command help main page",
+    "format": {
+        "name": "command usage description",
+        "value": "`<>`is required parameter `[]`is an optional parameter"
+    },
+    "main": {
+        "description": "Hi there! d(･∀･)b I am {{username}}, \nMy goal is for you to quickly build a quality and friendly discord server! \n\nHere is the complete list of commands for you to choose\nor you can just use `help` followed by the command name and I'll help you too!",
+        "menu": {
+            "placeholder": "📖 command tutorial"
         }
-    }
+    },
+    "cmdTitle": "{{emoji}}┇ {{command}} command",
+    "noValue": "`(No set)`"
 }

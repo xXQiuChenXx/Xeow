@@ -1,6 +1,0 @@
-{
-    "noMentions": "請指定一位成員",
-    "defaultReason": "違反伺服器規則",
-    "errorOccured": "出現錯誤, 請回報給開發者",
-    "banned": "執行成功! `{{member}}` 已不再是我們的成員了"
-}

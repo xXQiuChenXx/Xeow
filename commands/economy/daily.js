@@ -2,16 +2,16 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = {
     getLang: async function(Xeow) {
         return {
-            name: Xeow.translate("commands/daily:name"),
-            description: Xeow.translate("commands/daily:description"),
-            descriptionLocalizations: Xeow.translateAll("commands/daily:description")
+            name: Xeow.translate("app_commands/daily:name"),
+            description: Xeow.translate("app_commands/daily:description"),
+            descriptionLocalizations: Xeow.translateAll("app_commands/daily:description")
         }
     },
+    usage: "commands/daily:usage",
     config: {
         timeout: 86400000,
         checkInAmount: 100,
         bonusMultiple: 0.02,
-        usage: "daily",
         emoji: "📅",
     },
     run: async (Xeow, message, args, config) => {
@@ -28,13 +28,13 @@ module.exports = {
             await data.save()
             const embed = new EmbedBuilder()
                 .setColor("Random")
-                .setTitle(message.translate("economy/daily:title"))
-                .setDescription(message.translate("economy/daily:description:hasBonus", {
+                .setTitle(message.translate("commands/daily:title"))
+                .setDescription(message.translate("commands/daily:description:hasBonus", {
                     days: data["checked_in_count"],
                     bonus: bonus,
                     total: bonus + checkInAmount
                 }))
-                .setFooter({ text: message.translate("economy/daily:footer") })
+                .setFooter({ text: message.translate("commands/daily:footer") })
 
             await message.reply({ embeds: [embed] })
         } else {
@@ -60,11 +60,11 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setColor("Random")
-                .setTitle(message.translate("economy/daily:title"))
-                .setDescription(message.translate("economy/daily:description:default", {
+                .setTitle(message.translate("commands/daily:title"))
+                .setDescription(message.translate("commands/daily:description:default", {
                     total: checkInAmount
                 }))
-                .setFooter({ text: message.translate("economy/daily:footer") })
+                .setFooter({ text: message.translate("commands/daily:footer") })
 
             await message.reply({ embeds: [embed] })
         }

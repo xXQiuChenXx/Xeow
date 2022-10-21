@@ -1,4 +1,4 @@
 {
-    "name": "top",
-    "description": "coins leaderboard"
+    "usage": "top",
+    "leaderboard": "Coins LeaderBoard"
 }

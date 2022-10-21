@@ -1,6 +1,6 @@
 module.exports = {
+    usage: "commands/slashcommand:usage",
     config: {
-        usage: "slashcommand <unregister/register/reset/remove> [指令]",
         timeout: 60000,
         emoji: "🤖",
         memberPerms: ["Administrator"],
@@ -11,16 +11,11 @@ module.exports = {
         const cmdName = args[1]?.toLowerCase()
         if (type === "register" && cmdName) {
             let cmd = Xeow.commands.get(cmdName)
-            if (!cmd) return await Xeow.invalidUsage({
-                message: message, arg: 1, type: "incorrect",
-                reason: Xeow.translate("admin/slashcommand:commandNotFound", {
-                    command: cmdName
-                })
-            })
-            let msg = await message.replyT("admin/slashcommand:registeringCommand", {
+            if (!cmd) return await message.invalidUsage({ position: 1, reason: 1 })
+            let msg = await message.replyT("commands/slashcommand:registeringCommand", {
                 command: cmdName
             })
-            console.logT("admin/slashcommand:registeringCommand", {
+            console.logT("commands/slashcommand:registeringCommand", {
                 command: cmdName
             })
             try {
@@ -33,40 +28,40 @@ module.exports = {
                     defaultMemberPermissions: cmd?.defaultMemberPermissions || ["UseApplicationCommands"]
                 })
             } catch (error) {
-                await msg.editT("admin/slashcommand:registerFailed")
+                await msg.editT("commands/slashcommand:registerFailed")
                 return console.error(error);
             }
-            await msg.editT("admin/slashcommand:registerSuccess", { command: cmdName })
-            console.logT("admin/slashcommand:registerSuccess", { command: cmdName });
+            await msg.editT("commands/slashcommand:registerSuccess", { command: cmdName })
+            console.logT("commands/slashcommand:registerSuccess", { command: cmdName });
         } else if (type === "unregister" && cmdName) {
             let commands = await Xeow.application.commands.fetch()
             let command = commands.find(cmd => cmd.name === cmdName)
             if (!command) {
-                console.showErrT("admin/slashcommand:commandNotFound", {
+                console.showErrT("commands/slashcommand:commandNotFound", {
                     command: cmdName
                 })
-                return message.editT("admin/slashcommand:commandNotFound", {
+                return message.editT("commands/slashcommand:commandNotFound", {
                     command: cmdName
                 })
             }
-            let msg = message.replyT("admin/slashcommand:unregisteringCommand", {
+            let msg = message.replyT("commands/slashcommand:unregisteringCommand", {
                 command: cmdName
             })
             try {
                 await Xeow.application?.commands.delete(command)
             } catch (error) {
-                await msg.editT("admin/slashcommand:unregisterFailed", {
+                await msg.editT("commands/slashcommand:unregisterFailed", {
                     command: cmdName
                 })
                 return console.error(error)
             };
-            await msg.editT("admin/slashcommand:unregisteredCommand", {
+            await msg.editT("commands/slashcommand:unregisteredCommand", {
                 command: cmdName
             })
 
         } else if (type === "reset") {
-            let msg = await message.replyT("admin/slashcommand:resetting")
-            console.logT("admin/slashcommand:resetting")
+            let msg = await message.replyT("commands/slashcommand:resetting")
+            console.logT("commands/slashcommand:resetting")
             await Xeow.application?.commands.set([])
             try {
                 let commands = Xeow.commands.map(cmd => {
@@ -82,57 +77,57 @@ module.exports = {
                 await Xeow.application?.commands.set(commands)
             } catch (error) {
                 console.error(error)
-                return msg.editT("admin/slashcommand:resetFailed")
+                return msg.editT("commands/slashcommand:resetFailed")
             }
-            msg.editT("admin/slashcommand:hasBeenReset")
-            console.logT("admin/slashcommand:hasBeenReset");
+            msg.editT("commands/slashcommand:hasBeenReset")
+            console.logT("commands/slashcommand:hasBeenReset");
 
         } else if (type === "remove") {
             try {
                 await Xeow.application?.commands.set([])
             } catch (error) {
-                await message.replyT("admin/slashcommand:removeFailed")
+                await message.replyT("commands/slashcommand:removeFailed")
                 return console.error(error)
             }
-            await message.replyT("admin/slashcommand:removeSuccess");
+            await message.replyT("commands/slashcommand:removeSuccess");
         } else {
-            await Xeow.invalidUsage({ message: message, arg: 0, type: "empty" })
+            await message.invalidUsage({ position: 0, reason: 1 })
         }
     },
     getLang: async function (Xeow) {
         return {
-            name: Xeow.translate("commands/slashcommand:name"),
-            description: Xeow.translate("commands/slashcommand:description"),
-            descriptionLocalizations: Xeow.translateAll("commands/slashcommand:description"),
+            name: Xeow.translate("app_commands/slashcommand:name"),
+            description: Xeow.translate("app_commands/slashcommand:description"),
+            descriptionLocalizations: Xeow.translateAll("app_commands/slashcommand:description"),
             options: [{
-                name: Xeow.translate("commands/slashcommand:opts:type:name"),
-                nameLocalizations: Xeow.translateAll("commands/slashcommand:opts:type:name"),
+                name: Xeow.translate("app_commands/slashcommand:opts:type:name"),
+                nameLocalizations: Xeow.translateAll("app_commands/slashcommand:opts:type:name"),
                 type: 3,
-                description: Xeow.translate("commands/slashcommand:opts:type:description"),
-                descriptionLocalizations: Xeow.translateAll("commands/slashcommand:opts:type:description"),
+                description: Xeow.translate("app_commands/slashcommand:opts:type:description"),
+                descriptionLocalizations: Xeow.translateAll("app_commands/slashcommand:opts:type:description"),
                 required: true,
                 choices: [{
-                    name: Xeow.translate("commands/slashcommand:opts:type:choices:register"),
-                    nameLocalizations: Xeow.translateAll("commands/slashcommand:opts:type:choices:register"),
+                    name: Xeow.translate("app_commands/slashcommand:opts:type:choices:register"),
+                    nameLocalizations: Xeow.translateAll("app_commands/slashcommand:opts:type:choices:register"),
                     value: 'register'
                 }, {
-                    name: Xeow.translate("commands/slashcommand:opts:type:choices:unregister"),
-                    nameLocalizations: Xeow.translateAll("commands/slashcommand:opts:type:choices:unregister"),
+                    name: Xeow.translate("app_commands/slashcommand:opts:type:choices:unregister"),
+                    nameLocalizations: Xeow.translateAll("app_commands/slashcommand:opts:type:choices:unregister"),
                     value: 'unregister'
                 }, {
-                    name: Xeow.translate("commands/slashcommand:opts:type:choices:reset"),
-                    nameLocalizations: Xeow.translateAll("commands/slashcommand:opts:type:choices:reset"),
+                    name: Xeow.translate("app_commands/slashcommand:opts:type:choices:reset"),
+                    nameLocalizations: Xeow.translateAll("app_commands/slashcommand:opts:type:choices:reset"),
                     value: 'reset'
                 }, {
-                    name: Xeow.translate("commands/slashcommand:opts:type:choices:remove"),
-                    nameLocalizations: Xeow.translateAll("commands/slashcommand:opts:type:choices:remove"),
+                    name: Xeow.translate("app_commands/slashcommand:opts:type:choices:remove"),
+                    nameLocalizations: Xeow.translateAll("app_commands/slashcommand:opts:type:choices:remove"),
                     value: 'remove'
                 }],
             }, {
-                name: Xeow.translate("commands/slashcommand:opts:command:name"),
+                name: Xeow.translate("app_commands/slashcommand:opts:command:name"),
                 type: 3,
-                description: Xeow.translate("commands/slashcommand:opts:command:description"),
-                descriptionLocalizations: Xeow.translateAll("commands/slashcommand:opts:command:description"),
+                description: Xeow.translate("app_commands/slashcommand:opts:command:description"),
+                descriptionLocalizations: Xeow.translateAll("app_commands/slashcommand:opts:command:description"),
                 required: false
             }],
         }

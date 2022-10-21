@@ -4,9 +4,10 @@ module.exports = {
         memberPerms: ["BanMembers"],
         emoji: "⛓️",
     },
+    usage: "commands/unban:usage",
     run: async (Xeow, message, args, config) => {
         const id = args[0]
-        if (!id) return message.replyT("admin/unban:noMentions")
+        if (!id) return await message.invalidUsage({ position: 0, reason: 6 })
         let reason;
         if(args.length > 1) reason = args.slice(1, args.length)?.join(" ")
         try {
@@ -14,27 +15,27 @@ module.exports = {
         } catch (error) {
             console.error(error)
         }
-        await message.replyT("admin/unban:unbanned", {
+        await message.replyT("commands/unban:unbanned", {
             id: id
         })
     },
     getLang: async function (Xeow) {
         return {
-            name: Xeow.translate("commands/unban:name"),
-            description: Xeow.translate("commands/unban:description"),
-            descriptionLocalizations:  Xeow.translateAll("commands/unban:description"),
+            name: Xeow.translate("app_commands/unban:name"),
+            description: Xeow.translate("app_commands/unban:description"),
+            descriptionLocalizations:  Xeow.translateAll("app_commands/unban:description"),
             defaultMemberPermissions: ["BanMembers"],
             options: [{
-                name: Xeow.translate("commands/unban:opts:memberID:name"),
+                name: Xeow.translate("app_commands/unban:opts:memberID:name"),
                 type: 10,
-                description: Xeow.translate("commands/unban:opts:memberID:description"), 
-                descriptionLocalizations:  Xeow.translateAll("commands/unban:opts:memberID:name"),
+                description: Xeow.translate("app_commands/unban:opts:memberID:description"), 
+                descriptionLocalizations:  Xeow.translateAll("app_commands/unban:opts:memberID:name"),
                 required: true
             }, {
-                name: Xeow.translate("commands/unban:opts:reason:name"),
+                name: Xeow.translate("app_commands/unban:opts:reason:name"),
                 type: 3,
-                description:  Xeow.translate("commands/unban:opts:reason:description"), 
-                descriptionLocalizations:   Xeow.translateAll("commands/unban:opts:reason:description"),
+                description:  Xeow.translate("app_commands/unban:opts:reason:description"), 
+                descriptionLocalizations:   Xeow.translateAll("app_commands/unban:opts:reason:description"),
                 required: false
             }],
         }

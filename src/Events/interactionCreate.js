@@ -8,7 +8,7 @@ module.exports = class Event {
         const Xeow = this.Xeow
         if (interaction.isSelectMenu()) {
             const hp_config = Xeow.Configuration.get("commands/help.yml")
-            const noValue = Xeow.translate("general/help:noValue");
+            const noValue = Xeow.translate("commands/help:noValue");
             switch (interaction.customId) {
                 case 'help_menu':
                     let cat = interaction.values[0]
@@ -16,7 +16,7 @@ module.exports = class Event {
 
                     const menu = new SelectMenuBuilder()
                         .setCustomId('help_command')
-                        .setPlaceholder(Xeow.translate("general/help:chooseCommand"))
+                        .setPlaceholder(Xeow.translate("commands/help:chooseCommand"))
 
                     const row = new ActionRowBuilder().addComponents(menu);
                     const commands = Xeow.commands.filter(cmd => cmd.category === cat)
@@ -30,8 +30,8 @@ module.exports = class Event {
                         })
                     })
                     menu.addOptions({
-                        label: Xeow.translate("general/help:backToMain"),
-                        description: Xeow.translate("general/help:backToMainDescription"),
+                        label: Xeow.translate("commands/help:backToMain"),
+                        description: Xeow.translate("commands/help:backToMainDescription"),
                         value: "go_back_home",
                         emoji: "🏠"
                     })
@@ -42,13 +42,13 @@ module.exports = class Event {
                         const embed = new EmbedBuilder()
                             .setAuthor({ iconURL: Xeow.user.avatarURL({ extension: 'jpg' }), name: Xeow.user.username })
                             .setColor("Random")
-                            .setDescription(Xeow.translate("general/help:main:description", {
+                            .setDescription(Xeow.translate("commands/help:main:description", {
                                 username: Xeow.user.username
                             }))
 
                         const menu = new SelectMenuBuilder()
                             .setCustomId('help_menu')
-                            .setPlaceholder(Xeow.translate("general/help:commandTutorial"))
+                            .setPlaceholder(Xeow.translate("commands/help:commandTutorial"))
 
                         const row = new ActionRowBuilder().addComponents(menu);
                         for (const category of Xeow.categories) {
@@ -68,21 +68,21 @@ module.exports = class Event {
                             .setAuthor({ iconURL: Xeow.user.avatarURL({ extension: 'jpg' }), name: Xeow.user.username })
                             .addFields([
                                 {
-                                    name: Xeow.translate("general/help:getCMD:title", {
+                                    name: Xeow.translate("commands/help:cmdTitle", {
                                         emoji: command?.emoji,
                                         command: command?.name
                                     }),
                                     value: command?.description || noValue
                                 },
-                                { name: Xeow.translate("general/help:usage"), value: command?.usage === undefined ? noValue : "```" + `${prefix}${command.usage}` + "```" },
-                                { name: Xeow.translate("general/help:format:name"), value: Xeow.translate("general/help:format:value") }
+                                { name: Xeow.translate("commands/help:cmd_usage"), value: command?.usage === undefined ? noValue : "```" + `${prefix}${command.usage}` + "```" },
+                                { name: Xeow.translate("commands/help:format:name"), value: Xeow.translate("commands/help:format:value") }
                             ])
                             .setThumbnail(Xeow.user.avatarURL({ extension: 'jpg' }));
                         if (command?.timeout) embed.addFields([{
-                            name: Xeow.translate("general/help:cooldown"),
+                            name: Xeow.translate("commands/help:cooldown"),
                             value: Xeow.msToTime(command.timeout)
                         }])
-                        if (command?.aliases && command?.aliases?.length !== 0) embed.addFields([{ name: Xeow.translate("general/help:aliases"), value: command.aliases.join(", ") }])
+                        if (command?.aliases && command?.aliases?.length !== 0) embed.addFields([{ name: Xeow.translate("commands/help:aliases"), value: command.aliases.join(", ") }])
                         return await interaction.update({ embeds: [embed], content: '', components: [] })
                     }
                     break;
@@ -95,43 +95,48 @@ module.exports = class Event {
             if (interaction.user.bot) return;
             let command = Xeow.commands.get(interaction.commandName) || Xeow.aliases.get(interaction.commandName);
             if (!command) return await interaction.reply({
-                content: Xeow.translate("events:interactionCreate:cmdNotFound"),
+                content: Xeow.translate("core/events:interactionCreate:cmdNotFound"),
                 ephemeral: true
             });
             let msg = new FakeMessage(interaction)
 
             if (command.timeout) {
-                let cd = await Xeow.checkTimeout(command.name, command.timeout, msg.guild.id, msg.author.id)
+                let cd = await Xeow.checkTimeout(command, msg);
                 if (cd.status) {
-                    return await msg.replyT("events:interactionCreate:cooldowned", {
-                        time: Xeow.msToTime(cd.left)
-                    })
+                    return await msg.reply({
+                        content: Xeow.translate("core/events:interactionCreate:cooldown", {
+                            time: Xeow.msToTime(cd.left)
+                        }),
+                        ephemeral: true
+                    });
                 }
             }
-
 
             let args = msg.content.split(/ +/)
             args = args.slice(1, args.length)
 
-            if (!msg.channel.nsfw && command.nsfw) {
-                return msg.replyT("events:interactionCreate:nsfwCommand")
+            if (!msg.channel.nsfw && command?.nsfw) {
+                return msg.reply({
+                    content: Xeow.translate("core/events:interactionCreate:nsfwCommand"),
+                    ephemeral: true
+                })
             }
 
             if (command.memberPerms?.length) {
-                if (!msg.member.permissions.has(command.memberPerms)) return await msg.replyT("common:lackPermission")
+                if (!msg.member.permissions.has(command.memberPerms)) return await msg.replyT("core/common:lackPermission")
             }
 
             if (command.botPerms?.length) {
-                if (!msg.guild.me.permissions.has(command.botPerms)) return await msg.replyT("events:interactionCreate:botLackPerm", {
+                if (!msg.guild.me.permissions.has(command.botPerms)) return await msg.replyT("core/events:interactionCreate:botLackPerm", {
                     permission: command.botPerms.join("`, `")
                 })
             }
 
             if (command?.ownerOnly) {
-                if (msg.member.id !== this.Xeow.settings.ownerId) return await msg.replyT("events:interactionCreate:ownerOnly")
+                if (msg.member.id !== this.Xeow.settings.ownerId) return await msg.replyT("core/events:interactionCreate:ownerOnly")
             }
 
-            console.logT("events:interactionCreate:cmdExecuted", {
+            console.logT("core/events:interactionCreate:cmdExecuted", {
                 userTag: `${interaction.user.username}#${interaction.user.discriminator}`,
                 content: `/${interaction.commandName}${interaction.options?._hoistedOptions.map(o => ` ${o.name}:${o.value}`).join('') || ''}`
             })

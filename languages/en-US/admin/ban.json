@@ -1,6 +1,0 @@
-{
-    "noMentions": "You must mention a member first",
-    "defaultReason": "Violating server rules",
-    "errorOccured": "An error occurred, please report it to the developer",
-    "banned": "`{{member}}` is no longer a member of our server"
-}

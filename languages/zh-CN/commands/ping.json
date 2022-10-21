@@ -1,0 +1,9 @@
+{
+    "usage": "ping",
+    "pinging": "🏓 Pinging....",
+    "pong": {
+        "title": ":ping_pong: 延迟统计信息:",
+        "field_1": ":signal_strength: API 延迟",
+        "field_2": ":satellite: 机器人延迟"
+    }
+}

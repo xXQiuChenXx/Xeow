@@ -1,0 +1,26 @@
+{
+    "commandExist": "该CLI指令({{commandName}})已存在",
+    "processExit": "完毕! 机器人已关闭, 退出代码: {{exitCode}}",
+    "unknownCommand": "未知指令, 请重试",
+    "commandName": "指令名字",
+    "usage": "使用方法",
+    "description": "描述",
+    "noDescription": "无描述",
+    "commandHelp": "CLI 指令帮助",
+    "commandHelpList": "CLI 指令帮助列表",
+    "commands": {
+        "stop": {
+            "usage": "stop",
+            "description": "关闭机器人",
+            "receivedCMD": "接收到关闭指令, 关闭机器人中...",
+            "loggoutDC": "退出登入Discord中...",
+            "disconnectDB": "与数据库断开连接中..."
+        },
+        "help": {
+            "usage": "help [指令]",
+            "description": "指令帮助",
+            "commandNotFound": "无法找到指令: {{commandName}}"
+        }
+    },
+    "issuedCommand": "终端执行了指令: {{command}}"
+}

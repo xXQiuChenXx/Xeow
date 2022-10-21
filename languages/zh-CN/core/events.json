@@ -1,0 +1,17 @@
+{
+    "messageCreate": {
+        "cmdExecuted": "{{userTag}} 执行了指令: {{content}}",
+        "cooldown": "指令正在冷却中, 请等待 {{time}}",
+        "nsfwCommand": "你只能在允许NSFW的频道执行此指令!",
+        "botLackPerm": "抱歉, 但我缺少 {{permission}} 权限来执行此指令",
+        "ownerOnly": "这个指令只能机器人拥有者使用"
+    },
+    "interactionCreate": {
+        "cmdNotFound": "❌ ┃ 找不到指令... 请稍待Discord同步指令列表",
+        "cmdExecuted": "{{userTag}} 执行了指令: {{content}}",
+        "cooldown": "指令正在冷却中, 请等待 {{time}}",
+        "nsfwCommand": "你只能在允许NSFW的频道执行此指令!",
+        "botLackPerm": "抱歉, 但我缺少 {{permission}} 权限来执行此指令",
+        "ownerOnly": "这个指令只能机器人拥有者使用"
+    }
+}

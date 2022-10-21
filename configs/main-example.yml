@@ -8,11 +8,11 @@ Token: ""
 Prefix: "+"
 SlashCommand: true
 PrefixCommand: true
-Lang: zh-TW
-SupportedLang: ["en-US"]
+Lang: en-US
+SupportedLang: ["zh-TW", "zh-CN"]
 ownerId: "000000000000000000"
 Activities:
- - name: "+help 以獲取幫助"
+ - name: "+help"
 Status: "online"
 
 
@@ -40,7 +40,7 @@ Storage:
 ########################################
 Logger:
   debug: false
-  locale: "zh-tw"
+  locale: "en-US"
   ignore: []
   momentFormat: "LL LTS"
 

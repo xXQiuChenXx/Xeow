@@ -1,4 +1,9 @@
 {
-    "name": "ping",
-    "description": "see the bot's ping"
+    "pinging": "🏓 Pinging....",
+    "usage": "ping",
+    "pong": {
+        "title": ":ping_pong: Bot Ping",
+        "field_1": ":signal_strength: API Latency",
+        "field_2": ":satellite: Bot Latency"
+    }
 }

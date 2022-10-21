@@ -15,37 +15,37 @@ module.exports = class Event {
         if (cmd.length === 0) return;
         let command = Xeow.commands.get(cmd) || Xeow.aliases.get(cmd);
 
-        if(command?.dmPermission && !message.guild) return;
+        if (command?.dmPermission && !message.guild) return;
 
         if (command) {
             if (!this.Xeow.settings.PrefixCommand) return;
             if (command.timeout) {
-                let cd = await Xeow.checkTimeout(command.name, command.timeout, message.guild.id, message.author.id)
+                let cd = await Xeow.checkTimeout(command, message)
                 if (cd.status) {
-                    return message.replyT("events:messageCreate:cooldowned", {
+                    return message.replyT("core/events:messageCreate:cooldown", {
                         time: Xeow.msToTime(cd.left)
                     })
                 }
             }
             if (!message.channel.nsfw && cmd.nsfw) {
-                return message.replyT("events:messageCreate:nsfwCommand")
+                return message.replyT("core/events:messageCreate:nsfwCommand")
             }
 
             if (command.memberPerms?.length) {
-                if (!message.member.permissions.has(command.memberPerms)) return await message.replyT("common:lackPermission")
-            }
+                if (!message.member.permissions.has(command.memberPerms)) return await message.replyT("core/common:lackPermission")
+            }  
 
             if (command.botPerms?.length) {
-                if (!message.guild.members.me.permissions.has(command.botPerms)) return await message.replyT("events:messageCreate:botLackPerm", {
+                if (!message.guild.members.me.permissions.has(command.botPerms)) return await message.replyT("core/events:messageCreate:botLackPerm", {
                     permission: command.botPerms.join("`, `")
                 })
             }
 
             if (command?.ownerOnly) {
-                if (message.member.id !== this.Xeow.settings.ownerId) return await message.replyT("events:messageCreate:ownerOnly")
+                if (message.member.id !== this.Xeow.settings.ownerId) return await message.replyT("core/events:messageCreate:ownerOnly")
             }
 
-            console.logT("events:messageCreate:cmdExecuted", {
+            console.logT("core/events:messageCreate:cmdExecuted", {
                 userTag: message.member.user.tag,
                 content: message.content
             })

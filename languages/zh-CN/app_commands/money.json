@@ -1,0 +1,48 @@
+{
+    "name": "money",
+    "description": "设置和更改成员的钱币",
+    "opts": {
+        "set": {
+            "name": "set",
+            "description": "设置成员的钱币",
+            "opts": {
+                "member": {
+                    "name": "成员标注",
+                    "description": "指定一位成员"
+                },
+                "amount": {
+                    "name": "amount",
+                    "description": "你要设置的钱币数量"
+                }
+            }
+        },
+        "give": {
+            "name": "give",
+            "description": "给予成员钱币",
+            "opts": {
+                "member": {
+                    "name": "成员标注",
+                    "description": "指定一位成员"
+                },
+                "amount": {
+                    "name": "数量",
+                    "description": "钱币数量"
+                }
+            }
+        },
+        "take": {
+            "name": "take",
+            "description": "扣除成员的钱币",
+            "opts": {
+                "member": {
+                    "name": "成员标注",
+                    "description": "成员标注"
+                },
+                "amount": {
+                    "name": "数量",
+                    "description": "钱币数量"
+                }
+            }
+        }
+    }
+}

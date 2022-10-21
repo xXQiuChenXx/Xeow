@@ -1,0 +1,15 @@
+{
+    "success": {
+        "title": ":money_with_wings: 转账成功!",
+        "description": "你已成功将 {{total}} 钱币转账给 {{user}}",
+        "fields": {
+            "self": { "name": ":arrow_down: 你目前的余额", "value": "{{before}} -> {{after}}" },
+            "other": { "name": ":arrow_up: 他/她的余额", "value": "{{before}} -> {{after}}" }
+        }
+    },
+    "insufficientBalance": "抱歉, 但你的余额不足",
+    "cantBot": "抱歉, 但你不能给机器人转账",
+    "invalidAmount": "%give% 不是一个有效的数字 / 不能为0或负数",
+    "invalidTarget": "不能转账给自己, 因为这毫无意义",
+    "usage": "pay <成员标注> <金额>"
+}

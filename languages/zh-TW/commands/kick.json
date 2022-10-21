@@ -1,14 +1,6 @@
 {
-    "name": "kick",
-    "description": "踢出一位成員",
-    "opts": {
-        "member": {
-            "name": "成員標注",
-            "description": "指定一位成員"
-        },
-        "reason": {
-            "name": "原因",
-            "description": "踢出原因"
-        }
-    }
+    "defaultReason": "違反伺服器規則",
+    "errorOccured": "出現錯誤, 請回報給開發者",
+    "kicked": "執行成功! `{{member}}` 已不再是我們的成員了",
+    "usage": "kick <成員標注> [原因]\n\n成員標注 - @你要踢出的成員\n原因 - 踢出他的原因"
 }

@@ -1,0 +1,10 @@
+{
+    "name": "balance",
+    "description": "查询自己或他人的余额",
+    "opts": {
+        "member": {
+            "name": "成员",
+            "description": "成员标注"
+        }
+    }
+}

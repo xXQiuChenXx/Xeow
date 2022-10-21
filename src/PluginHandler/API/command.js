@@ -11,10 +11,10 @@ module.exports = class {
 
     register(name, prop = {}, force) {
         let cmd = this.#commands.get(name)
-        if (cmd && force !== true) throw new Error(Xeow.translate("console/pluginLoader:API:commandExist", {
+        if (cmd && force !== true) throw new Error(Xeow.translate("core/pluginLoader:API:commandExist", {
             commandName: name
         }))
-        if (!prop.run) throw new Error(Xeow.translate("console/pluginLoader:API:invalidCommand"))
+        if (!prop.run) throw new Error(Xeow.translate("core/pluginLoader:API:invalidCommand"))
 
         let base = {
             name: null,
@@ -43,12 +43,12 @@ module.exports = class {
             command.aliases.forEach(p => {
                 this.#aliases.set(p, { ...command, name: p })
             })
-            console.log("console/main:command:loaded:haveAliase", {
+            console.log("core/main:command:loaded:haveAliase", {
                 commandName: command.name,
                 commandAliases: command.aliases.join(", ")
             })
         } else {
-            console.log("console/main:command:loaded:noAliase", {
+            console.log("core/main:command:loaded:noAliase", {
                 commandName: command.name
             })
         }

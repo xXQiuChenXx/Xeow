@@ -21,7 +21,7 @@ class Language {
 		await i18next.init({
 			backend: options,
 			debug: false,
-			fallbackLng: [ config.Lang, ...config.SupportedLang ],
+			fallbackLng: [config.Lang, ...config.SupportedLang],
 			initImmediate: false,
 			interpolation: { escapeValue: false },
 			load: "all",
@@ -33,7 +33,7 @@ class Language {
 		i18next.on('missingKey', function (lngs, namespace, key, res) {
 			console.warn(`Missing key in ${namespace} file ${lngs} language at ${key}`)
 		})
-		i18next.on('failedLoading', function(lng, ns, msg) {
+		i18next.on('failedLoading', function (lng, ns, msg) {
 			console.warn(`Failed to load ${lng} in ${ns}, reason: ${msg}`)
 		})
 
@@ -61,7 +61,6 @@ class Language {
 			if (stat.isDirectory()) {
 				const isLanguage = file.includes("-");
 				if (isLanguage) languages.push(file);
-
 				const folder = await this.walkDirectory(
 					path.join(dir, file),
 					namespaces,
@@ -70,7 +69,7 @@ class Language {
 
 				namespaces = folder.namespaces;
 			} else {
-				namespaces.push(`${folderName}${file.substr(0, file.length - 5)}`);
+				namespaces.push(`${folderName}${file.replace(".json", "")}`);
 			}
 		}
 

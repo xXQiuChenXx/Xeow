@@ -1,0 +1,20 @@
+{
+    "name": "slashcommand",
+    "description": "Edit the slashcommand",
+    "opts": {
+        "type": {
+            "name": "type",
+            "description": "Edit the slashcommand",
+            "choices": {
+                "register": "register",
+                "remove": "remove",
+                "reset": "reset",
+                "unregister": "unregister"
+            }
+        },
+        "command": {
+            "name": "command",
+            "description": "command name"
+        }
+    }
+}

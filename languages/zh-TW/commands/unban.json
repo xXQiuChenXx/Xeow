@@ -1,14 +1,5 @@
 {
-    "name": "unban",
-    "description": "解除封禁一位成員",
-    "opts": {
-        "memberID": {
-            "name": "id",
-            "description": "成員ID"
-        },
-        "reason": {
-            "name": "原因",
-            "description": "解封原因"
-        }
-    }
+    "usage": "unban <成員標注>",
+    "noMentions": "你未指定一位成員的ID",
+    "unbanned": "執行成功! {{id}} 已從封禁列表中移除"
 }

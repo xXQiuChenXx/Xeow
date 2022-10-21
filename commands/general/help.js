@@ -2,23 +2,23 @@ const { EmbedBuilder, SelectMenuBuilder, ActionRowBuilder } = require("discord.j
 module.exports = {
     getLang: async function (Xeow) {
         return {
-            name: Xeow.translate("commands/help:name"),
-            description: Xeow.translate("commands/help:description"),
-            descriptionLocalizations: Xeow.translateAll("commands/help:description"),
+            name: Xeow.translate("app_commands/help:name"),
+            description: Xeow.translate("app_commands/help:description"),
+            descriptionLocalizations: Xeow.translateAll("app_commands/help:description"),
             options: [
                 {
-                    name: Xeow.translate("commands/help:opts:command:name"),
-                    nameLocalizations: Xeow.translateAll("commands/help:opts:command:name"),
+                    name: Xeow.translate("app_commands/help:opts:command:name"),
+                    nameLocalizations: Xeow.translateAll("app_commands/help:opts:command:name"),
                     type: 3,
-                    description: Xeow.translate("commands/help:opts:command:description"),
-                    descriptionLocalizations: Xeow.translateAll("commands/help:opts:command:description"), 
+                    description: Xeow.translate("app_commands/help:opts:command:description"),
+                    descriptionLocalizations: Xeow.translateAll("app_commands/help:opts:command:description"), 
                     required: false
                 }
             ]
         }
     },
+    usage: "commands/help:usage",
     config: {
-        usage: "help [指令]",
         emoji: "❓",
         categoryReplacement: {
             admin: {
@@ -41,7 +41,7 @@ module.exports = {
     run: async (Xeow, message, args, config) => {
         const prefix = Xeow.prefix.get(message.guild.id)
         let name = args[0]?.toLowerCase();
-        const noValue = message.translate("general/help:noValue")
+        const noValue = Xeow.translate("commands/help:noValue")
         if (name && Xeow.commands.get(name)) {
             const embed = new EmbedBuilder()
             const cmd = Xeow.commands.get(name);
@@ -50,23 +50,23 @@ module.exports = {
                 .setThumbnail(Xeow.user.avatarURL({ extension: 'jpg' }))
                 .addFields([
                     {
-                        name: message.translate("general/help:getCMD:title", {
+                        name: Xeow.translate("commands/help:cmdTitle", {
                             command: cmd.name,
                             emoji: cmd?.emoji
                         }),
                         value: cmd?.description || noValue
                     }, {
-                        name: `${message.translate("general/help:usage")}`,
+                        name: Xeow.translate("commands/help:cmd_usage"),
                         value: cmd?.usage === undefined ? noValue : "```" + `${prefix}${cmd.usage}` + "```"
                     }
                 ]);
             if (cmd?.timeout) embed.addFields([{
-                name: message.translate("general/help:cooldown"),
+                name: Xeow.translate("commands/help:cooldown"),
                 value: Xeow.msToTime(cmd.timeout)
             }])
             if (cmd?.aliases && cmd?.aliases?.length !== 0) {
                 embed.addFields([
-                    { name: message.translate("general/help:aliases"), value: command.aliases.join(", ") }
+                    { name: Xeow.translate("commands/help:aliases"), value: command.aliases.join(", ") }
                 ])
             }
             await message.reply({ embeds: [embed] });
@@ -74,13 +74,13 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setAuthor({ iconURL: Xeow.user.avatarURL({ extension: 'jpg' }), name: Xeow.user.username })
                 .setColor("Random")
-                .setDescription(message.translate("general/help:main:description", {
+                .setDescription(Xeow.translate("commands/help:main:description", {
                     username: Xeow.user.username
                 }))
 
             const menu = new SelectMenuBuilder()
                 .setCustomId('help_menu')
-                .setPlaceholder(Xeow.translate("general/help:main:menu:placeholder"))
+                .setPlaceholder(Xeow.translate("commands/help:main:menu:placeholder"))
 
             const row = new ActionRowBuilder().addComponents(menu);
             for (const category of Xeow.categories) {

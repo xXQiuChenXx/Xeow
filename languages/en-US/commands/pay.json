@@ -1,14 +1,15 @@
 {
-    "name": "pay",
-    "description": "Payment/Transfer",
-    "opts": {
-        "target": {
-            "name": "target",
-            "description": "the member that you want to give coins to"
-        },
-        "amount": {
-            "name": "amount",
-            "description": "amount of coins"
+    "success": {
+        "title": ":money_with_wings: Successfully transferred!",
+        "description": "You have successfully transferred {{total}} coins to {{user}}",
+        "fields": {
+            "self": { "name": ":arrow_down: Your current balance", "value": "{{before}} -> {{after}}" },
+            "other": { "name": ":arrow_up: his/her balance", "value": "{{before}} -> {{after}}" }
         }
-    }
+    },
+    "insufficientBalance": "Sorry, but you don't have enough money",
+    "cantBot": "You cannot transfer coins to bots",
+    "invalidAmount": "%give% is not a valid numner / cannot be negative number",
+    "invalidTarget": "You cannot transfer coins to yourself",
+    "usage": "pay <member> <amount>"
 }

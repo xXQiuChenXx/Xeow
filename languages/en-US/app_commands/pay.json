@@ -1,0 +1,14 @@
+{
+    "name": "pay",
+    "description": "Payment/Transfer",
+    "opts": {
+        "target": {
+            "name": "target",
+            "description": "the member that you want to give coins to"
+        },
+        "amount": {
+            "name": "amount",
+            "description": "amount of coins"
+        }
+    }
+}

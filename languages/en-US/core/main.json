@@ -1,0 +1,53 @@
+{
+    "bot": {
+        "nodeJSVersion": "You are using NodeJS {{version}}",
+        "invalidToken": "Invalid bot token, please check your bot token first then try again.",
+        "loginError": "An error occured when trying to logging in the bot:",
+        "loggedIn": "Successfully logged in {{username}}",
+        "loaded": "Done ({{second}}s)! For help, type 'help' ",
+        "leaveStar": "Like this bot? Kindly leave a star at our Github Page https://github.com/xXQiuChenXx/Xeow"
+    },
+    "archive": {
+        "archiving": "Compressing the log file...",
+        "success": "Compressed log file successfully, total {{total}} bytes",
+        "failed": "An error occured when compressing the log file"
+    },
+    "database": {
+        "invalidType": "Sorry, but the {{type}} database type is not yet supported",
+        "loading": "Loading database...",
+        "validate": {
+            "verifying": "Validating database...",
+            "success": "Database connection has been established successfully!",
+            "failed": "Unable to connect to the database"
+        },
+        "checking": "Checking database..",
+        "checked": "Checked database!"
+    },
+    "event": {
+        "preparing": "Preparing events...",
+        "loaded": "Successfully loaded {{event}} event",
+        "done": "Loaded {{count}}(s) events"
+    },
+    "command": {
+        "loaded": {
+            "noAliase": "✔ Successfully loaded {{commandName}} command",
+            "haveAliase": "✔ Successfully loaded {{commandName}}, aliases: {{commandAliases}}"
+        },
+        "NoDescription": "The command does not have description",
+        "invalidUsage": {
+            "title": "Invalid command usage, please check the error then try again",
+            "description": "Error: {{reason}}",
+            "rs": {
+                "empty": "Missing parameters",
+                "number": "That parameter must be a number",
+                "string": "That parameter must be a text string",
+                "integer": "That parameter must be a integer",
+                "boolean": "That parameter must be 'true' or 'false'",
+                "user": "You must mention a member",
+                "channel": "You must mention a channel",
+                "role": "You must mention a role",
+                "mentionable": "must be mentionable"
+            }
+        }
+    }
+}

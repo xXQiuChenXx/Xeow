@@ -1,0 +1,14 @@
+{
+    "name": "pay",
+    "description": "付款/转账",
+    "opts": {
+        "target": {
+            "name": "目标",
+            "description": "成员标注"
+        },
+        "amount": {
+            "name": "金额",
+            "description": "转账金额"
+        }
+    }
+}

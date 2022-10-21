@@ -22,7 +22,7 @@ module.exports = class EventManager {
                 const event = new (require(`../Events/${file}`))(this.Xeow);
                 this.Xeow.on(eventName, (...args) => event.run(...args));
                 this.events.set(eventName, (...args) => event.run(...args));
-                console.logT("console/main:event:loaded", {event: eventName});
+                console.logT("core/main:event:loaded", {event: eventName});
             })
     }
 

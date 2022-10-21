@@ -1,9 +1,9 @@
 {
-    "usage": "balance [member]",
     "self": {
         "title": "💰 Your coins",
         "description": "You currently have {{coins}} coins"
     },
+    "usage": "balance [member]",
     "other": {
         "title": "💰 His/Her coins",
         "description": "His/Her currently have {{coins}} coins"

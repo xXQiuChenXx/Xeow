@@ -20,11 +20,9 @@
   <a href="https://github.com/xXQiuChenXx/Xeow/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/xXQiuChenXx/Xeow?&logo=github">
   </a>
-
-  <!-- Crowdin Example
-  <a href="https://crowdin.com/project/red-discordbot">
-    <img src="https://d322cqt584bo4o.cloudfront.net/red-discordbot/localized.svg" alt="Localized with Crowdin">
-  </a> -->
+  <a href="https://crowdin.com/project/xeow-bot">
+    <img src="https://badges.crowdin.net/xeow-bot/localized.svg" alt="Localized with Crowdin">
+  </a>
 </p>
 
 Xeow is a discord bot that used NodeJS/JavaScript and designed for configurability, new fun and exciting bot features. Xeow discord bot built using discord.js v14.x and the bot will keep updating as discord.js is always updating.
@@ -88,3 +86,11 @@ If you need any additional help, make sure to read our [wiki here](https://githu
 
 ## License
 Xeow Bot is released under the MIT license. A well-maintained open source ecosystem starts from us (*>ω<)φ
+
+## Screenshots
+
+### 1. Console
+![](https://github.com/xXQiuChenXx/Xeow/blob/master/assets/en_screenshot_console.png?raw=true)
+
+### 2. Multi-Language support
+![](https://github.com/xXQiuChenXx/Xeow/blob/master/assets/en_screenshot_multi_lang.png?raw=true)

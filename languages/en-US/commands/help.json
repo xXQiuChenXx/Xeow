@@ -1,7 +1,7 @@
 {
+    "usage": "help [command]",
     "aliases": "command aliase(s)",
     "description": "command description",
-    "usage": "help [command]",
     "cmd_usage": "command usage",
     "cooldown": "command cooldown",
     "commandTutorial": "📖 command tutorial",

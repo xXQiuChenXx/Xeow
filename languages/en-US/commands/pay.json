@@ -3,8 +3,14 @@
         "title": ":money_with_wings: Successfully transferred!",
         "description": "You have successfully transferred {{total}} coins to {{user}}",
         "fields": {
-            "self": { "name": ":arrow_down: Your current balance", "value": "{{before}} -> {{after}}" },
-            "other": { "name": ":arrow_up: his/her balance", "value": "{{before}} -> {{after}}" }
+            "self": {
+                "name": ":arrow_down: Your current balance",
+                "value": "{{before}} -> {{after}}"
+            },
+            "other": {
+                "name": ":arrow_up: his/her balance",
+                "value": "{{before}} -> {{after}}"
+            }
         }
     },
     "insufficientBalance": "Sorry, but you don't have enough money",

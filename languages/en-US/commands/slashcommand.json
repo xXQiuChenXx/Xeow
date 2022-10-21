@@ -10,7 +10,7 @@
     "registeringCommand": "Registering command...",
     "registerSuccess": "Successfully register the command!",
     "registerFailed": "An error has occured when trying to register the slashcommand. Please check console.",
-    "settingPermission":"Setting command permissions...",
+    "settingPermission": "Setting command permissions...",
     "setPermissionFailed": "An error has occured while trying to setting the command permissions. Please check console.",
     "setPermsSuccess": "Successfully setting the permissions",
     "commandNotFound": "{{command}} command not found",

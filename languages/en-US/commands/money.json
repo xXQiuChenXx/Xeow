@@ -1,7 +1,7 @@
 {
-    "usage": "money <give/take/set> <member>",
     "cantNegNum": "Cannot be negatif number",
     "cantBot": "The member that you mentioned cannot be a bot",
+    "usage": "money <give/take/set> <member>",
     "give": {
         "title": "🔧Setting success!",
         "description": "You have successfully transferred {{amount}} coins to {{member}}, who now has {{balance}}"

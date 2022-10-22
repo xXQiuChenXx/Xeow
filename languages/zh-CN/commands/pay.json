@@ -15,7 +15,7 @@
     },
     "insufficientBalance": "抱歉, 但你的余额不足",
     "cantBot": "抱歉, 但你不能给机器人转账",
-    "invalidAmount": "%give% 不是一个有效的数字 / 不能为0或负数",
+    "invalidAmount": "{{give}} 不是一个有效的数字 / 不能为0或负数",
     "invalidTarget": "不能转账给自己, 因为这毫无意义",
     "usage": "pay <成员标注> <金额>"
 }

@@ -1,6 +1,6 @@
 {
-  "line_1": "歡迎, {{userTag}}",
-  "line_2": "第 #{{memberCount}} 位成員加入",
-  "embed_description": "**歡迎來到 {{guild_name}}!**\n嗨 <@{{member_id}}>!, 🎉🤗請到 {{rule_channel}} 同意一下規章哦!",
-  "embed_footer": "歡迎"
+  "line_1": "欢迎, {{userTag}}",
+  "line_2": "第 {{memberCount}} 个成员加入",
+  "embed_description": "**欢迎来到 {{guild_name}}!**\n嗨 <@{{member_id}}>!, 🎉🤗请到 {{rule_channel}} 同意一下规章哦!",
+  "embed_footer": "欢迎"
 }

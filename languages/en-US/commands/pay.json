@@ -15,7 +15,7 @@
     },
     "insufficientBalance": "Sorry, but you don't have enough money",
     "cantBot": "You cannot transfer coins to bots",
-    "invalidAmount": "%give% is not a valid numner / cannot be negative number",
+    "invalidAmount": "%give% is not a valid number / cannot be negative number",
     "invalidTarget": "You cannot transfer coins to yourself",
     "usage": "pay <member> <amount>"
 }

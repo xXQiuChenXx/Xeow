@@ -5,7 +5,7 @@
     "cmd_usage": "command usage",
     "cooldown": "command cooldown",
     "commandTutorial": "📖 command tutorial",
-    "chooseCommand": "Choose a command",
+    "chooseCommand": "Choose command",
     "backToMain": "Go back to main",
     "backToMainDescription": "Shows the command help main page",
     "format": {

@@ -10,7 +10,7 @@
     "registeringCommand": "正在注册斜线指令 {{command}} 中...",
     "registerSuccess": "成功注册斜线指令 {{command}}!",
     "registerFailed": "尝试注册斜线指令时出错, 请查看后台以了解详情",
-    "settingPermission":"设置指令权限中...",
+    "settingPermission": "设置指令权限中...",
     "setPermissionFailed": "尝试设置指令权限时出错了, 请检查后台以查看错误",
     "setPermsSuccess": "设置权限成功",
     "commandNotFound": "找不到 `{{command}}` 指令",

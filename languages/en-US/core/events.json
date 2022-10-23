@@ -1,7 +1,7 @@
 {
     "messageCreate": {
         "cmdExecuted": "{{userTag}} issued command: {{content}}",
-        "cooldown": "Command is cooling down, please wait for {{time}}",
+        "cooldown": "You must wait **{{time}}** till you can run that command again",
         "nsfwCommand": "You only can allowed to use this command in NSFW channel!",
         "botLackPerm": "I'm sorry, but I lack {{permission}} permission to issue this command",
         "ownerOnly": "This command only can be run by the bot owner"

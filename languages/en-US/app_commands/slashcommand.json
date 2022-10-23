@@ -7,7 +7,7 @@
             "description": "Edit the slashcommand",
             "choices": {
                 "register": "register",
-                "remove": "remove",
+                "remove": "Remove All Commands",
                 "reset": "reset",
                 "unregister": "unregister"
             }

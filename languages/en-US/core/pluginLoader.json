@@ -14,6 +14,6 @@
     "loadingFailed": "An error has occurred when loading the plugin {{plugin_name}}@{{plugin_version}}:",
     "loadingSuccess": "Successfully loaded plugin {{plugin_name}}@{{plugin_version}}! (author: {{author}})",
     "disablingPlugin": "Disabling '{{name}}' plugin...",
-    "disableFailed": "An error occured when disabling '{{name}}' plugin",
+    "disableFailed": "An error occurred when disabling '{{name}}' plugin",
     "disabledPlugin": "Successfully disabled '{{name}}' plugin"
 }

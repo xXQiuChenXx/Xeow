@@ -3,13 +3,19 @@
         "title": ":money_with_wings: Successfully transferred!",
         "description": "You have successfully transferred {{total}} coins to {{user}}",
         "fields": {
-            "self": { "name": ":arrow_down: Your current balance", "value": "{{before}} -> {{after}}" },
-            "other": { "name": ":arrow_up: his/her balance", "value": "{{before}} -> {{after}}" }
+            "self": {
+                "name": ":arrow_down: Your current balance",
+                "value": "{{before}} -> {{after}}"
+            },
+            "other": {
+                "name": ":arrow_up: his/her balance",
+                "value": "{{before}} -> {{after}}"
+            }
         }
     },
     "insufficientBalance": "Sorry, but you don't have enough money",
     "cantBot": "You cannot transfer coins to bots",
-    "invalidAmount": "%give% is not a valid numner / cannot be negative number",
+    "invalidAmount": "%give% is not a valid number / cannot be negative number",
     "invalidTarget": "You cannot transfer coins to yourself",
     "usage": "pay <member> <amount>"
 }

@@ -1,7 +1,7 @@
 {
     "commandExist": "The CLI command({{commandName}}) already exists",
     "processExit": "Done! The bot has been shut down, exit code: {{exitCode}}.",
-    "unknownCommand": "Uknown command, please try again.",
+    "unknownCommand": "Unknown command, please try again.",
     "commandName": "command nane",
     "usage": "usage",
     "description": "description",

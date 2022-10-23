@@ -2,7 +2,7 @@
     "usage": "daily",
     "title": ":white_check_mark: Cheked In!",
     "description": {
-        "default": "You have earned {{total}} coins from daily check in",        
+        "default": "You have earned {{total}} coins from daily check in",
         "hasBonus": "You have checked in for {{days}} days, therefore you earned extra {{bonus}} bonus coins, totally you have earned {{total}} coins"
     },
     "footer": "Use balance command to check you balance"

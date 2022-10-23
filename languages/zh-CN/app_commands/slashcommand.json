@@ -13,8 +13,8 @@
             }
         },
         "command": {
-        "name": "指令",
-        "description": "指令名称"
+            "name": "指令",
+            "description": "指令名称"
         }
     }
 }

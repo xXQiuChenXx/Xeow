@@ -85,6 +85,13 @@ If you need any additional help, make sure to read our [wiki here](https://githu
 * If you found any bugs or you have some idea on new feature feel free to create a issue [here](https://github.com/xXQiuChenXx/Xeow/issues).
 * If you want to be a part of Xeow Discord Bot, please contact via the owner/creator 's gmail. You can found it on his github info page.
 
+### Help
+If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our official [Dicord Server](https://discord.gg/m5VthYMNmh).
+
+### Donate
+Support this project via PayPal
+[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/lautaihong/)
+
 ## License
 Xeow Bot is released under the MIT license. A well-maintained open source ecosystem starts from us (*>ω<)φ
 
@@ -97,6 +104,6 @@ Xeow Bot is released under the MIT license. A well-maintained open source ecosys
 ![](https://github.com/xXQiuChenXx/Xeow/blob/master/assets/en_screenshot_multi_lang.png?raw=true)
 
 
-### 3. Discord.js v14.x.x, newest features are avaible (etc: select menu, context menu, buttons... )
+### 3. Discord.js v14.x.x, newest features are avaible (etc: select menu, context menu, button... )
 ![](https://github.com/xXQiuChenXx/Xeow/blob/master/assets/djs_v14.png?raw=true)
 

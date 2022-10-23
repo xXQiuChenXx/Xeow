@@ -65,6 +65,7 @@ If you need any additional help, make sure to read our [wiki here](https://githu
 ## About Slash Command
 - Please note that the slash command will not automatically register when you start up the bot. You need to use the prefix command `slashcommand reset` in order to set up the slash commands. 
 - We haven't support for editting the slash commands such as editting the permissions because we need some time to think the way to grant the Bearer token. 
+- And we still haven't yet in making web server
 
 ## Supported Database Type
 - MySQL
@@ -94,3 +95,8 @@ Xeow Bot is released under the MIT license. A well-maintained open source ecosys
 
 ### 2. Multi-Language support
 ![](https://github.com/xXQiuChenXx/Xeow/blob/master/assets/en_screenshot_multi_lang.png?raw=true)
+
+
+### 3. Discord.js v14.x.x, newest features are avaible (etc: select menu, context menu, buttons... )
+![](https://github.com/xXQiuChenXx/Xeow/blob/master/assets/djs_v14.png?raw=true)
+

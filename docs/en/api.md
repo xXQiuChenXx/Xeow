@@ -6,8 +6,8 @@
   - [Libraries](#libraries)
     - [Collection](#collection)
     - [FakeMessage](#fakemessage)
-    - [InteractionButtonPages](#interactionbuttonpages)
-    - [InteractionEmbedPages](#interactionembedpages)
+    - [InteractionButtonPages({ interaction, embeds, time, customFilter, fastSkip, pageTravel, end })](#interactionbuttonpages-interaction-embeds-time-customfilter-fastskip-pagetravel-end-)
+    - [InteractionEmbedPages({ interaction, embeds, time, fastSkip, pageTravel, end })](#interactionembedpages-interaction-embeds-time-fastskip-pagetravel-end-)
     - [Logger](#logger)
       - [Logger.log(message)](#loggerlogmessage)
       - [Logger.showErr(error)](#loggershowerrerror)
@@ -24,11 +24,12 @@
       - [Logger.noticeT(message, args)](#loggernoticetmessage-args)
       - [Logger.warnT(message, args)](#loggerwarntmessage-args)
     - [MessageButtonPages({ message, embeds, time, customFilter, fastSkip, pageTravel, end, newMsg })](#messagebuttonpages-message-embeds-time-customfilter-fastskip-pagetravel-end-newmsg-)
-    - [MessageEmbedPages](#messageembedpages)
+    - [MessageEmbedPages({ message, embeds, time, fastSkip, pageTravel, end })](#messageembedpages-message-embeds-time-fastskip-pagetravel-end-)
   - [Classes](#classes)
     - [Xeow](#xeow)
       - [Xeow.Modules](#xeowmodules)
       - [Xeow.translate(key, args, locale)](#xeowtranslatekey-args-locale)
+      - [Xeow.translateAll(key, args)](#xeowtranslateallkey-args)
     - [Xeow.CLI](#xeowcli)
       - [CLI.register(name, callback)](#cliregistername-callback)
       - [CLI.unregister(name)](#cliunregistername)
@@ -45,6 +46,13 @@
       - [DBManager.get(model)](#dbmanagergetmodel)
       - [DBManager.sync(alter, force)](#dbmanagersyncalter-force)
       - [DBManager.close()](#dbmanagerclose)
+    - [Message](#message)
+      - [Message.translate(key, args, locale)](#messagetranslatekey-args-locale)
+      - [Message.replyT(key, args, locale)](#messagereplytkey-args-locale)
+      - [Message.invalidUsage({ position, reason })](#messageinvalidusage-position-reason-)
+    - [CommandInteraction](#commandinteraction)
+      - [CommandInteraction.replyT()](#commandinteractionreplyt)
+      - [CommandInteraction.editT()](#commandinteractioneditt)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -60,9 +68,10 @@ This is actually Discord#Collection. This easy for temporary data storing only.
 ### FakeMessage
 FakeMessage used to convert Discord#Interaction to Discord#Message
 
-### InteractionButtonPages
+### InteractionButtonPages({ interaction, embeds, time, customFilter, fastSkip, pageTravel, end })
 
-### InteractionEmbedPages
+
+### InteractionEmbedPages({ interaction, embeds, time, fastSkip, pageTravel, end })
 
 ### Logger
 #### Logger.log(message)
@@ -118,9 +127,7 @@ This function is to warn the user but it is not an error
 ### MessageButtonPages({ message, embeds, time, customFilter, fastSkip, pageTravel, end, newMsg })
 
 
-### MessageEmbedPages
-
-
+### MessageEmbedPages({ message, embeds, time, fastSkip, pageTravel, end })
 
 
 ## Classes
@@ -157,6 +164,17 @@ Get translation text from file, Translation are getting from `languages` directo
  })
 // "Hello MyWorld"
  ```
+
+#### Xeow.translateAll(key, args)
+returns all the translated language
+
+Example:
+```js
+{
+    "en-US": "Hello",
+    "zh-CN": "你好"
+}
+```
 
 ### Xeow.CLI
 #### CLI.register(name, callback)
@@ -235,3 +253,41 @@ Xeow Database Manager use [sequelize](https://www.npmjs.com/package/sequelize) p
 > INFO: Only call close() when stoping the bot
 
 close the connection
+
+### Message
+Extends [Message](https://discord.js.org/#/docs/discord.js/main/class/Message)
+
+#### Message.translate(key, args, locale)
+Get translation text from file, Translation are getting from `languages` directory.
+ * `key` - with format (directory)/(FileName):key
+ * `args` - Placeholder Replacement, with format `{{something-here}}`
+ * `locale` - language, default is depends on the main configuration file
+
+ #### Message.replyT(key, args, locale)
+Get translation text from file, then send reply.
+ * `key` - with format (directory)/(FileName):key
+ * `args` - Placeholder Replacement, with format `{{something-here}}`
+ * `locale` - language, default is depends on the main configuration file
+
+ #### Message.invalidUsage({ position, reason })
+ Send message if invalid Args.
+ * `position` - arg position
+ * `reason` - invalid reason
+
+choices available for reason:
+1: Empty args
+2: Must be number
+3: Must be string
+4: Must be integer
+5: Must be boolean
+6: Must be user
+
+### CommandInteraction
+Extends [CommandInteraction](https://discord.js.org/#/docs/discord.js/main/class/CommandInteraction)
+
+#### CommandInteraction.replyT()
+same as Message.replyT(), but it is command interaction
+
+#### CommandInteraction.editT()
+much same as CommandInteraction.replyT(), but it is edit the message.
+

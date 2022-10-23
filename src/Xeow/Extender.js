@@ -96,12 +96,12 @@ CommandInteraction.prototype.editT = function (key, args) {
 
 };
 
-// Format a date
-Message.prototype.printDate = function (date, format) {
-	return this.client.printDate(date, format, this.guild.data.language);
-};
+// // Format a date
+// Message.prototype.printDate = function (date, format) {
+// 	return this.client.printDate(date, format, this.guild.data.language);
+// };
 
-// Convert time
-Message.prototype.convertTime = function (time, type, noPrefix) {
-	return this.client.convertTime(time, type, noPrefix, (this.guild && this.guild.data) ? this.guild.data.language : null);
-};
+// // Convert time
+// Message.prototype.convertTime = function (time, type, noPrefix) {
+// 	return this.client.convertTime(time, type, noPrefix, (this.guild && this.guild.data) ? this.guild.data.language : null);
+// };

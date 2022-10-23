@@ -90,6 +90,7 @@ If you don't understand something in the documentation, you are experiencing pro
 
 ### Donate
 Support this project via PayPal
+
 [![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/lautaihong/)
 
 ## License

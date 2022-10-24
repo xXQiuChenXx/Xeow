@@ -1,4 +1,4 @@
 {
     "name": "ping",
-    "description": "see the bot's ping"
+    "description": "查看機器人延遲"
 }

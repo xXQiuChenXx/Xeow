@@ -1,10 +1,10 @@
 {
     "name": "help",
-    "description": "Help menu",
+    "description": "幫助選單",
     "opts": {
         "command": {
-            "name": "command",
-            "description": "command name"
+            "name": "指令",
+            "description": "指令名稱"
         }
     }
 }

@@ -44,6 +44,7 @@ Xeow is a discord bot that used NodeJS/JavaScript and designed for configurabili
 ## Getting Started
 
 1. Install Xeow Discord Bot File (two method choose one only)
+
 - Open the terminal and run the following commands
 ```
 git clone https://github.com/xXQiuChenXx/Xeow.git
@@ -51,14 +52,17 @@ git clone https://github.com/xXQiuChenXx/Xeow.git
 - Download the Xeow Discord Bot File through the [Release Page](https://github.com/xXQiuChenXx/Xeow/releases/)
 
 2. Install Dependencies
+
 > Make sure you have native to the correct bot directory first before you run the command.
 > If you getting any problem on installing the package feel free to create a issue [here](https://github.com/xXQiuChenXx/Xeow/issues)
 - Open the terminal and run the command ```npm install```. Wait for all the dependencies to be installed.
 
 3. Setting Configuaration
+
 Rename ```config/main-example.yml``` to ```config/main.yml``` and fill the values.
 
 4. Start the bot
+
 Type npm run start to start the bot
 If you need any additional help, make sure to read our [wiki here](https://github.com/xXQiuChenXx/Xeow/wiki)
 

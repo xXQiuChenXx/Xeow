@@ -1,10 +1,10 @@
 {
     "name": "balance",
-    "description": "Check your own or someone else's balance",
+    "description": "查詢自己或他人的餘額",
     "opts": {
         "member": {
-            "name": "member",
-            "description": "mention a member"
+            "name": "成員",
+            "description": "成員標註"
         }
     }
 }

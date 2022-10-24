@@ -1,52 +1,52 @@
 {
     "bot": {
-        "nodeJSVersion": "You are using NodeJS {{version}}",
-        "invalidToken": "Invalid bot token, please check your bot token first then try again.",
-        "loginError": "An error occurred when trying to log in the bot:",
-        "loggedIn": "Successfully logged in {{username}}",
-        "loaded": "Done ({{second}}s)! For help, type 'help' ",
-        "leaveStar": "Like this bot? Kindly leave a star at our GitHub Page https://GitHub.com/xXQiuChenXx/Xeow"
+        "nodeJSVersion": "你所用的 NodeJS 版本為 {{version}}",
+        "invalidToken": "你的機器人令牌(token) 無效, 請重新檢查后再啓動",
+        "loginError": "嘗試登入到機器人時出錯:",
+        "loggedIn": "已成功登入機器人 {{username}}",
+        "loaded": "機器人已啓動成功! 耗時: {{second}}s",
+        "leaveStar": "喜歡這個機器人嗎? 歡迎到 Github 點個小星星 https://github.com/xXQiuChenXx/Xeow"
     },
     "archive": {
-        "archiving": "Compressing the log file...",
-        "success": "Compressed log file successfully, total {{total}} bytes",
-        "failed": "An error occurred when compressing the log file"
+        "archiving": "正在壓縮記錄文件中...",
+        "success": "成功壓縮記錄文件, 共 {{total}} bytes",
+        "failed": "壓縮記錄文件時出錯"
     },
     "database": {
-        "invalidType": "Sorry, but the {{type}} database type is not yet supported",
-        "loading": "Loading database...",
+        "invalidType": "抱歉, 但目前還不支持 {{type}} 數據庫類型",
+        "loading": "正在加載數據庫...",
         "validate": {
-            "verifying": "Validating database...",
-            "success": "Database connection has been established successfully!",
-            "failed": "Unable to connect to the database"
+            "verifying": "正在驗證數據庫信息中...",
+            "success": "驗證成功!",
+            "failed": "無法驗證/登入你的數據庫, 請檢查配置信息無誤后再重新啓動"
         },
-        "checking": "Checking database...",
-        "checked": "Checked database!"
+        "checking": "正在檢查數據庫資料中...",
+        "checked": "檢查完畢!"
     },
     "event": {
-        "preparing": "Preparing events...",
-        "loaded": "Successfully loaded {{event}} event",
-        "done": "Loaded {{count}}(s) events"
+        "preparing": "正在準備事件中...",
+        "loaded": "成功加載事件 {{event}}",
+        "done": "已加載 {{count}} 事件"
     },
     "command": {
         "loaded": {
-            "noAliase": "✔ Successfully loaded {{commandName}} command",
-            "haveAliase": "✔ Successfully loaded {{commandName}}, aliases: {{commandAliases}}"
+            "noAliase": "✔ 成功加載指令 {{commandName}}",
+            "haveAliase": "✔ 成功加載指令 {{commandName}}, 別名為: {{commandAliases}}"
         },
-        "NoDescription": "The command does not have description",
+        "NoDescription": "該指令無描述",
         "invalidUsage": {
-            "title": "Invalid command usage, please check the error then try again",
-            "description": "Error: {{reason}}",
+            "title": "指令使用方式錯誤, 請檢查錯誤后再試",
+            "description": "錯誤: {{reason}}",
             "rs": {
-                "empty": "Missing parameters",
-                "number": "That parameter must be a number",
-                "string": "That parameter must be a text string",
-                "integer": "That parameter must be an integer",
-                "boolean": "That parameter must be 'true' or 'false'",
-                "user": "You must mention a member",
-                "channel": "You must mention a channel",
-                "role": "You must mention a role",
-                "mentionable": "Must be mentionable"
+                "empty": "缺少參數",
+                "number": "必須是一個數字",
+                "string": "必須是一個文本",
+                "integer": "必須是一個整數",
+                "boolean": "只能是 true 或者 false",
+                "user": "必須指定一位用戶",
+                "channel": "必須是一個頻道",
+                "role": "必須是一個身分組",
+                "mentionable": "必須是可被標注的"
             }
         }
     }

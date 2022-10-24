@@ -60,6 +60,20 @@ module.exports = class Xeow extends Client {
         return language(key, args);
     }
 
+    native(path) {
+        const that = this
+        return function(key, args, locale) {
+            return that.translate(`${path}:${key}`, args, locale)
+        }
+    }
+
+    nativeA(path) {
+        const that = this
+        return function(key, args, locale) {
+            return that.translateAll(`${path}:${key}`, args, locale)
+        }
+    }
+
     setVariable(key, variables) {
         if (this[key]) { throw new Error("Key already exists"); }
         this[key] = variables;

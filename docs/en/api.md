@@ -30,6 +30,8 @@
       - [Xeow.Modules](#xeowmodules)
       - [Xeow.translate(key, args, locale)](#xeowtranslatekey-args-locale)
       - [Xeow.translateAll(key, args)](#xeowtranslateallkey-args)
+      - [Xeow.native(path)](#xeownativepath)
+      - [Xeow.nativeA(path)](#xeownativeapath)
     - [Xeow.CLI](#xeowcli)
       - [CLI.register(name, callback)](#cliregistername-callback)
       - [CLI.unregister(name)](#cliunregistername)
@@ -175,6 +177,13 @@ Example:
     "zh-CN": "你好"
 }
 ```
+
+#### Xeow.native(path)
+Native to some translation path
+
+#### Xeow.nativeA(path)
+same as Xeow.native(), but this is for translateAll
+
 
 ### Xeow.CLI
 #### CLI.register(name, callback)

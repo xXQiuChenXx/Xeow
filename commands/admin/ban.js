@@ -1,33 +1,35 @@
 module.exports = {
     getLang: async function (Xeow) {
+        const tr = Xeow.native("app_commands/ban")
+        const trA = Xeow.nativeA("app_commands/ban")
         return {
-            name: Xeow.translate("app_commands/ban:name"),
-            description: Xeow.translate("app_commands/ban:description"),
-            descriptionLocalizations: Xeow.translateAll("app_commands/ban:description"),
+            name: tr("name"),
+            description: tr("description"),
+            descriptionLocalizations:trA("description"),
             defaultMemberPermissions: ["BanMembers"],
             options: [
                 {
-                    name: Xeow.translate("app_commands/ban:opts:member:name"),
-                    nameLocalizations: Xeow.translateAll("app_commands/ban:opts:member:name"),
+                    name: tr("opts:member:name"),
+                    nameLocalizations:trA("opts:member:name"),
                     type: 6,
-                    description: Xeow.translate("app_commands/ban:opts:member:description"),
-                    descriptionLocalizations: Xeow.translateAll("app_commands/ban:opts:member:description"),
+                    description: tr("opts:member:description"),
+                    descriptionLocalizations:trA("opts:member:description"),
                     required: true
                 },
                 {
-                    name: Xeow.translate("app_commands/ban:opts:reason:name"),
-                    nameLocalizations: Xeow.translateAll("app_commands/ban:opts:reason:name"),
+                    name: tr("opts:reason:name"),
+                    nameLocalizations:trA("opts:reason:name"),
                     type: 3,
-                    description: Xeow.translate("app_commands/ban:opts:reason:description"),
-                    descriptionLocalizations: Xeow.translateAll("app_commands/ban:opts:reason:description"),
+                    description: tr("opts:reason:description"),
+                    descriptionLocalizations:trA("opts:reason:description"),
                     required: false
                 },
                 {
-                    name: Xeow.translate("app_commands/ban:opts:deleteMessage:name"),
-                    nameLocalizations: Xeow.translateAll("app_commands/ban:opts:deleteMessage:name"),
+                    name: tr("opts:deleteMessage:name"),
+                    nameLocalizations:trA("opts:deleteMessage:name"),
                     type: 10,
-                    description: Xeow.translate("app_commands/ban:opts:deleteMessage:description"),
-                    descriptionLocalizations: Xeow.translateAll("app_commands/ban:opts:deleteMessage:description"),
+                    description: tr("opts:deleteMessage:description"),
+                    descriptionLocalizations:trA("opts:deleteMessage:description"),
                     required: false
                 }
             ]

@@ -36,7 +36,7 @@ Xeow is a discord bot that used NodeJS/JavaScript and designed for configurabili
 
 ## Features
 - Support for public and private bot
-- Support for plugins (You can make it your own plugin, just have a look at API docs)
+- Support for plugins (You can make your own plugin, just have a look at API docs)
 - Multi-language support (english, zh-TW, and customizable)
 - Console commands
 - Human friendy configurations

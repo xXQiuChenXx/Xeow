@@ -1,9 +1,9 @@
 {
-    "days": "days",
-    "hours": "hours",
-    "minutes": "minutes",
-    "seconds": "seconds",
-    "milliseconds": "milliseconds",
-    "messageDeleted": "Deleted Message",
-    "lackPermission": "I'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error."
+    "days": "天",
+    "hours": "小時",
+    "minutes": "分鐘",
+    "seconds": "秒",
+    "milliseconds": "毫秒",
+    "messageDeleted": "原信息已刪除",
+    "lackPermission": "抱歉,但你沒有權限, 如果你認爲這是個錯誤, 請聯係管理員"
 }

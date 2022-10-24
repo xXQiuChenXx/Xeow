@@ -1,14 +1,14 @@
 {
     "name": "pay",
-    "description": "Payment/Transfer",
+    "description": "付款/轉賬",
     "opts": {
         "target": {
-            "name": "target",
-            "description": "the member that you want to give coins to"
+            "name": "目標",
+            "description": "成員標註"
         },
         "amount": {
-            "name": "amount",
-            "description": "amount of coins"
+            "name": "金額",
+            "description": "轉賬金額"
         }
     }
 }

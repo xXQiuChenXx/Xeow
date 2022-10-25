@@ -1,46 +1,46 @@
 {
     "name": "money",
-    "description": "設置和更改成員的錢幣",
+    "description": "Set and change members' coins",
     "opts": {
         "set": {
             "name": "set",
-            "description": "設置成員的錢幣",
+            "description": "Set member coins",
             "opts": {
                 "member": {
-                    "name": "成員標註",
-                    "description": "指定一位成員"
+                    "name": "member",
+                    "description": "mention a member"
                 },
                 "amount": {
                     "name": "amount",
-                    "description": "你要設置的錢幣數量"
+                    "description": "the amount of money you want to set"
                 }
             }
         },
         "give": {
             "name": "give",
-            "description": "給予成員錢幣",
+            "description": "Give member coins",
             "opts": {
                 "member": {
-                    "name": "成員標註",
-                    "description": "指定一位成員"
+                    "name": "member",
+                    "description": "mention a member"
                 },
                 "amount": {
-                    "name": "數量",
-                    "description": "錢幣數量"
+                    "name": "amount",
+                    "description": "amount of coins"
                 }
             }
         },
         "take": {
             "name": "take",
-            "description": "扣除成員的錢幣",
+            "description": "deduct members' coins",
             "opts": {
                 "member": {
-                    "name": "成員標註",
-                    "description": "成員標注"
+                    "name": "member",
+                    "description": "mention a member"
                 },
                 "amount": {
-                    "name": "數量",
-                    "description": "錢幣數量"
+                    "name": "amount",
+                    "description": "amount of coins"
                 }
             }
         }

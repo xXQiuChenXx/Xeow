@@ -1,14 +1,14 @@
 {
     "name": "kick",
-    "description": "踢出一位成員",
+    "description": "kick a member",
     "opts": {
         "member": {
-            "name": "成員標注",
-            "description": "指定一位成員"
+            "name": "member",
+            "description": "mention a member to kick"
         },
         "reason": {
-            "name": "原因",
-            "description": "踢出原因"
+            "name": "reason",
+            "description": "kick reason"
         }
     }
 }

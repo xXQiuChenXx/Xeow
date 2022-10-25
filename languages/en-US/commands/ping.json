@@ -2,8 +2,8 @@
     "usage": "ping",
     "pinging": "🏓 Pinging....",
     "pong": {
-        "title": ":ping_pong: 延遲統計信息:",
-        "field_1": ":signal_strength: API 延遲",
-        "field_2": ":satellite: 機器人延遲"
+        "title": ":ping_pong: Bot Ping",
+        "field_1": ":signal_strength: API Latency",
+        "field_2": ":satellite: Bot Latency"
     }
 }

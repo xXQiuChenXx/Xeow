@@ -1,11 +1,11 @@
 {
     "self": {
-        "title": "💰 你的餘額",
-        "description": "你目前擁有 {{coins}} 錢幣"
+        "title": "💰 Your coins",
+        "description": "You currently have {{coins}} coins"
     },
-    "usage": "balance [成員標註]",
+    "usage": "balance [member]",
     "other": {
-        "title": "💰 他/她的餘額",
-        "description": "他/她目前擁有 {{coins}} 錢幣"
+        "title": "💰 His/Her coins",
+        "description": "His/Her currently have {{coins}} coins"
     }
 }

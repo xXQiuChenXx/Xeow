@@ -1,14 +1,14 @@
 {
     "name": "unban",
-    "description": "解除封禁一位成員",
+    "description": "unban a member",
     "opts": {
         "memberID": {
             "name": "id",
-            "description": "成員ID"
+            "description": "the member's id that you want to unban"
         },
         "reason": {
-            "name": "原因",
-            "description": "解封原因"
+            "name": "reason",
+            "description": "unban reason"
         }
     }
 }

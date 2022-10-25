@@ -1,19 +1,19 @@
 {
-    "cantNegNum": "不能是負數",
-    "cantBot": "對方不能是機器人",
-    "usage": "money <give/take/set> <成員標註> <數量>\n\nset 是設置, take 是抽走, set 是設置\n成員標注 - @一位成員\n數量 - 錢幣數量",
+    "cantNegNum": "Cannot be negative number",
+    "cantBot": "The member that you mentioned cannot be a bot",
+    "usage": "money <give/take/set> <member>",
     "give": {
-        "title": "🔧設置成功!",
-        "description": "你已成功將{{amount}}錢幣給予{{member}}, 他現在共有{{balance}}錢幣"
+        "title": "🔧Setting success!",
+        "description": "You have successfully transferred {{amount}} coins to {{member}}, who now has {{balance}}"
     },
     "take": {
-        "no_enough_money": "抱歉ㄟ，他沒那麽多錢幣...",
-        "title": "🔧設置成功!",
-        "description": "你已成功將{{amount}}錢幣從{{member}}中拿走了{{amount}}錢幣, 他現在共有{{balance}}錢幣"
+        "no_enough_money": "Sorry, but he/she don't have so much coins",
+        "title": "🔧Setting success!",
+        "description": "You have successfully removed {{amount}} coins from {{member}}, he now has {{balance}} coins"
     },
     "set": {
-        "title": "🔧設置成功!",
-        "description": "{{member}}現在共有{{amount}}錢幣"
+        "title": "🔧Setting success!",
+        "description": "{{member}} now have {{amount}} coins"
     },
-    "invalidUsage": "必須為 'take', 'give' 或者 'set'"
+    "invalidUsage": "Must be 'take', 'give', or 'set'"
 }

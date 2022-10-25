@@ -1,18 +1,18 @@
 {
     "name": "ban",
-    "description": "封禁一位成員",
+    "description": "ban a member in your guild",
     "opts": {
         "member": {
-            "name": "成員",
-            "description": "指定一位成員"
+            "name": "member",
+            "description": "mention a member"
         },
         "reason": {
-            "name": "原因",
-            "description": "封禁原因"
+            "name": "reason",
+            "description": "ban reason"
         },
         "deleteMessage": {
-            "name": "刪除信息",
-            "description": "要刪除的消息秒數，必須介於 0 和 604800 (7 天) 之間"
+            "name": "delete_message",
+            "description": "How much of their recent message history to delete, must be between 0 and 604800 (7 days)"
         }
     }
 }

@@ -1,20 +1,20 @@
 {
     "name": "slashcommand",
-    "description": "編輯斜綫指令, reset 和 remove 是包含全部指令",
+    "description": "Edit the slashcommand",
     "opts": {
         "type": {
-            "name": "類型",
-            "description": "編輯斜綫指令",
+            "name": "type",
+            "description": "Edit the slashcommand",
             "choices": {
-                "register": "注冊指令",
-                "remove": "移除所有指令",
-                "reset": "重置指令",
-                "unregister": "注銷指令"
+                "register": "register",
+                "remove": "Remove All Commands",
+                "reset": "reset",
+                "unregister": "unregister"
             }
         },
         "command": {
-            "name": "指令",
-            "description": "指令名称"
+            "name": "command",
+            "description": "command name"
         }
     }
 }

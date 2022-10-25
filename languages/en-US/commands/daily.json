@@ -1,9 +1,9 @@
 {
     "usage": "daily",
-    "title": ":white_check_mark: 簽到成功!",
+    "title": ":white_check_mark: Cheked In!",
     "description": {
-        "default": "你已成功領取了每日 {{total}} 錢幣",
-        "hasBonus": "你已連續簽到 {{days}} 天, 因此你獲得了額外獎勵 {{bonus}}, 本次簽到共獲得了 {{total}} 錢幣"
+        "default": "You have earned {{total}} coins from daily check in",
+        "hasBonus": "You have checked in for {{days}} days, therefore you earned extra {{bonus}} bonus coins, totally you have earned {{total}} coins"
     },
-    "footer": "使用 balance 指令可查看你目前的餘額"
+    "footer": "Use balance command to check you balance"
 }

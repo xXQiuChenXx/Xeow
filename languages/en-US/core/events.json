@@ -1,17 +1,17 @@
 {
     "messageCreate": {
-        "cmdExecuted": "{{userTag}} 執行了指令: {{content}}",
-        "cooldown": "指令正在冷卻中, 請等待 {{time}}",
-        "nsfwCommand": "你只能在允許NSFW的頻道執行此指令!",
-        "botLackPerm": "抱歉, 但我缺少 {{permission}} 權限來執行此指令",
-        "ownerOnly": "這個指令只能機器人擁有者使用"
+        "cmdExecuted": "{{userTag}} issued command: {{content}}",
+        "cooldown": "You must wait **{{time}}** till you can run that command again",
+        "nsfwCommand": "You only can allowed to use this command in NSFW channel!",
+        "botLackPerm": "I'm sorry, but I lack {{permission}} permission to issue this command",
+        "ownerOnly": "This command only can be run by the bot owner"
     },
     "interactionCreate": {
-        "cmdNotFound": "❌ ┃ 找不到指令... 請稍待Discord同步指令列表",
-        "cmdExecuted": "{{userTag}} 執行了指令: {{content}}",
-        "cooldown": "指令正在冷卻中, 請等待 {{time}}",
-        "nsfwCommand": "你只能在允許NSFW的頻道執行此指令!",
-        "botLackPerm": "抱歉, 但我缺少 {{permission}} 權限來執行此指令",
-        "ownerOnly": "這個指令只能機器人擁有者使用"
+        "cmdNotFound": "❌ ┃ command not found... Please wait for discord to synchronize the command list",
+        "cmdExecuted": "{{userTag}} issued command: {{content}}",
+        "cooldown": "You must wait **{{time}}** till you can run that command again",
+        "nsfwCommand": "You only can allowed to use this command in NSFW channel!",
+        "botLackPerm": "I'm sorry, but I lack {{permission}} permission to issue this command",
+        "ownerOnly": "This command only can be run by the bot owner"
     }
 }

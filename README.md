@@ -59,7 +59,7 @@ git clone https://github.com/xXQiuChenXx/Xeow.git
 - Rename ```config/main-example.yml``` to ```config/main.yml``` and then complete the configs the configuration file.
 
 4. Start the bot
-- Type npm run start to start the bot
+- use command `npm run start` or `node .` to start the bot
 - If you need any additional help, make sure to read our [wiki here](https://github.com/xXQiuChenXx/Xeow/wiki)
 
 ## About Slash Command
@@ -70,6 +70,10 @@ git clone https://github.com/xXQiuChenXx/Xeow.git
 ## Supported Database Type
 - MySQL
 - SQLite
+
+### Languages
+- all the translation are available on [Crowdin](https://crowdin.com/project/xeow-bot)
+- all the language are according to the [Discord's languages](https://discord.com/developers/docs/reference#locales)
 
 ### More Information
 <div style="text-align: center"><span style="font-family: 'Tahoma'"><span style="font-size: 15px"><br>

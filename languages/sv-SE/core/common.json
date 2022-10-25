@@ -1,0 +1,9 @@
+{
+    "days": "天",
+    "hours": "小時",
+    "minutes": "分鐘",
+    "seconds": "秒",
+    "milliseconds": "毫秒",
+    "messageDeleted": "原信息已刪除",
+    "lackPermission": "抱歉,但你沒有權限, 如果你認爲這是個錯誤, 請聯係管理員"
+}

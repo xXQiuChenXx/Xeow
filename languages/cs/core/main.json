@@ -1,0 +1,53 @@
+{
+    "bot": {
+        "nodeJSVersion": "你所用的 NodeJS 版本為 {{version}}",
+        "invalidToken": "你的機器人令牌(token) 無效, 請重新檢查后再啓動",
+        "loginError": "嘗試登入到機器人時出錯:",
+        "loggedIn": "已成功登入機器人 {{username}}",
+        "loaded": "機器人已啓動成功! 耗時: {{second}}s",
+        "leaveStar": "喜歡這個機器人嗎? 歡迎到 Github 點個小星星 https://github.com/xXQiuChenXx/Xeow"
+    },
+    "archive": {
+        "archiving": "正在壓縮記錄文件中...",
+        "success": "成功壓縮記錄文件, 共 {{total}} bytes",
+        "failed": "壓縮記錄文件時出錯"
+    },
+    "database": {
+        "invalidType": "抱歉, 但目前還不支持 {{type}} 數據庫類型",
+        "loading": "正在加載數據庫...",
+        "validate": {
+            "verifying": "正在驗證數據庫信息中...",
+            "success": "驗證成功!",
+            "failed": "無法驗證/登入你的數據庫, 請檢查配置信息無誤后再重新啓動"
+        },
+        "checking": "正在檢查數據庫資料中...",
+        "checked": "檢查完畢!"
+    },
+    "event": {
+        "preparing": "正在準備事件中...",
+        "loaded": "成功加載事件 {{event}}",
+        "done": "已加載 {{count}} 事件"
+    },
+    "command": {
+        "loaded": {
+            "noAliase": "✔ 成功加載指令 {{commandName}}",
+            "haveAliase": "✔ 成功加載指令 {{commandName}}, 別名為: {{commandAliases}}"
+        },
+        "NoDescription": "該指令無描述",
+        "invalidUsage": {
+            "title": "指令使用方式錯誤, 請檢查錯誤后再試",
+            "description": "錯誤: {{reason}}",
+            "rs": {
+                "empty": "缺少參數",
+                "number": "必須是一個數字",
+                "string": "必須是一個文本",
+                "integer": "必須是一個整數",
+                "boolean": "只能是 true 或者 false",
+                "user": "必須指定一位用戶",
+                "channel": "必須是一個頻道",
+                "role": "必須是一個身分組",
+                "mentionable": "必須是可被標注的"
+            }
+        }
+    }
+}

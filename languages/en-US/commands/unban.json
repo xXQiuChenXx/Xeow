@@ -1,5 +1,5 @@
 {
-    "usage": "unban <id>",
-    "noMentions": "You must mention a member's ID",
-    "unbanned": "Removed {{id}} from banned list"
+    "usage": "unban <member>",
+    "noMentions": "You must mention a member id",
+    "unbanned": "Successfully removed  {{id}} from the ban list"
 }

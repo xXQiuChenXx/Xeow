@@ -1,17 +1,15 @@
 module.exports = {
     usage: "commands/slashcommand:usage",
-    config: {
-        timeout: 60000,
-        emoji: "🤖",
-        memberPerms: ["Administrator"],
-        ownerOnly: true
-    },
-    run: async (Xeow, message, args, config) => {
+    emoji: "🤖",
+    timeout: 60000,
+    memberPerms: ["Administrator"],
+    ownerOnly: true,
+    run: async (Xeow, message, args) => {
         const type = args[0]?.toLowerCase()
         const cmdName = args[1]?.toLowerCase()
         if (type === "register" && cmdName) {
             let cmd = Xeow.commands.get(cmdName)
-            if (!cmd) return await message.invalidUsage({ position: 1, reason: 1 })
+            if (!cmd) return await message.replyT("commands/slashcommand:commandNotFound")
             let msg = await message.replyT("commands/slashcommand:registeringCommand", {
                 command: cmdName
             })

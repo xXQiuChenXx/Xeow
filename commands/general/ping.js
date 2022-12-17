@@ -8,10 +8,8 @@ module.exports = {
         }
     },
     usage: "commands/ping:usage",
-    config: {
-        timeout: 6000,
-        emoji: "🏓",
-    },
+    timeout: 6000,
+    emoji: "🏓",
     run: async (Xeow, message, args, config) => {
         await message.reply(message.translate("commands/ping:pinging")).then(async msg => {
             const embed = new Discord.EmbedBuilder()

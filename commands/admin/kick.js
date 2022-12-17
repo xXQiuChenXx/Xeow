@@ -26,18 +26,16 @@ module.exports = {
         }
     },
     usage: "commands/kick:usage",
-    config: {
-        emoji: "🦵",
-        memberPerms: ["KickMembers"],
-        botPerms: ["KickMembers"]
-    },
-    run: async (Xeow, message, args, config) => {
+    emoji: "🦵",
+    memberPerms: ["KickMembers"],
+    botPerms: ["KickMembers"],
+    run: async (Xeow, message, args) => {
         const member = message.mentions.members.first();
-        if(!member) return await message.invalidUsage({ position: 0, reason: 6 })
+        if (!member) return await message.invalidUsage({ position: 0, reason: 6 })
         const reason = args.slice(1, args.length).join(" ") || Xeow.translate("commands/kick:defaultReason");
         try {
             await member.kick(reason);
-        } catch(error) {
+        } catch (error) {
             console.error(error)
             return message.replyT("commands/kick:errorOccured")
         }

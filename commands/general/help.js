@@ -1,4 +1,4 @@
-const { EmbedBuilder, SelectMenuBuilder, ActionRowBuilder } = require("discord.js");
+const { EmbedBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 module.exports = {
     getLang: async function (Xeow) {
         return {
@@ -18,8 +18,8 @@ module.exports = {
         }
     },
     usage: "commands/help:usage",
+    emoji: "❓",
     config: {
-        emoji: "❓",
         categoryReplacement: {
             admin: {
                 name: "管理員使用",
@@ -78,7 +78,7 @@ module.exports = {
                     username: Xeow.user.username
                 }))
 
-            const menu = new SelectMenuBuilder()
+            const menu = new StringSelectMenuBuilder()
                 .setCustomId('help_menu')
                 .setPlaceholder(Xeow.translate("commands/help:main:menu:placeholder"))
 

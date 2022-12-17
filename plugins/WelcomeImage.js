@@ -1,7 +1,6 @@
 module.exports = {
     name: "WelcomeImage",
     description: "歡迎成員圖片",
-    enable: true,
     author: "QiuChen",
     version: "1.0.0",
     api: ['1.0.0'],

@@ -1,62 +1,82 @@
 module.exports = class {
     #commands;
     #aliases;
-    #Configuration
+    #Configuration;
+    #Xeow;
 
     constructor(Xeow) {
+        this.#Xeow = Xeow
         this.#commands = Xeow.commands
         this.#aliases = Xeow.aliases
         this.#Configuration = Xeow.Configuration
     }
 
-    register(name, prop = {}, force) {
-        let cmd = this.#commands.get(name)
-        if (cmd && force !== true) throw new Error(Xeow.translate("core/pluginLoader:API:commandExist", {
-            commandName: name
+    async register(name, prop = {}, force) {
+        const Xeow = this.#Xeow
+        let CMD = this.#commands.get(name)
+        if (CMD && force !== true) throw new Error(Xeow.translate("core/pluginLoader:API:command:exist", {
+            name: name
         }))
-        if (!prop.run) throw new Error(Xeow.translate("core/pluginLoader:API:invalidCommand"))
+        if (!prop.run) throw new Error(Xeow.translate("core/pluginLoader:API:command:invalid"))
 
         let base = {
-            name: null,
             enabled: true,
-            aliases: new Array(),
+            aliases: [],
             nsfw: false,
             ownerOnly: false,
             memberPerms: [],
+            botPermission: [],
             cooldown: 0,
-            description: null
-        }
-        let command;
-        let conf = Xeow.Configuration.get(`commands/${name}.yml`)
-        if (conf) {
-            if (conf?.enabled === false) return
-            if (!conf?.description || !conf?.category) return
-            command = { ...conf, run: prop.run }
-        } else {
-            command = { ...base, ...command.config, run: command.run }
-            this.#Configuration.Configuration.writeSync(`commands/${name}.yml`,
-                { ...cmd, run: undefined }, "utf8", { sortKeys: true })
+            config: undefined,
+            category: undefined
         }
 
-        this.#commands.set(name, command)
-        if (command.aliases.length) {
-            command.aliases.forEach(p => {
-                this.#aliases.set(p, { ...command, name: p })
-            })
-            console.log("core/main:command:loaded:haveAliase", {
-                commandName: command.name,
-                commandAliases: command.aliases.join(", ")
-            })
-        } else {
-            console.log("core/main:command:loaded:noAliase", {
-                commandName: command.name
-            })
+        let command = await prop.getLang(Xeow);
+        for(const key of Object.keys(base)) {
+            if(key === "category") {
+                base[key] = prop?.category || "plugin"
+                continue;
+            }
+            base[key] = prop?.[key] || base[key]
         }
 
-        if (cmd && force === true) console.warn(`檢測到指令${name}已被覆蓋`)
+        let cmd = { 
+            ...base, 
+            ...prop, 
+            ...command,
+            usage: Xeow.translate(prop.usage)
+        }
+
+        const conf = Xeow.Configuration.get(`commands/${cmd.name}.yml`)
+        if (!conf) {
+            Xeow.Configuration.writeSync(`commands/${cmd.name}.yml`, base, "utf8", { sortKeys: true })
+        } else {
+            cmd = { ...cmd, ...conf }
+        }
+
+        if (cmd.enabled) {
+            Xeow.commands.set(cmd.name, cmd)
+            if (cmd.aliases.length) {
+                cmd.aliases.forEach(p => {
+                    Xeow.aliases.set(p, { ...cmd, name: p })
+                })
+                console.logT("core/pluginLoader:API:command:loadedWithAliase", {
+                    name: cmd.name,
+                    aliase: cmd.aliases.join(", ")
+                })
+            } else {
+                console.logT("core/pluginLoader:API:command:loaded", {
+                    name: cmd.name
+                })
+            }
+        }
+
+        if (cmd && force === true) console.warnT("core/pluginLoader:API:command:overwrite", {
+            name: cmd.name
+        })
     }
 
-    unregister(name) {
+    async unregister(name) {
         if (this.#commands.get(name)) this.#commands.delete(name)
         if (this.#aliases.get(name)) this.#aliases.delete(name)
     }

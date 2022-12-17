@@ -22,10 +22,8 @@ module.exports = {
         }
     },
     usage: "commands/pay:usage",
-    config: {
-        emoji: "💸",
-    },
-    run: async (Xeow, message, args, config) => {
+    emoji: "💸",
+    run: async (Xeow, message, args) => {
         const { EmbedBuilder } = Xeow.Modules["discord.js"]
         if (!message.mentions.members.first()) return await message.invalidUsage({ position: 0, reason: 6 })
         if (!args[1]) return await message.invalidUsage({ position: 1, reason: 1 })

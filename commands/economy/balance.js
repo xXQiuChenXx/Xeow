@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 module.exports = {
-    getLang: async function(Xeow) {
+    getLang: async function (Xeow) {
         return {
             name: Xeow.translate("app_commands/balance:name"),
             description: Xeow.translate("app_commands/balance:description"),
@@ -15,9 +15,9 @@ module.exports = {
         }
     },
     usage: "commands/balance:usage",
+    aliases: ["bal"],
+    emoji: "💰",
     config: {
-        aliases: ["bal"],
-        emoji: "💰",
         self: {
             timestamp: true
         },
@@ -57,7 +57,7 @@ module.exports = {
                 })
                 .setTitle(message.translate("commands/balance:self:title"))
                 .setDescription(message.translate("commands/balance:self:description", {
-                    coins:  coins === undefined ? "0" : coins
+                    coins: coins === undefined ? "0" : coins
                 }))
             if (config.self.timestamp === true) embed.setTimestamp()
             await message.reply({ embeds: [embed] })

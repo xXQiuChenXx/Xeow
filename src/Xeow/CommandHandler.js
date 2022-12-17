@@ -7,7 +7,9 @@ module.exports = async (Xeow) => {
         ownerOnly: false,
         memberPerms: [],
         botPermission: [],
-        cooldown: 0
+        cooldown: 0,
+        config: undefined,
+        category: undefined
     }
     if (!fs.existsSync("./configs/commands")) fs.mkdirSync("./configs/commands");
 
@@ -17,15 +19,28 @@ module.exports = async (Xeow) => {
         for (const file of files) {
             const command_file = require(`../../commands/${dir}/${file}`)
             let command = await command_file.getLang(Xeow);
-            let cmd = { ...base, ...command_file, ...command, category: dir, ...command_file.config }
-            cmd.usage = Xeow.translate(cmd.usage)
+            for(const key of Object.keys(base)) {
+                if(key === "category") {
+                    base[key] = dir
+                    continue;
+                }
+                base[key] = command_file?.[key] || base[key]
+            }
+
+            let cmd = { 
+                ...base, 
+                ...command_file, 
+                ...command,
+                usage: Xeow.translate(command_file.usage)
+            }
+
             const conf = Xeow.Configuration.get(`commands/${cmd.name}.yml`)
             if (!conf) {
-                Xeow.Configuration.writeSync(`commands/${cmd.name}.yml`,
-                    { ...base, ...command_file.config, category: dir }, "utf8", { sortKeys: true })
+                Xeow.Configuration.writeSync(`commands/${cmd.name}.yml`, base, "utf8", { sortKeys: true })
             } else {
                 cmd = { ...cmd, ...conf }
             }
+
             if (cmd.enabled) {
                 Xeow.commands.set(cmd.name, cmd)
                 if (cmd.aliases.length) {

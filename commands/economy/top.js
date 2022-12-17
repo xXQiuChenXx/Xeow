@@ -8,10 +8,8 @@ module.exports = {
         }
     },
     usage: "commands/top:usage",
-    config: {
         emoji: "🏆",
-    },
-    run: async (Xeow, message, args, config) => {
+    run: async (Xeow, message, args) => {
         await Xeow.DBManager.sync()
         let data = await Xeow.DBManager.get("economy").findAll({
             where: {

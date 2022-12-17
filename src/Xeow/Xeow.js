@@ -26,10 +26,7 @@ module.exports = class Xeow extends Client {
                 GatewayIntentBits.MessageContent,
             ],
             autoReconnect: true,
-            partials: ["CHANNEL"],
-            allowedMentions: {
-                parse: ["users"]
-            }
+            partials: ["CHANNEL"]
         });
 
         this.prefix = new Collection()
@@ -51,7 +48,7 @@ module.exports = class Xeow extends Client {
         Libraries.forEach(lib => { this.Libraries[lib.name] = lib.main; });
         this.Libraries["Collection"] = require("discord.js").Collection
         this.Configuration = new (require("./Configuration"))();
-        this.PluginManager = new (require("../PluginHandler/PluginLoader"))(this);
+        this.PluginManager = new (require("../PluginHandler/PluginManager"))(this);
     }
 
     translate(key, args, locale) {
@@ -127,16 +124,15 @@ module.exports = class Xeow extends Client {
     async run(config) {
         await this.DBManager.startup(config);
         await this.DBManager.sync(true);
-        let prefixes = await this.DBManager.get("prefixes").findAll()
-        prefixes.forEach(data => {
-            this.prefix.set(data.guild, data.prefix)
-        })
+        let guilds = await this.DBManager.get("guild").findAll();
+        for(const guild of guilds) {
+            await this.prefix.set(guild.id, guild.prefix)
+        }
         await this.user.setPresence({ activities: config.Activities, status: config.Status });
     }
 
     msToTime(duration) {
-        var milliseconds = Math.floor((duration % 1000) / 100),
-            seconds = Math.floor((duration / 1000) % 60),
+        var seconds = Math.floor((duration / 1000) % 60),
             minutes = Math.floor((duration / (1000 * 60)) % 60),
             hours = Math.floor((duration / (1000 * 60 * 60)) % 24),
             days = Math.floor(duration / (1000 * 60 * 60 * 24))

@@ -1,0 +1,38 @@
+{
+    "notAVoiceChannel": "無法設置主頻道到 {{channel}}, 原因: 該頻道不是語音頻道",
+    "setRoomSuccess": "成功將主頻道設置到 {{channel}}",
+    "onlyInRoomChannel": "只能在語音房使用此指令",
+    "roomInfo": "語音房信息",
+    "roomName": "語音房名稱",
+    "roomAdmin": "語音房管理員",
+    "publicRoom": {
+        "title": "公開語音房",
+        "true": "任何人都能看見此語音房",
+        "false": "任何人都能看見此語音房"
+    },
+    "roomAllowConnect": {
+        "title": "允許語音連接",
+        "true": "任何人都能進入此語音房",
+        "false": "只限部分成員能進入此語音房"
+    },
+    "roomAllowSpeak": {
+        "title": "允許語音發言",
+        "true": "任何人都能開麥說話",
+        "false": "只限部分成員能開麥説話"
+    },
+    "roomInvite": "邀請鏈接: {{inviteLink}}",
+    "actionSuccess":{
+        "lock": "{{channel}} 已上鎖, 未經同意的成員無法加入此語音房",
+        "unlock": "{{channel}} 已解除上鎖, 所有人都可以加入此頻道",
+        "rename": "已成功將頻道名稱設置成 {{name}}",
+        "limit": "{{channel}} 人數限制已改爲 {{count}}",
+        "mute": "此語音房的成員已被禁止開麥説話",
+        "unmute": "此語音房的成員已被允許開麥説話",
+        "hide": "此語音房已被隱藏",
+        "visible": "此語音房成功設置為可見狀態",
+        "addAdmin": "成功將 {{member}} 設置為語音房管理員",
+        "removeAdmin": "{{member}} 已不再是語音房管理員了",
+        "ban": "{{member}} 已被禁止加入此語音房",
+        "unban": "{{member}} 已從語音房封禁列表中移除"
+    }
+}

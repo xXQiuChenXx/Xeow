@@ -30,7 +30,7 @@ module.exports = class DatabaseManager {
                 }
             );
         } else {
-            console.showErrT("core/main:database:invalidType", { type: config.Storage.Type});
+            console.showErrT("core/main:database:invalidType", { type: config.Storage.Type });
             await this.#Xeow.bot.destroy();
             process.exit(0)
         }
@@ -52,37 +52,59 @@ module.exports = class DatabaseManager {
     async startup(config) {
         console.logT("core/main:database:checking")
         const { DataTypes } = this.#Xeow.Modules["sequelize"];
+        this.DataTypes = DataTypes;
         this.#db.define('command', {
             lastRun: { type: DataTypes.STRING, allowNull: false },
             user: { type: DataTypes.STRING, allowNull: false },
             guild: { type: DataTypes.STRING, allowNull: false },
             command: { type: DataTypes.STRING, allowNull: false },
-        }, { freezeTableName: true });
-        this.#db.define('prefixes', {
-            guild: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-            prefix: { type: DataTypes.STRING, allowNull: false }
-        }, { freezeTableName: true });
+        }, { freezeTableName: true, timestamps: false });
+        this.#db.define('guild', {
+            id: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
+            prefix: { type: DataTypes.STRING, allowNull: false },
+            // roomId: { type: DataTypes.STRING }
+        }, { freezeTableName: true, timestamps: false });
         this.#db.define('economy', {
             guild: { type: DataTypes.STRING, allowNull: false },
             user: { type: DataTypes.STRING, allowNull: false },
             coins: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
             checked_in_count: { type: DataTypes.INTEGER, allowNull: true },
             lastCheckIn: { type: DataTypes.STRING(1000), allowNull: true }
-        }, { freezeTableName: true });
-        await this.#db.sync({ alter: true });
+        }, { freezeTableName: true, timestamps: false });
+
+        await this.#db.sync();
         await this.#Xeow.guilds.cache.forEach(async guild => {
-            let prefix = await this.#db.models.prefixes.findOne({ where: { guild: guild.id } });
-            if (!prefix) await this.#db.models.prefixes.build({ guild: guild.id, prefix: config.Prefix }).save()
+            let prefix = await this.#db.models["guild"].findOne({ where: { id: guild.id } });
+            if (!prefix) await this.#db.models["guild"].build({ id: guild.id, prefix: config.Prefix }).save()
         })
+
         console.logT("core/main:database:checked")
+
+
+    }
+
+    define(table, cols, opts) {
+        return this.#db.define(table, cols, opts)
+    }
+
+    getQueryInterface() {
+        return this.#db.getQueryInterface();
     }
 
     get(model) {
         return this.#db.models[model]
     }
 
-    async sync(alter, force) {
-        await this.#db.sync({ alter: alter, force: force });
+    async sync(options) {
+        return await this.#db.sync(options);
+    }
+
+    async createColumn(table, column, options) {
+        const model = this.get(table);
+        const attr = await model.describe();
+        attr[column] = options;
+        this.#db.define(table, attr, { freezeTableName: true, timestamps: false });
+        await this.sync({ alter: true })
     }
 
     async close() {

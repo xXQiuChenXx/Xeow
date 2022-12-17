@@ -7,7 +7,7 @@ module.exports = class {
     }
 
     async run(guild) {
-        let DB = await this.Xeow.DBManager.get("prefixes")
+        let DB = await this.Xeow.DBManager.get("guild")
         let exists = await DB.findOne({ where: { guild: guild.id } })
         if (!exists?.prefix) {
             await DB.build({ guild: guild.id, prefix: this.Xeow.defaultPrefix }).save()

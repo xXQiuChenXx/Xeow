@@ -29,9 +29,13 @@ class SimplePluginLoader {
                 permissions: plugin.permissions
             }
             await Xeow.Configuration.writeSync(`plugins/${plugin.name}/main.yml`, main)
+        } else {
+            plugin.permissions = main.permissions;
+            plugin.description = main.description;
+            plugin.enable = main.enable;
         }
 
-        if (main.enable === true) {
+        if (main.enable) {
             if (plugin?.config || plugin?.configs) {
                 if (Array.isArray(plugin?.configs)) {
                     for (const config of plugin.configs) {
@@ -215,6 +219,10 @@ class SimplePluginLoader {
 
     getAllInstance() {
         return this.plugins
+    }
+
+    get(pluginName) {
+        return this.plugins.get(pluginName);
     }
 
     /**

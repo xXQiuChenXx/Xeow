@@ -90,7 +90,7 @@ module.exports = {
                     }))
             await message.reply({ embeds: [embed] })
         } else {
-            return await message.invalidUsage({ position: 0, reason: Xeow.translate("commands/money:invalidUsage")})
+            return await message.invalidUsage({ position: 0, reason: Xeow.translate("commands/money:invalidUsage") })
         }
     },
 
@@ -167,8 +167,7 @@ module.exports = {
         }
     },
     usage: "commands/money:usage",
-    config: {
-        emoji: "⚙️",
-        memberPerms: ["Administrator"]
-    }
+    emoji: "⚙️",
+    memberPerms: ["Administrator"]
+
 }

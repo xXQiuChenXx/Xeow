@@ -1,4 +1,4 @@
-const { EmbedBuilder, SelectMenuBuilder, ActionRowBuilder } = require("discord.js");
+const { EmbedBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 module.exports = class Event {
     constructor(Xeow) {
         this.Xeow = Xeow
@@ -6,15 +6,15 @@ module.exports = class Event {
     }
     async run(interaction) {
         const Xeow = this.Xeow
-        if (interaction.isSelectMenu()) {
-            const hp_config = Xeow.Configuration.get("commands/help.yml")
+        if (interaction.isStringSelectMenu()) {
+            const hp_config = Xeow.Configuration.get("commands/help.yml").config
             const noValue = Xeow.translate("commands/help:noValue");
             switch (interaction.customId) {
                 case 'help_menu':
                     let cat = interaction.values[0]
                     let cat_repl = hp_config.categoryReplacement[cat]
 
-                    const menu = new SelectMenuBuilder()
+                    const menu = new StringSelectMenuBuilder()
                         .setCustomId('help_command')
                         .setPlaceholder(Xeow.translate("commands/help:chooseCommand"))
 
@@ -46,7 +46,7 @@ module.exports = class Event {
                                 username: Xeow.user.username
                             }))
 
-                        const menu = new SelectMenuBuilder()
+                        const menu = new StringSelectMenuBuilder()
                             .setCustomId('help_menu')
                             .setPlaceholder(Xeow.translate("commands/help:commandTutorial"))
 

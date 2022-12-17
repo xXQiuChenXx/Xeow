@@ -1,0 +1,91 @@
+{
+    "name": "vc",
+    "description": "語音房間",
+    "opts": {
+        "setMain": {
+            "description": "設置創建房間的頻道",
+            "opts": {
+                "channel": {
+                    "name": "頻道",
+                    "description": "指定一個語音頻道"
+                }
+            }
+        },
+        "help": {
+            "description": "取得動態語音房的幫助"
+        },
+        "info": {
+            "description": "查看語音房相關設定資訊"
+        },
+        "invite": {
+            "description": "邀請成員加入到語音頻道",
+            "opts": {
+                "name": "成員",
+                "description": "指定一位你要邀請的成員"
+            }
+        },
+        "lock": {
+            "description": "上鎖語音房, 防止成員加入"
+        },
+        "unlock": {
+            "description": "解鎖語音房，使成員可以加入"
+        },
+        "rename": {
+            "description": "重命名語音房",
+            "opts": {
+                "name": "名稱",
+                "description": "頻道新名稱"
+            }
+        },
+        "limit": {
+            "description": "限制語音房人數",
+            "opts": {
+                "name": "數量",
+                "description": "可加入的成員人數"
+            }
+        },
+        "speak": {
+            "description": "切換 成員是否能開麥説話"
+        },
+        "visible": {
+            "description": "切換 顯示你的語音房"
+        },
+        "add_admin": {
+            "description": "給予指定成員語音房的管理員權限",
+            "opts": {
+                "name": "成員",
+                "description": "指定一位成員"
+            }
+        },
+        "remove_admin": {
+            "description": "移除語音房管理員的管理員權限",
+            "opts": {
+                "name": "成員",
+                "description": "指定一位成員"
+            }
+        },
+        "ban": {
+            "description": "禁止指定成員加入語音房",
+            "opts": {
+                "name": "成員",
+                "description": "請指定一位成員"
+            }
+        },
+        "unban": {
+            "description": "取消禁止指定成員加入語音房",
+            "opts": {
+                "name": "成員id",
+                "description": "請指定一位成員ID"
+            }
+        },
+        "hide": {
+            "description": "切換 隱藏你的語音房"
+        },
+        "mute": {
+            "description": "禁止成員開麥"
+        },
+        "unmute": {
+            "description": "允許成員開麥説話"
+        }
+    }
+}

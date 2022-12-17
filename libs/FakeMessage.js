@@ -17,7 +17,7 @@ class FakeMessage {
         setTimeout(async function () {
             try {
                 await interaction.deferReply();
-            } catch(error) {
+            } catch (error) {
 
             }
         }, 2400);
@@ -167,7 +167,7 @@ class FakeMessage {
             }
             try {
                 await this.interaction.reply({ fetchReply: true, ...options });
-            } catch(e) {
+            } catch (e) {
                 await this.interaction.editReply({ ...options })
             }
             return this.interaction

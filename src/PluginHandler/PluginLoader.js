@@ -18,7 +18,7 @@ class SimplePluginLoader {
         if (typeof plugin === 'string') plugin = require("../../plugins/" + plugin) // convert plugin name to plugin instance
         if (this.list.includes(plugin.name)) return console.showErrT("core/pluginLoader:pluginExist", { name: plugin.name }) // check whether plugin already loaded
         let main = Xeow.Configuration.get(`plugins/${plugin.name}/main.yml`) // get the main plugin configuration file
-        if (!fs.existsSync("./configs/plugins")) fs.mkdir("./configs/plugins")
+        if (!fs.existsSync("./configs/plugins")) fs.mkdirSync("./configs/plugins")
 
         //set main config about a plugin
         if (!main) {

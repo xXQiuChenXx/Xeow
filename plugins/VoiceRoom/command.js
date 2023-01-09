@@ -11,6 +11,7 @@ module.exports = function (PluginInstance) {
             let guild_db = Xeow.DBManager.get("guild");
             let channel = message.channel
             let everyone = message.guild.roles.everyone;
+            
             if (type === "help") {
                 const helpTuT = fs.readFileSync(path.join(__dirname, "help.txt"), "utf-8")
                 const helpF = helpTuT.replaceAll("{{mainChannel}}", `<#${PluginInstance._CRC.get(message.guild.id)}>`)

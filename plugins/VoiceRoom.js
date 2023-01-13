@@ -24,27 +24,65 @@ module.exports = {
 
         async onLoad() {
             const Logger = this.logger;
-            await vc.db(this.api); // Set up the database
+            const config = await this.api.getConfig("main");
+            Logger.logT("plugins/voiceRoom:initializeDB:load");
+            await vc.db(this.api).catch(e => {
+                Logger.showErrT("plugins/voiceRoom:initializeDB:failed")
+                Logger.error(e)
+            }); // Set up the database
+            Logger.logT("plugins/voiceRoom:initializeDB:success")
             // ------- caches --------
             let guilds = await (this.api.db.get("guild")).findAll();
             let roomsDB = this.api.db.get("active_rooms")
+            const bot = this.bot
             let active_rooms = await roomsDB.findAll();
             for (const guild of guilds) {
-                if (guild?.roomId) this._CRC.set(guild.id, guild.roomId);
+                if (guild?.roomId) {
+                    this._CRC.set(guild.id, guild.roomId);
+                    let g = await bot.guilds.cache.get(guild.id)
+                    let ch = await g.channels.cache.get(guild.roomId)
+                    if (ch.members.size) {
+                        let mems = ch.members.map(x => x)
+                        for (const m of mems) {
+                            let exist = active_rooms.find(x => x.owner === m.id)
+                            let c = g.channels.cache.get(exist?.channel)
+                            if (exist && c) {
+                                await m.voice.setChannel(c);
+                            } else {
+                                const roomName = config.defaultRoomName.replaceAll("{{Member}}", m?.nickname || m.user.username)
+                                const parentId = ch?.parentId
+                                const room = await g.channels.create({
+                                    name: roomName,
+                                    parent: parentId,
+                                    type: 2
+                                })
+                                await m.voice.setChannel(room)
+                                await room.permissionOverwrites.set([{
+                                    id: m.id,
+                                    allow: "ManageChannels"
+                                }])
+                                await roomsDB.build({ owner: m.id, channel: room.id, guild: g.id }).save();
+                                this._AR.set(room.id, g.id);
+                                Logger.infoT("plugins/voiceRoom:newRoomCreated", {
+                                    member: m.user.tag,
+                                    id: m.id,
+                                    roomName: room.name,
+                                    roomId: room.id
+                                })
+                            }
+                        }
+                    }
+                }
             }
             for (const r of active_rooms) {
                 let g = this.bot.guilds.cache.get(r.guild); // Check If Guild Exist
-                console.log(r.channel)
                 let ch = g.channels.cache.get(r.channel); // Check If Channel Exist
-                if(!g) console.log("WHAT THE FUCK")
-                if (!ch || !g) {
-                    console.log("whatttt")
-                    return await roomsDB.destroy({ where: { guild: r.guild, channel: r.channel } });
-                }
+                if (!ch || !g) return await roomsDB.destroy({ where: { guild: r.guild, channel: r.channel } });
+
                 if (!ch.members.size) { // If Channel Don't have any member
                     await ch.delete();
                     await roomsDB.destroy({ where: { guild: r.guild, channel: r.channel } });
-                    Logger.info(`Deleted voice room (${ch.id}) due to inactive / no members inside the room`)
+                    Logger.infoT(`Deleted voice room (${ch.id}) in guild (${r.guild}) due to inactive / no members inside the room`)
                 } else {
                     this._AR.set(r.channel, r.guild);
                 }
@@ -67,6 +105,7 @@ module.exports = {
             })
             await this._CRC.set(guildId, channelId);
         }
+
 
 
         async onEnable() {

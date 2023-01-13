@@ -67,6 +67,11 @@ module.exports = function (Xeow) {
                 required: true
             }]
         },{
+            name: "hide",
+            description: tr("opts:hide:description"),
+            descriptionLocalize: trA("opts:hide:description"),
+            type: 1
+        },{
             name: "visible",
             description: tr("opts:visible:description"),
             descriptionLocalize: trA("opts:visible:description"),

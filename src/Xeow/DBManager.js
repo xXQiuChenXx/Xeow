@@ -95,6 +95,10 @@ module.exports = class DatabaseManager {
         return this.#db.models[model]
     }
 
+    async refresh() {
+        
+    }
+
     async sync(options) {
         return await this.#db.sync(options);
     }

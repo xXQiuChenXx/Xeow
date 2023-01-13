@@ -1,4 +1,4 @@
 module.exports = {
-    command: require("./command"),
-    db: require("./database")
+    command: require("./event/messageCreate"),
+    db: require("./handle/databaseHandle")
 }

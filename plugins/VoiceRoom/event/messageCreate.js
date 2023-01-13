@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
-const cmdLang = require("./cmd-lang");
+const cmdLang = require("../slashCommand");
 const fs = require("fs");
 const path = require("path");
 
@@ -11,7 +11,7 @@ module.exports = function (PluginInstance) {
             let guild_db = Xeow.DBManager.get("guild");
             let channel = message.channel
             let everyone = message.guild.roles.everyone;
-            
+
             if (type === "help") {
                 const helpTuT = fs.readFileSync(path.join(__dirname, "help.txt"), "utf-8")
                 const helpF = helpTuT.replaceAll("{{mainChannel}}", `<#${PluginInstance._CRC.get(message.guild.id)}>`)
@@ -36,8 +36,10 @@ module.exports = function (PluginInstance) {
                     {
                         name: tr("roomAdmin"),
                         value: channel.members.map(member => {
-                            if (member.permissions.has(["MoveMembers"]) && !member.user.bot) return member.user.tag.toString()
-                        }).join(", "),
+                            if (channel.permissionsFor(member).has(["ManageChannels"]) && !member.user.bot) {
+                                return member.toString()
+                            }
+                        }).filter(x => x).join(", "),
                         inline: true,
                     }, { name: '\u200b', value: '\u200b', inline: true },
                     {
@@ -77,7 +79,7 @@ module.exports = function (PluginInstance) {
                 await message.reply(tr("actionSuccess:rename", { name: name }));
             } else if (type === "limit") {
                 await channel.setUserLimit(parseInt(args[1]))
-                await message.reply(tr("actionSuccess:limit", { count: args[1] }))
+                await message.reply(tr("actionSuccess:limit", { count: args[1], channel: `<#${channel.id}>` }))
             } else if (type === "mute") {
                 await channel.permissionOverwrites.set([{
                     id: everyone.id,
@@ -95,7 +97,7 @@ module.exports = function (PluginInstance) {
                     id: everyone.id,
                     deny: "ViewChannel"
                 }])
-                await message.reply(tr("actionSuccess:hide"))
+                await message.reply(tr("actionSuccess:hide"));
             } else if (type === "visible") {
                 await channel.permissionOverwrites.set([{
                     id: everyone.id,
@@ -103,23 +105,23 @@ module.exports = function (PluginInstance) {
                 }])
                 await message.reply(tr("actionSuccess:visible"));
             } else if (type === "add_admin") {
-                let member = message.mentions.member.first();
+                let member = message.mentions.members.first();
                 if (!member) return await message.reply("NOOO")
                 await channel.permissionOverwrites.set([{
                     id: member.id,
-                    allow: "ManageChannel"
+                    allow: "ManageChannels"
                 }])
                 await message.reply(tr("actionSuccess:addAdmin", { member: member.user.toString() }))
             } else if (type === "remove_admin") {
-                let member = message.mentions.member.first();
+                let member = message.mentions.members.first();
                 if (!member) return await message.reply("NOOO")
                 await channel.permissionOverwrites.set([{
                     id: member.id,
-                    deny: "ManageChannel"
+                    deny: "ManageChannels"
                 }])
                 await message.reply(tr("actionSuccess:removeAdmin", { member: member.user.toString() }))
             } else if (type === "ban") {
-                let member = message.mentions.member.first();
+                let member = message.mentions.members.first();
                 if (!member) return await message.reply("NOOO")
                 await channel.permissionOverwrites.set([{
                     id: member.id,
@@ -127,9 +129,10 @@ module.exports = function (PluginInstance) {
                 }])
                 await message.reply(tr("actionSuccess:ban", { member: member.user.toString() }))
             } else if (type === "unban") {
-                if (!id) return await message.reply("錯誤")
+                let member = message.mentions.members.first();
+                if (!member) return await message.reply("錯誤")
                 await channel.permissionOverwrites.set([{
-                    id: id,
+                    id: member.id,
                     allow: "ViewChannel"
                 }])
                 await message.reply(tr("actionSuccess:unban", { member: member.user.toString() }))

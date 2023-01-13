@@ -8,7 +8,7 @@
     "publicRoom": {
         "title": "公開語音房",
         "true": "任何人都能看見此語音房",
-        "false": "任何人都能看見此語音房"
+        "false": "只限部分成員能看見此語音房"
     },
     "roomAllowConnect": {
         "title": "允許語音連接",
@@ -34,5 +34,12 @@
         "removeAdmin": "{{member}} 已不再是語音房管理員了",
         "ban": "{{member}} 已被禁止加入此語音房",
         "unban": "{{member}} 已從語音房封禁列表中移除"
-    }
+    },
+    "initializeDB": {
+        "load": "初始化數據庫中...",
+        "success": "初始化數據庫完成!",
+        "failed": "初始化數據庫出錯!"
+    },
+    "newRoomCreated": "{{member}}({{id}}) 創建了一個新的房間 - {{roomName}}({{roomId}})",
+    "deletedDeactiveRoom": "語音房({{roomId}}) 在群({{guildId}})"
 }
